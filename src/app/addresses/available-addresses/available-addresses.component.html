@@ -1,0 +1,33 @@
+<div class="page-wrapper">
+  <div class="top-section">
+    <h2>Available Addresses</h2>
+    <span class="spacer"></span>
+    <div class="add-address-button">
+      <button type="button" class="add-button" (click)="onAddAddresses()">
+        <p>Add Address</p>
+        <span class="spacer"></span>
+        <img src="../../assets/images/icons/add-icon.svg" alt="add-icon" />
+      </button>
+    </div>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Search</mat-label>
+    <input type="search" matInput [(ngModel)]="searchTerm" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-accordion *ngIf="!isLoading">
+    <mat-expansion-panel *ngFor="let address of filteredAddresses">
+      <mat-expansion-panel-header>
+        <mat-panel-title> {{ address.name }} </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>
+        {{ address.street }} <br />
+        {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
+        <span *ngFor="let phone of address.phone">{{ phone }} <br /> </span>
+      </p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

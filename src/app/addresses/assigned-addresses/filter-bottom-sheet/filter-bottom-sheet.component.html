@@ -1,0 +1,8 @@
+<h3>Filter By Writer</h3>
+
+<mat-divider></mat-divider>
+
+<p *ngFor="let writer of data">
+  <a (click)="filterSelect(writer.name)">{{ writer.name }}</a>
+</p>
+<p class="none" (click)="filterSelect('')">None</p>

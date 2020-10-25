@@ -1,0 +1,107 @@
+button {
+  width: 268px;
+  height: 88px;
+  margin: auto;
+  margin-top: 33px;
+  display: flex;
+  background-color: #e2f1ff;
+  border: none;
+  border-radius: 10px;
+  padding: 23px;
+  cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+
+  p {
+    align-self: center;
+    margin: 0 20px 0 0;
+    font-size: 17px;
+  }
+
+  img {
+    display: inline-block;
+    height: 30px;
+    width: 35px;
+    align-self: center;
+  }
+
+  .writer-info {
+    text-align: left;
+
+    .address-amount {
+      display: block;
+      font-size: 10px;
+      color: #6d6d6d;
+
+      a {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  display: grid;
+  margin: auto;
+  width: 268px;
+  grid-template-columns: repeat(2, 1fr);
+
+  #add-writer {
+    justify-self: start;
+    background-color: #ff5555;
+  }
+
+  #custom-send {
+    justify-self: end;
+    background-color: #3136b7;
+
+    img {
+      height: 15px;
+    }
+  }
+
+  button {
+    margin: 0;
+    width: 119px;
+    height: 40px;
+    padding: 0;
+
+    p {
+      font-size: 10px;
+      margin: 0;
+      padding-left: 12px;
+      color: #ffffff;
+    }
+
+    img {
+      height: 24px;
+      width: 24px;
+      align-self: center;
+      padding-right: 12px;
+      color: #ffffff;
+      fill: #ffffff;
+    }
+  }
+}
+
+#writers-button {
+  background-color: #ffecef;
+}
+
+#addresses-button {
+  background-color: #bbdcff;
+  padding: 0;
+
+  p {
+    padding: 23px;
+  }
+
+  img {
+    height: 60px;
+    align-self: center;
+    padding-right: 23px;
+  }
+}

@@ -1,0 +1,32 @@
+<div class="container">
+  <button type="button" class="top-button" id="add-writer">
+    <p>Add Writer</p>
+    <span class="spacer"></span>
+    <img src="../../assets/images/icons/add-icon.svg" alt="airplane" />
+  </button>
+  <button type="button" class="top-button" id="custom-send">
+    <p>Custom Send</p>
+    <span class="spacer"></span>
+    <img src="../../assets/images/icons/Send_Icon.svg" alt="airplane" />
+  </button>
+</div>
+<button
+  type="button"
+  id="writers-button"
+  class="pen-button"
+  *ngFor="let writer of writers"
+  [style.backgroundColor]="writer.color"
+>
+  <div class="writer-info">
+    <p>{{ writer.name }}</p>
+    <p class="address-amount">
+      {{ writer.defaultAddressAmount }} Addresses | <a href="#">Edit</a>
+    </p>
+  </div>
+  <span class="spacer"></span>
+  <img
+    src="../../assets/images/icons/send-icon-black.svg"
+    alt="airplane"
+    id="pen-icon"
+  />
+</button>

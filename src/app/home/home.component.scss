@@ -1,0 +1,61 @@
+button {
+  width: 268px;
+  height: 88px;
+  margin: auto;
+  margin-top: 33px;
+  display: flex;
+  background-color: #e2f1ff;
+  border: none;
+  border-radius: 10px;
+  padding: 23px;
+  cursor: pointer;
+
+  p {
+    align-self: center;
+    margin: 0 20px 0 0;
+    font-size: 17px;
+  }
+
+  img {
+    display: inline-block;
+    height: 42px;
+    width: 64px;
+  }
+}
+
+.pen-button {
+  padding: 0;
+
+  p {
+    padding: 23px;
+  }
+
+  #pen-icon {
+    width: 90px;
+    height: 90px;
+    padding-right: 23px;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+#writers-button {
+  background-color: #ffecef;
+}
+
+#addresses-button {
+  background-color: #bbdcff;
+  padding: 0;
+
+  p {
+    padding: 23px;
+  }
+
+  img {
+    height: 60px;
+    align-self: center;
+    padding-right: 23px;
+  }
+}

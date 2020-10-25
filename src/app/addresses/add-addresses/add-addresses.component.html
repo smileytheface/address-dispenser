@@ -1,0 +1,58 @@
+<div class="page-wrapper">
+  <h3>Add Address</h3>
+  <mat-slide-toggle
+    color="primary"
+    [(ngModel)]="addMany"
+    class="add-many-toggle"
+    id="add-many-toggle"
+    >Add Many</mat-slide-toggle
+  >
+
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Street</mat-label>
+      <input type="text" matInput formControlName="street" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>City</mat-label>
+      <input type="text" matInput formControlName="city" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>State</mat-label>
+      <input type="text" matInput formControlName="state" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Zip</mat-label>
+      <input type="text" matInput formControlName="zip" />
+    </mat-form-field>
+    <!-- phone numbers -->
+    <div
+      class="phone-controls full-width"
+      *ngFor="let phoneControl of phoneControls; let i = index"
+      formArrayName="phone"
+    >
+      <mat-icon (click)="onRemovePhone(i)">remove</mat-icon>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Phone #</mat-label>
+        <input type="text" matInput [formControlName]="i" />
+      </mat-form-field>
+    </div>
+
+    <div
+      class="add-phone-number"
+      (click)="onAddPhoneNumber()"
+      style="cursor: pointer"
+    >
+      <a><mat-icon>add</mat-icon><span id="add-phone">Add Phone #</span></a>
+    </div>
+    <button type="submit" class="submit-button">SUBMIT</button>
+  </form>
+
+  <div class="success-box" *ngIf="addressSuccessfullyAdded" @fadeSlideInOut>
+    Address Added Successfully!
+  </div>
+</div>

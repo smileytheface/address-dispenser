@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="143.58505mm"
+   height="94.825928mm"
+   viewBox="0 0 143.58505 94.825928"
+   version="1.1"
+   id="svg848"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="Airplane.svg">
+  <defs
+     id="defs842" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.175"
+     inkscape:cx="-778.05935"
+     inkscape:cy="-691.06841"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:object-paths="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="false" />
+  <metadata
+     id="metadata845">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(95.749943,234.64442)">
+    <g
+       id="g1429">
+      <path
+         style="opacity:1;fill:#6fa9ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:8.70499992;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+         d="m 47.835117,-234.64422 -143.585034,38.4731 26.558054,20.94032 6.344841,30.90923 12.010125,-16.43724 26.558584,20.94032 z"
+         id="path1417"
+         inkscape:connector-curvature="0" />
+      <path
+         style="opacity:1;fill:#1f79ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:20.20499992;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+         inkscape:transform-center-x="11.383274"
+         inkscape:transform-center-y="-1.180832"
+         d="m 47.834857,-234.64442 -72.11332,94.82588 -26.5583,-20.94017 z"
+         id="path1419"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path1421"
+         d="m 47.834857,-234.64442 -117.0265,59.41361 -26.5583,-20.94017 z"
+         inkscape:transform-center-y="-1.180832"
+         inkscape:transform-center-x="11.383274"
+         style="opacity:1;fill:#1f79ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:20.20499992;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path1423"
+         d="m -46.028843,-156.96785 -4.80792,-3.79086 -12.01026,16.43714 z"
+         inkscape:transform-center-y="-0.21608719"
+         inkscape:transform-center-x="2.0830914"
+         style="opacity:1;fill:#003d97;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.69742489;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke" />
+    </g>
+  </g>
+</svg>

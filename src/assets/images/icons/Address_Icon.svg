@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="148.01202mm"
+   height="301.14474mm"
+   viewBox="0 0 148.01203 301.14474"
+   version="1.1"
+   id="svg1053"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="Address_Icon.svg">
+  <defs
+     id="defs1047" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.12374369"
+     inkscape:cx="-700.04906"
+     inkscape:cy="332.31496"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata1050">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-13.418767,473.30325)">
+    <path
+       style="opacity:1;fill:#3136b7;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.79999995;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.97142855;paint-order:fill markers stroke"
+       d="m 87.424794,-473.30325 c -48.638897,2e-5 -94.1995962,45.09468 -64.633797,109.23519 l 64.633797,131.37234 64.633706,-131.37234 c 29.5659,-64.14054 -15.9948,-109.23517 -64.633706,-109.23519 z m 0,41.6362 a 31.270533,31.270533 0 0 1 31.270606,31.27095 31.270533,31.270533 0 0 1 -31.270606,31.27045 31.270533,31.270533 0 0 1 -31.2703,-31.27045 31.270533,31.270533 0 0 1 31.2703,-31.27095 z"
+       id="path840"
+       inkscape:connector-curvature="0" />
+    <ellipse
+       style="opacity:1;fill:#4b4b4b;fill-opacity:0.94117647;fill-rule:evenodd;stroke:none;stroke-width:7.27343845;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path816"
+       cx="87.424774"
+       cy="-187.99455"
+       rx="60.93745"
+       ry="15.836055" />
+  </g>
+</svg>

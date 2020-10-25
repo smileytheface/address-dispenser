@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "address-dispenser"
+    }
+  },
+  "defaultProject": "address-dispenser",
+  "cli": {
+    "analytics": false
+  }
 }

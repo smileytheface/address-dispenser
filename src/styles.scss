@@ -1,1 +1,182 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import "~@angular/material/theming";
+
+// Plus imports for other components in your app.
+@import "assets/scss/modules/_font.scss";
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+$primary_font: "Alata";
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+$custom-typography: mat-typography-config(
+  $font-family: $primary_font,
+);
+
+@include mat-core($custom-typography);
+
+$ad-red: (
+  50: #ffecef,
+  100: #ffcfd5,
+  200: #f99d9e,
+  300: #f37678,
+  400: #ff5555,
+  500: #ff4239,
+  600: #f7393a,
+  700: #e42e33,
+  800: #d7262c,
+  900: #c8191f,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffd7d7,
+  A700: #ffbebe,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$ad-blue: (
+  50: #e2f1ff,
+  100: #bbdcff,
+  200: #8dc6ff,
+  300: #5db0ff,
+  400: #389eff,
+  500: #1b8dff,
+  600: #287eff,
+  700: #2d6bea,
+  800: #3059d7,
+  900: #3136b7,
+  A100: #ffffff,
+  A200: #f7f9ff,
+  A400: #c4d2ff,
+  A700: #abbeff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$address-dispenser-primary: mat-palette($ad-red);
+$address-dispenser-accent: mat-palette($ad-blue);
+
+// The warn palette is optional (defaults to red).
+$address-dispenser-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$address-dispenser-theme: mat-light-theme(
+  (
+    color: (
+      primary: $address-dispenser-primary,
+      accent: $address-dispenser-accent,
+      warn: $address-dispenser-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
 /* You can add global styles to this file, and also import other style files */
+
+// primary font
+
+// font-weight
+$thin: 100;
+$light: 300;
+$regular: 400;
+$bold: 700;
+$black: 900;
+
+// Font size
+$font-xs: 12px;
+$font-sm: 14px;
+$primary-fs: 16px;
+$font-md: 18px;
+$font-lg: 20px;
+
+html,
+body {
+  height: 100%;
+}
+* {
+  margin: 0;
+  font-family: "Alata";
+  font-weight: $regular;
+}
+
+.add-button {
+  width: 125px;
+  height: 40px;
+  margin: 0;
+  display: flex;
+  background-color: #ff5555;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  grid-column: 2;
+  justify-self: right;
+  align-self: center;
+
+  p {
+    font-size: 10px;
+    margin: 0;
+    padding-left: 12px;
+    color: #ffffff;
+    align-self: center;
+  }
+
+  img {
+    height: 24px;
+    width: 24px;
+    align-self: center;
+    padding-right: 12px;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+.submit-button {
+  width: 100px;
+  height: 40px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ff4239;
+  color: #fff;
+  letter-spacing: 1.25px;
+}
