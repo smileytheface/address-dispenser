@@ -1,6 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { formatCurrency } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   Form,
   FormArray,
@@ -37,6 +43,7 @@ export class AddAddressesComponent implements OnInit, OnDestroy {
   addressSuccessfullyAdded: boolean = false;
   addressAddedSub: Subscription;
   phoneNumbers: FormArray = new FormArray([]);
+  @ViewChild('form') form;
 
   addressForm: FormGroup;
 
@@ -102,7 +109,7 @@ export class AddAddressesComponent implements OnInit, OnDestroy {
 
     this.addressesService.addAddress(newAddress);
     this.lastSubmittedAddress = newAddress;
-    this.addressForm.reset();
+    this.form.resetForm();
   }
 
   showAddressAddedMessage() {

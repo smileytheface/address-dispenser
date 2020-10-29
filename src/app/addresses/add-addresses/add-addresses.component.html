@@ -1,14 +1,21 @@
 <div class="page-wrapper">
-  <h3>Add Address</h3>
-  <mat-slide-toggle
-    color="primary"
-    [(ngModel)]="addMany"
-    class="add-many-toggle"
-    id="add-many-toggle"
-    >Add Many</mat-slide-toggle
-  >
+  <div class="top">
+    <h3>Add Address</h3>
+    <mat-slide-toggle
+      color="primary"
+      [(ngModel)]="addMany"
+      class="add-many-toggle"
+      id="add-many-toggle"
+      >Add Many</mat-slide-toggle
+    >
+  </div>
 
-  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+  <form
+    [formGroup]="addressForm"
+    (ngSubmit)="onSubmit()"
+    #form="ngForm"
+    class="form"
+  >
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Name</mat-label>
       <input type="text" matInput formControlName="name" />
