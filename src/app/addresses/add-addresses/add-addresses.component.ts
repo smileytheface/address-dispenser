@@ -1,125 +1,37 @@
-import { animate, style, transition, trigger } from '@angular/animations';
-import { formatCurrency } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
-import {
-  Form,
-  FormArray,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { Address } from 'src/app/shared/models/address.model';
-import { AddressesService } from '../addresses.service';
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  Router,
+} from '@angular/router';
 
 @Component({
   selector: 'app-add-addresses',
   templateUrl: './add-addresses.component.html',
   styleUrls: ['./add-addresses.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // animation taken from https://indepth.dev/in-depth-guide-into-animations-in-angular/
-  // author: William Tjondrosuharto
-  animations: [
-    trigger('fadeSlideInOut', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(10px)' }),
-        animate('500ms', style({ opacity: 0.6, transform: 'translateY(0)' })),
-      ]),
-      transition(':leave', [
-        animate('500ms', style({ opacity: 0, transform: 'translateY(10px)' })),
-      ]),
-    ]),
-  ],
 })
-export class AddAddressesComponent implements OnInit, OnDestroy {
-  addMany = false;
-  lastSubmittedAddress: Address;
-  addressSuccessfullyAdded: boolean = false;
-  addressAddedSub: Subscription;
-  phoneNumbers: FormArray = new FormArray([]);
-  @ViewChild('form') form;
+export class AddAddressesComponent implements OnInit {
+  addMany: boolean;
 
-  addressForm: FormGroup;
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  constructor(private addressesService: AddressesService) {}
-
-  ngOnInit(): void {
-    this.initForm();
-
-    this.addressAddedSub = this.addressesService
-      .getAddressAddedListener()
-      .subscribe((address) => {
-        if (address === this.lastSubmittedAddress) {
-          this.showAddressAddedMessage();
-        } else {
-          return;
-        }
-      });
-  }
-
-  initForm() {
-    this.addressForm = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      street: new FormControl(null, Validators.required),
-      city: new FormControl(null, Validators.required),
-      state: new FormControl(null, Validators.required),
-      zip: new FormControl(null, Validators.required),
-      phone: this.phoneNumbers,
-    });
-  }
-
-  get phoneControls() {
-    return (<FormArray>this.addressForm.get('phone')).controls;
-  }
-
-  onAddPhoneNumber() {
-    (<FormArray>this.addressForm.get('phone')).push(new FormControl());
-  }
-
-  onRemovePhone(index: number) {
-    (<FormArray>this.addressForm.get('phone')).removeAt(index);
-  }
-
-  onSubmit() {
-    console.log(this.addressForm);
-
-    if (this.addressForm.invalid) {
-      return;
+  ngOnInit() {
+    if (
+      this.route.snapshot.firstChild.url[0].path &&
+      this.route.snapshot.firstChild.url[0].path === 'add-many'
+    ) {
+      this.addMany = true;
+    } else {
+      this.addMany = false;
     }
-
-    const newAddress: Address = {
-      id: null,
-      name: this.addressForm.value.name,
-      street: this.addressForm.value.street,
-      city: this.addressForm.value.city,
-      state: this.addressForm.value.state,
-      zip: this.addressForm.value.zip,
-      phone: this.addressForm.value.phone,
-      assigned: false,
-      writer: null,
-    };
-
-    console.log(newAddress);
-
-    this.addressesService.addAddress(newAddress);
-    this.lastSubmittedAddress = newAddress;
-    this.form.resetForm();
   }
 
-  showAddressAddedMessage() {
-    this.addressSuccessfullyAdded = true;
-    setTimeout(() => {
-      this.addressSuccessfullyAdded = false;
-    }, 4000);
-  }
-
-  ngOnDestroy() {
-    this.addressAddedSub.unsubscribe();
+  onAddManyToggleChange() {
+    if (!this.addMany) {
+      this.router.navigate(['add-one'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['add-many'], { relativeTo: this.route });
+    }
   }
 }

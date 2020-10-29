@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppUiModule } from './app-ui.module';
+import { AppUiModule } from './ui-imports/app-ui.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,6 +16,8 @@ import { AssignedAddressesComponent } from './addresses/assigned-addresses/assig
 import { FilterBottomSheetComponent } from './addresses/assigned-addresses/filter-bottom-sheet/filter-bottom-sheet.component';
 import { WritersComponent } from './writers/writers.component';
 import { AddAddressesComponent } from './addresses/add-addresses/add-addresses.component';
+import { AddOneComponent } from './addresses/add-addresses/add-one/add-one.component';
+import { AddManyComponent } from './addresses/add-addresses/add-many/add-many.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { AddAddressesComponent } from './addresses/add-addresses/add-addresses.c
     FilterBottomSheetComponent,
     WritersComponent,
     AddAddressesComponent,
+    AddOneComponent,
+    AddManyComponent,
   ],
   imports: [
     BrowserModule,

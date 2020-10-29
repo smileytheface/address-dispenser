@@ -1,0 +1,27 @@
+<div class="wrapper">
+  <h2>Data needs to be formatted</h2>
+  <p>
+    Name,Street Address,City,State,Zip,Phone,Phone;
+    <br />
+    Name,Street Address,City,State,Zip,Phone,Phone;...
+  </p>
+  <p>
+    Example:
+    <br />
+    Tom Hornet,222 Mayher Drive,Red Wood,IN,12992,555-555-5555,555-555-1234;
+    <br />
+    Josh Gordon,122 Eagle Rd,Chicago,IL,66045,555-555-2342;
+  </p>
+  <form class="add-many-form" #addManyForm="ngForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <textarea matInput rows="20"></textarea>
+    </mat-form-field>
+    <button
+      type="submit"
+      [disabled]="!addManyForm.form.valid"
+      class="submit-button"
+    >
+      SUBMIT
+    </button>
+  </form>
+</div>
