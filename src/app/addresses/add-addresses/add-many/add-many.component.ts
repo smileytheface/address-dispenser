@@ -16,13 +16,14 @@ export class AddManyComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
-    // if (!form.valid) {
-    //   return;
-    // }
+    if (!form.valid) {
+      console.log('hey');
+      return;
+    }
 
-    // const addressStr = form.value.addresses;
-    const addressStr =
-      'Tom Hornet,222 Mayher Drive,Red Wood,IN,12992,555-555-5555,555-555-1234\nJosh Gordon,122 Eagle Rd,Chicago,IL,66045,555-555-2342';
+    const addressStr = form.value.addresses;
+    // const addressStr =
+    //   'Tom Hornet,222 Mayher Drive,Red Wood,IN,12992,555-555-5555,555-555-1234\nJosh Gordon,122 Eagle Rd,Chicago,IL,66045,555-555-2342';
     const addressArray: Address[] = this.parseStringIntoAddresses(addressStr);
 
     let dialogRef = this.dialog.open(AddManyConfirmationComponent, {
@@ -31,9 +32,8 @@ export class AddManyComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((confirmed) => {
       console.log(confirmed);
-      if (confirmed === true) {
+      if (confirmed === 'true') {
         console.log(addressArray);
-        console.log('hey');
       }
     });
   }

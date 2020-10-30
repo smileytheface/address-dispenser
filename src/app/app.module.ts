@@ -19,6 +19,7 @@ import { AddAddressesComponent } from './addresses/add-addresses/add-addresses.c
 import { AddOneComponent } from './addresses/add-addresses/add-one/add-one.component';
 import { AddManyComponent } from './addresses/add-addresses/add-many/add-many.component';
 import { AddManyConfirmationComponent } from './addresses/add-addresses/add-many/add-many-confirmation/add-many-confirmation.component';
+import { ValidAddressDirective } from './addresses/add-addresses/add-many/valid-address.directive';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AddManyConfirmationComponent } from './addresses/add-addresses/add-many
     AddOneComponent,
     AddManyComponent,
     AddManyConfirmationComponent,
+    ValidAddressDirective,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [

@@ -18,16 +18,22 @@
     (ngSubmit)="onSubmit(addManyForm)"
   >
     <mat-form-field appearance="outline" class="full-width">
-      <!-- required -->
       <textarea
         matInput
         rows="20"
         id="addresses"
         name="addresses"
+        #addresses="ngModel"
         ngModel
+        required
+        appValidAddress
       ></textarea>
     </mat-form-field>
-    <!-- [disabled]="!addManyForm.form.valid" -->
-    <button type="submit" class="submit-button">SUBMIT</button>
+    <mat-error *ngIf="addresses.touched && addresses.errors?.incompleteAddress"
+      >Please Enter Complete Addresses</mat-error
+    >
+    <button type="submit" class="submit-button" [disabled]="!addManyForm.valid">
+      SUBMIT
+    </button>
   </form>
 </div>
