@@ -7,7 +7,7 @@ export interface Address {
   city: string;
   state: string;
   zip: string;
-  phone: string;
+  phone: string[];
   assigned: boolean;
   writer: Writer;
 }

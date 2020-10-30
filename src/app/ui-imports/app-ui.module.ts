@@ -9,6 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const uiModules = [
   MatSidenavModule,
@@ -20,6 +21,7 @@ const uiModules = [
   MatBottomSheetModule,
   MatSlideToggleModule,
   MatProgressSpinnerModule,
+  MatDialogModule,
 ];
 
 @NgModule({
