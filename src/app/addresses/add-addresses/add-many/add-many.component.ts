@@ -1,6 +1,9 @@
+import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from '@angular/cdk/overlay/overlay-directives';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Address } from '../../../shared/models/address.model';
+import { AddManyConfirmationComponent } from './add-many-confirmation/add-many-confirmation.component';
 
 @Component({
   selector: 'app-add-many',
@@ -8,7 +11,7 @@ import { Address } from '../../../shared/models/address.model';
   styleUrls: ['./add-many.component.scss'],
 })
 export class AddManyComponent implements OnInit {
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
@@ -21,7 +24,18 @@ export class AddManyComponent implements OnInit {
     const addressStr =
       'Tom Hornet,222 Mayher Drive,Red Wood,IN,12992,555-555-5555,555-555-1234\nJosh Gordon,122 Eagle Rd,Chicago,IL,66045,555-555-2342';
     const addressArray: Address[] = this.parseStringIntoAddresses(addressStr);
-    // console.log(addressArray);
+
+    let dialogRef = this.dialog.open(AddManyConfirmationComponent, {
+      data: addressArray,
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      console.log(confirmed);
+      if (confirmed === true) {
+        console.log(addressArray);
+        console.log('hey');
+      }
+    });
   }
 
   parseStringIntoAddresses(addressString: string): Address[] {
@@ -50,8 +64,6 @@ export class AddManyComponent implements OnInit {
       addresses.push(newAddress);
     }
 
-    console.log(addresses);
-    console.log('yo');
-    return null;
+    return addresses;
   }
 }

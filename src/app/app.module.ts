@@ -18,6 +18,7 @@ import { WritersComponent } from './writers/writers.component';
 import { AddAddressesComponent } from './addresses/add-addresses/add-addresses.component';
 import { AddOneComponent } from './addresses/add-addresses/add-one/add-one.component';
 import { AddManyComponent } from './addresses/add-addresses/add-many/add-many.component';
+import { AddManyConfirmationComponent } from './addresses/add-addresses/add-many/add-many-confirmation/add-many-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { AddManyComponent } from './addresses/add-addresses/add-many/add-many.co
     AddAddressesComponent,
     AddOneComponent,
     AddManyComponent,
+    AddManyConfirmationComponent,
   ],
+  entryComponents: [AddManyConfirmationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
