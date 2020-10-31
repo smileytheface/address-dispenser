@@ -3,9 +3,18 @@
 </h2>
 <mat-dialog-content>
   <div *ngFor="let address of data">
-    {{ address.name }} <br />
-    {{ address.street }} <br />
-    {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
+    {{ address.name }}
+    <span *ngIf="address.name === ''" style="color: red">Empty name</span>
+    <br />
+    {{ address.street }}
+    <span *ngIf="address.street === ''" style="color: red">Empty street</span>
+    <br />
+    {{ address.city }}
+    <span *ngIf="address.city === ''" style="color: red">Empty city</span>,
+    {{ address.state }}
+    <span *ngIf="address.state === ''" style="color: red">Empty state</span>
+    {{ address.zip }}
+    <span *ngIf="address.zip === ''" style="color: red">Empty zip</span> <br />
     <span *ngFor="let phone of address.phone"> {{ phone }} <br /> </span>
     <br />
   </div>
