@@ -1,7 +1,8 @@
-import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from '@angular/cdk/overlay/overlay-directives';
-import { Component, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { Address } from '../../../shared/models/address.model';
 import { AddressesService } from '../../addresses.service';
 import { AddManyConfirmationComponent } from './add-many-confirmation/add-many-confirmation.component';
@@ -10,14 +11,48 @@ import { AddManyConfirmationComponent } from './add-many-confirmation/add-many-c
   selector: 'app-add-many',
   templateUrl: './add-many.component.html',
   styleUrls: ['./add-many.component.scss'],
+  animations: [
+    trigger('fadeSlideInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(10px)' }),
+        animate('500ms', style({ opacity: 0.6, transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms', style({ opacity: 0, transform: 'translateY(10px)' })),
+      ]),
+    ]),
+  ],
 })
 export class AddManyComponent implements OnInit {
+  addedSuccessfully: boolean;
+  successSub: Subscription;
+  lastSubmittedAddresses: Address[];
+  @ViewChild('addManyForm') form: NgForm;
+
   constructor(
     public dialog: MatDialog,
     public addressesService: AddressesService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.successSub = this.addressesService
+      .getAddressesAddedListener()
+      .subscribe((addresses) => {
+        let addressesMatch: boolean = false;
+        for (let i = 0; i < addresses.length; i++) {
+          if (addresses[i] === this.lastSubmittedAddresses[i]) {
+            addressesMatch = true;
+          } else {
+            addressesMatch = false;
+            break;
+          }
+        }
+
+        if (addressesMatch) {
+          this.addedSuccessfullyMsg();
+        }
+      });
+  }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -26,8 +61,6 @@ export class AddManyComponent implements OnInit {
     }
 
     const addressStr = form.value.addresses;
-    // const addressStr =
-    //   'Tom Hornet,222 Mayher Drive,Red Wood,IN,12992,555-555-5555,555-555-1234\nJosh Gordon,122 Eagle Rd,Chicago,IL,66045,555-555-2342';
     const addressArray: Address[] = this.parseStringIntoAddresses(addressStr);
 
     let dialogRef = this.dialog.open(AddManyConfirmationComponent, {
@@ -38,6 +71,8 @@ export class AddManyComponent implements OnInit {
       console.log(confirmed);
       if (confirmed === 'true') {
         this.addressesService.addAddresses(addressArray);
+        this.lastSubmittedAddresses = addressArray;
+        this.form.resetForm();
       }
     });
   }
@@ -69,5 +104,12 @@ export class AddManyComponent implements OnInit {
     }
 
     return addresses;
+  }
+
+  addedSuccessfullyMsg() {
+    this.addedSuccessfully = true;
+    setTimeout(() => {
+      this.addedSuccessfully = false;
+    }, 4000);
   }
 }

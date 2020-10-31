@@ -81,4 +81,8 @@ export class AddressesService {
   getAddressAddedListener() {
     return this.addressAdded.asObservable();
   }
+
+  getAddressesAddedListener() {
+    return this.addressesAdded.asObservable();
+  }
 }

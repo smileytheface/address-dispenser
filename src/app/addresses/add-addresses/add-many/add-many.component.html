@@ -12,11 +12,7 @@
     <br />
     Josh Gordon,122 Eagle Rd,Chicago,IL,66045,555-555-2342
   </p>
-  <form
-    class="add-many-form"
-    #addManyForm="ngForm"
-    (ngSubmit)="onSubmit(addManyForm)"
-  >
+  <form class="add-many-form" #addManyForm="ngForm" (ngSubmit)="onSubmit(addManyForm)">
     <mat-form-field appearance="outline" class="full-width">
       <textarea
         matInput
@@ -35,5 +31,8 @@
     <button type="submit" class="submit-button" [disabled]="!addManyForm.valid">
       SUBMIT
     </button>
+    <div class="successfull-box" *ngIf="addedSuccessfully" @fadeSlideInOut>
+      Addresses Added Successfully!
+    </div>
   </form>
 </div>
