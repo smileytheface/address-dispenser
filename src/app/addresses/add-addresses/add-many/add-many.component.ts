@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Address } from '../../../shared/models/address.model';
+import { AddressesService } from '../../addresses.service';
 import { AddManyConfirmationComponent } from './add-many-confirmation/add-many-confirmation.component';
 
 @Component({
@@ -11,7 +12,10 @@ import { AddManyConfirmationComponent } from './add-many-confirmation/add-many-c
   styleUrls: ['./add-many.component.scss'],
 })
 export class AddManyComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    public addressesService: AddressesService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -33,7 +37,7 @@ export class AddManyComponent implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed) => {
       console.log(confirmed);
       if (confirmed === 'true') {
-        console.log(addressArray);
+        this.addressesService.addAddresses(addressArray);
       }
     });
   }
