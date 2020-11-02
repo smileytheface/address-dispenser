@@ -8,6 +8,11 @@
     position: absolute;
   }
 
+  #menu-button {
+    margin: 20px;
+    padding: 0px;
+  }
+
   .menu-button {
     left: 0px;
     background-color: transparent;
@@ -15,9 +20,8 @@
 
     mat-icon {
       font-size: 40px;
-      height: none;
-      width: none;
-      margin-top: 20px;
+      height: inherit;
+      width: inherit;
       line-height: normal;
     }
   }

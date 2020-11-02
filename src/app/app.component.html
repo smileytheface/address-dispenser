@@ -1,6 +1,11 @@
 <div class="page-container">
   <div id="heading-wrapper">
-    <button mat-button class="menu-button" (click)="sidenav.toggle()">
+    <button
+      mat-button
+      class="menu-button"
+      id="menu-button"
+      (click)="sidenav.toggle()"
+    >
       <mat-icon>{{ isMenuOpen ? "menu_open" : "menu" }}</mat-icon>
     </button>
     <div class="logo">
