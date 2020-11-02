@@ -1,18 +1,29 @@
 <div class="wrapper">
   <h2>Data needs to be formatted</h2>
   <p>
-    Name,Street Address,City,State,Zip,Phone,Phone
+    Name,Age,Street Address,City,State,Zip,Phone,Phone
     <br />
-    Name,Street Address,City,State,Zip,Phone,Phone...
+    Name,Age,Street Address,City,State,Zip,Phone,Phone...
   </p>
   <p>
     Example:
     <br />
-    Tom Hornet,222 Mayher Drive,Red Wood,IN,12992,555-555-5555,555-555-1234
+    Tom Hornet,35,222 Mayher Drive,Red Wood,IN,12992,555-555-5555,555-555-1234
     <br />
-    Josh Gordon,122 Eagle Rd,Chicago,IL,66045,555-555-2342
+    Josh Gordon,51,122 Eagle Rd,Chicago,IL,66045,555-555-2342
   </p>
-  <form class="add-many-form" #addManyForm="ngForm" (ngSubmit)="onSubmit(addManyForm)">
+  <p>
+    Note:
+    <br />
+    If there is no age, please leave the field empty instead of deleting it.
+    i.e. <em>Tom Hornet,,222 Mayher Drive,...</em> instead of
+    <em>Tom Hornet,222 Mayher Drive,...</em>
+  </p>
+  <form
+    class="add-many-form"
+    #addManyForm="ngForm"
+    (ngSubmit)="onSubmit(addManyForm)"
+  >
     <mat-form-field appearance="outline" class="full-width">
       <textarea
         matInput

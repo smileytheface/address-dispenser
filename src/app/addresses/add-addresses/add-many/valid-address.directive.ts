@@ -13,7 +13,7 @@ export class ValidAddressDirective implements Validator {
       let splitAddressStrings: string[] = control.value.split(/\r\n|\r|\n/g);
       for (let addressString of splitAddressStrings) {
         let addressInfoArray = addressString.split(',');
-        if (addressInfoArray.length < 5) {
+        if (addressInfoArray.length < 6) {
           return { incompleteAddress: true };
         }
       }

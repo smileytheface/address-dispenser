@@ -21,6 +21,7 @@
               <mat-panel-title> {{ address.name }} </mat-panel-title>
             </mat-expansion-panel-header>
             <p>
+              <span *ngIf="address.age">Age: {{ address.age }}<br /></span>
               {{ address.street }} <br />
               {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
               {{ address.phone }}

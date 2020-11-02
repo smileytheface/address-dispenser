@@ -52,6 +52,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
   initForm() {
     this.addressForm = new FormGroup({
       name: new FormControl(null, Validators.required),
+      age: new FormControl(null, Validators.pattern('^[0-9]*$')),
       street: new FormControl(null, Validators.required),
       city: new FormControl(null, Validators.required),
       state: new FormControl(null, Validators.required),
@@ -82,6 +83,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
     const newAddress: Address = {
       id: null,
       name: this.addressForm.value.name,
+      age: this.addressForm.value.age,
       street: this.addressForm.value.street,
       city: this.addressForm.value.city,
       state: this.addressForm.value.state,

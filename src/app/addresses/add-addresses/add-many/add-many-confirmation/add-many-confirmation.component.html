@@ -5,6 +5,7 @@
   <div *ngFor="let address of data">
     {{ address.name }}
     <span *ngIf="address.name === ''" style="color: red">Empty name</span>
+    <span *ngIf="address.age"> (Age: {{ address.age }})</span>
     <br />
     {{ address.street }}
     <span *ngIf="address.street === ''" style="color: red">Empty street</span>

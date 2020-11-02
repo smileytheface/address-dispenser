@@ -85,16 +85,17 @@ export class AddManyComponent implements OnInit {
       let addressInfoArray = splitAddressStrings[i].split(',');
       let addressPhones: string[] = [];
 
-      for (let y = 5; y < addressInfoArray.length; y++) {
+      for (let y = 6; y < addressInfoArray.length; y++) {
         addressPhones.push(addressInfoArray[y]);
       }
       let newAddress: Address = {
         id: null,
         name: addressInfoArray[0],
-        street: addressInfoArray[1],
-        city: addressInfoArray[2],
-        state: addressInfoArray[3],
-        zip: addressInfoArray[4],
+        age: addressInfoArray[1] !== '' ? +addressInfoArray[1] : null,
+        street: addressInfoArray[2],
+        city: addressInfoArray[3],
+        state: addressInfoArray[4],
+        zip: addressInfoArray[5],
         phone: addressPhones,
         assigned: false,
         writer: null,

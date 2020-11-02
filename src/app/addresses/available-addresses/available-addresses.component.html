@@ -21,9 +21,12 @@
   <mat-accordion *ngIf="!isLoading">
     <mat-expansion-panel *ngFor="let address of filteredAddresses">
       <mat-expansion-panel-header>
-        <mat-panel-title> {{ address.name }} </mat-panel-title>
+        <mat-panel-title>
+          {{ address.name }}
+        </mat-panel-title>
       </mat-expansion-panel-header>
       <p>
+        <span *ngIf="address.age">Age: {{ address.age }}<br /></span>
         {{ address.street }} <br />
         {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
         <span *ngFor="let phone of address.phone">{{ phone }} <br /> </span>

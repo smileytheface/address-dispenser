@@ -25,6 +25,7 @@ export class AddressesService {
             return {
               id: address._id,
               name: address.name,
+              age: address.age,
               street: address.street,
               city: address.city,
               state: address.state,

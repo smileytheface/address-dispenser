@@ -18,6 +18,7 @@ export class AssignedAddressesComponent implements OnInit {
     {
       id: '0',
       name: 'Gregory Jones',
+      age: 20,
       street: '1000 Street St',
       city: 'Crete',
       state: 'IL',
@@ -37,6 +38,7 @@ export class AssignedAddressesComponent implements OnInit {
     {
       id: '0',
       name: 'Josh Figelhorn',
+      age: 20,
       street: '1000 Street St',
       city: 'Crete',
       state: 'IL',
@@ -48,6 +50,7 @@ export class AssignedAddressesComponent implements OnInit {
     {
       id: '0',
       name: 'Arnold Ord',
+      age: 20,
       street: '1000 Street St',
       city: 'Crete',
       state: 'IL',
@@ -59,6 +62,7 @@ export class AssignedAddressesComponent implements OnInit {
     {
       id: '0',
       name: 'Joshua Ezekiel',
+      age: 20,
       street: '1000 Street St',
       city: 'Crete',
       state: 'IL',
@@ -70,6 +74,7 @@ export class AssignedAddressesComponent implements OnInit {
     {
       id: '0',
       name: 'Plop Juice',
+      age: 20,
       street: '1000 Street St',
       city: 'Crete',
       state: 'IL',
@@ -89,6 +94,7 @@ export class AssignedAddressesComponent implements OnInit {
     {
       id: '0',
       name: 'Justine Killo',
+      age: 20,
       street: '1000 Street St',
       city: 'Crete',
       state: 'IL',
@@ -108,6 +114,7 @@ export class AssignedAddressesComponent implements OnInit {
     {
       id: '0',
       name: 'Fun Fran',
+      age: 20,
       street: '1000 Street St',
       city: 'Crete',
       state: 'IL',

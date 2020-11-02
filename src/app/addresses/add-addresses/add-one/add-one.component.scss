@@ -13,6 +13,10 @@ form {
 
   .my-mat-form-field {
     margin-bottom: 10px;
+
+    .mat-form-field-infix {
+      line-height: 1.35;
+    }
   }
 }
 
