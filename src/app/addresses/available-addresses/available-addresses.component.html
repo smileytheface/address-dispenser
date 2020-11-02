@@ -31,6 +31,12 @@
         {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
         <span *ngFor="let phone of address.phone">{{ phone }} <br /> </span>
       </p>
+      <mat-action-row>
+        <button mat-button color="primary">Edit</button>
+        <button mat-button color="warn" (click)="onDelete(address.id)">
+          Delete
+        </button>
+      </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

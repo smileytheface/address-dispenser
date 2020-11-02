@@ -75,6 +75,18 @@ export class AddressesService {
       });
   }
 
+  deleteAddress(id: string) {
+    this.http
+      .delete<{ message: string }>('http://localhost:3000/api/addresses/' + id)
+      .subscribe(() => {
+        const updatedAddresses = this.addresses.filter(
+          (address) => address.id !== id
+        );
+        this.addresses = updatedAddresses;
+        this.addressesUpdated.next([...this.addresses]);
+      });
+  }
+
   getAddressesUpdatedListener() {
     return this.addressesUpdated.asObservable();
   }

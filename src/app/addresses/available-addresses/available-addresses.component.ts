@@ -55,6 +55,11 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
     this.router.navigate(['add-addresses'], { relativeTo: this.route });
   }
 
+  onDelete(id: string) {
+    console.log(id);
+    this.addressesService.deleteAddress(id);
+  }
+
   ngOnDestroy() {
     this.addressesSub.unsubscribe();
   }
