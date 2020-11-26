@@ -4,6 +4,7 @@
   #form="ngForm"
   class="form"
 >
+  <h2 *ngIf="editMode" id="edit-header">Edit Address</h2>
   <mat-form-field appearance="outline" class="full-width my-mat-form-field">
     <mat-label>Name</mat-label>
     <input type="text" matInput formControlName="name" />
@@ -52,5 +53,7 @@
 </form>
 
 <div class="success-box" *ngIf="addressSuccessfullyAdded" @fadeSlideInOut>
-  Address Added Successfully!
+  {{
+    editMode ? "Address Updated Successfully!" : "Address Added Successfully!"
+  }}
 </div>

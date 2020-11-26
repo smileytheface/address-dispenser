@@ -35,6 +35,10 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'available-addresses/edit/:addressId',
+    component: AddOneComponent,
+  },
   { path: 'assigned-addresses', component: AssignedAddressesComponent },
   { path: 'writers', component: WritersComponent },
 ];

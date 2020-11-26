@@ -11,6 +11,7 @@ export class AddressesService {
   private addressesUpdated = new Subject<Address[]>();
   private addressAdded = new Subject<Address>();
   private addressesAdded = new Subject<Address[]>();
+  private addressEdited = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -41,6 +42,12 @@ export class AddressesService {
         this.addresses = transformedAddresses;
         this.addressesUpdated.next([...this.addresses]);
       });
+  }
+
+  getAddress(addressId: string) {
+    return this.http.get<any>(
+      'http://localhost:3000/api/addresses/' + addressId
+    );
   }
 
   addAddress(address: Address) {
@@ -87,6 +94,25 @@ export class AddressesService {
       });
   }
 
+  updateAddress(id: string, updatedAddress: Address) {
+    const newAddress = updatedAddress;
+    this.http
+      .put<{ message: string }>(
+        'http://localhost:3000/api/addresses/' + id,
+        newAddress
+      )
+      .subscribe((responseMessage) => {
+        const updatedAddresses = [...this.addresses];
+        const oldAddressIndex = updatedAddresses.findIndex(
+          (address) => address.id === newAddress.id
+        );
+        updatedAddresses[oldAddressIndex] = newAddress;
+        this.addresses = updatedAddresses;
+        this.addressesUpdated.next([...this.addresses]);
+        this.addressEdited.next(newAddress.id);
+      });
+  }
+
   getAddressesUpdatedListener() {
     return this.addressesUpdated.asObservable();
   }
@@ -97,5 +123,9 @@ export class AddressesService {
 
   getAddressesAddedListener() {
     return this.addressesAdded.asObservable();
+  }
+
+  getAddressEditedListener() {
+    return this.addressEdited.asObservable();
   }
 }
