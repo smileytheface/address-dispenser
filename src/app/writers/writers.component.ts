@@ -36,6 +36,10 @@ export class WritersComponent implements OnInit, OnDestroy {
     this.router.navigate(['add-writer'], { relativeTo: this.route });
   }
 
+  onDelete() {
+    console.log('delete');
+  }
+
   ngOnDestroy() {
     this.writersSub.unsubscribe();
   }

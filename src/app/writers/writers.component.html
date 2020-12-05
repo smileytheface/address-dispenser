@@ -12,19 +12,27 @@
   </div>
   <div class="writers-wrapper" *ngIf="!isLoading">
     <div *ngFor="let writer of writers" class="writers-section">
-      <button [style.backgroundColor]="writer.color">
-        <p class="writer-name">{{ writer.name }}</p>
-        <p>Phone: {{ writer.phone }}</p>
-        <p>Email: {{ writer.email }}</p>
-        <p>
-          Preferred Mode Of Contant:
-          {{ writer.prefersText ? "Phone" : "Email" }}
-        </p>
-        <p>Default # of Addresses: {{ writer.defaultAddressAmount }}</p>
-        <p>
-          Total Checked Out:
-          {{ writer.totalCheckedOut ? writer.totalCheckedOut : "0" }}
-        </p>
+      <button [style.backgroundColor]="writer.color" class="grid-display">
+        <div class="info">
+          <p class="writer-name">{{ writer.name }}</p>
+          <p>Phone: {{ writer.phone }}</p>
+          <p>Email: {{ writer.email }}</p>
+          <p>
+            Preferred Mode Of Contant:
+            {{ writer.prefersText ? "Phone" : "Email" }}
+          </p>
+          <p>Default # of Addresses: {{ writer.defaultAddressAmount }}</p>
+          <p>
+            Total Checked Out:
+            {{ writer.totalCheckedOut ? writer.totalCheckedOut : "0" }}
+          </p>
+        </div>
+        <div class="center">|</div>
+        <div class="center">
+          <a (click)="onDelete()"
+            ><mat-icon id="delete-icon">delete</mat-icon></a
+          >
+        </div>
       </button>
     </div>
   </div>
