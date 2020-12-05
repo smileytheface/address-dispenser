@@ -41,6 +41,10 @@ export class WritersService {
       });
   }
 
+  getWriter(writerId: string) {
+    return this.http.get<any>('http://localhost:3000/api/writers/' + writerId);
+  }
+
   addWriter(writer: Writer) {
     let newWriter: Writer = writer;
     this.http

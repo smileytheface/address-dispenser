@@ -43,6 +43,7 @@ const routes: Routes = [
   { path: 'assigned-addresses', component: AssignedAddressesComponent },
   { path: 'writers', component: WritersComponent },
   { path: 'writers/add-writer', component: AddWriterComponent },
+  { path: 'writers/edit/:writerId', component: AddWriterComponent },
 ];
 
 @NgModule({

@@ -51,6 +51,10 @@ export class WritersComponent implements OnInit, OnDestroy {
     });
   }
 
+  onEdit(id: string) {
+    this.router.navigate(['edit', id], { relativeTo: this.route });
+  }
+
   ngOnDestroy() {
     this.writersSub.unsubscribe();
   }

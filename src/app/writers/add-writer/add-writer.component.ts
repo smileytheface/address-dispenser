@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { throwIfEmpty } from 'rxjs/operators';
 
@@ -44,10 +44,26 @@ export class AddWriterComponent implements OnInit, OnDestroy {
   writerAddedSuccessfully: boolean = false;
   lastSubmittedWriter: Writer;
   writerAddedSub: Subscription;
+  editMode: boolean = false;
+  writerId: string;
 
-  constructor(public router: Router, private writersService: WritersService) {}
+  constructor(
+    public router: Router,
+    public route: ActivatedRoute,
+    private writersService: WritersService
+  ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('writerId')) {
+        this.editMode = true;
+        this.writerId = paramMap.get('writerId');
+        this.writersService.getWriter(this.writerId).subscribe((writer) => {
+          console.log(writer);
+        });
+      }
+    });
+
     this.writerAddedSub = this.writersService
       .getWriterAddedListener()
       .subscribe((writerAdded) => {
