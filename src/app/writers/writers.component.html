@@ -12,28 +12,36 @@
   </div>
   <div class="writers-wrapper" *ngIf="!isLoading">
     <div *ngFor="let writer of writers" class="writers-section">
-      <button [style.backgroundColor]="writer.color" class="grid-display">
-        <div class="info">
-          <p class="writer-name">{{ writer.name }}</p>
-          <p>Phone: {{ writer.phone }}</p>
-          <p>Email: {{ writer.email }}</p>
-          <p>
-            Preferred Mode Of Contant:
-            {{ writer.prefersText ? "Phone" : "Email" }}
-          </p>
-          <p>Default # of Addresses: {{ writer.defaultAddressAmount }}</p>
-          <p>
-            Total Checked Out:
-            {{ writer.totalCheckedOut ? writer.totalCheckedOut : "0" }}
-          </p>
+      <div
+        [style.backgroundColor]="writer.color"
+        class="grid-display writer-card"
+      >
+        <div class="writer-card-content">
+          <div class="info">
+            <p class="writer-name">{{ writer.name }}</p>
+            <p>Phone: {{ writer.phone }}</p>
+            <p>Email: {{ writer.email }}</p>
+            <p>
+              Preferred Mode Of Contant:
+              {{ writer.prefersText ? "Phone" : "Email" }}
+            </p>
+            <p>Default # of Addresses: {{ writer.defaultAddressAmount }}</p>
+            <p>
+              Total Checked Out:
+              {{ writer.totalCheckedOut ? writer.totalCheckedOut : "0" }}
+            </p>
+          </div>
+          <div class="center">|</div>
+          <div class="center">
+            <a><mat-icon id="edit-icon">edit</mat-icon></a>
+            <br />
+            <br />
+            <a (click)="onDelete(writer)">
+              <mat-icon id="delete-icon">delete</mat-icon>
+            </a>
+          </div>
         </div>
-        <div class="center">|</div>
-        <div class="center">
-          <a (click)="onDelete()"
-            ><mat-icon id="delete-icon">delete</mat-icon></a
-          >
-        </div>
-      </button>
+      </div>
     </div>
   </div>
 </div>

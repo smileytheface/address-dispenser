@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Writer } from '../shared/models/writer.model';
+import { DeleteWriterConfirmationComponent } from './delete-writer-confirmation/delete-writer-confirmation.component';
 
 import { WritersService } from './writers.service';
 
@@ -18,7 +20,8 @@ export class WritersComponent implements OnInit, OnDestroy {
   constructor(
     public writersService: WritersService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +39,16 @@ export class WritersComponent implements OnInit, OnDestroy {
     this.router.navigate(['add-writer'], { relativeTo: this.route });
   }
 
-  onDelete() {
-    console.log('delete');
+  onDelete(writer: Writer) {
+    let dialogRef = this.dialog.open(DeleteWriterConfirmationComponent, {
+      data: writer,
+    });
+
+    dialogRef.afterClosed().subscribe((deletionConfirmed) => {
+      if (deletionConfirmed === 'true') {
+        this.writersService.deleteWriter(writer.id);
+      }
+    });
   }
 
   ngOnDestroy() {

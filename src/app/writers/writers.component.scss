@@ -64,20 +64,27 @@
 
 .writers-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  grid-gap: 35px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 40px;
 }
 
 .writers-section {
-  button {
-    display: grid;
-    grid-template-columns: 6fr 10px 50px;
-    grid-gap: 10px;
-    padding: 10px;
+  max-width: 500px;
+  .writer-card {
     filter: drop-shadow(0px 5.82609px 5.82609px rgba(0, 0, 0, 0.25));
     border: none;
     border-radius: 14px;
     width: 100%;
+
+    .writer-card-content {
+      display: grid;
+      grid-template-columns: 6fr 10px 50px;
+      grid-gap: 10px;
+      margin-left: 20px;
+      margin-right: 20px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
 
     .center {
       align-self: center;
@@ -86,6 +93,7 @@
   }
 
   p {
+    line-height: 1.5;
     margin: 0;
     text-align: left;
     font-size: 10px;
@@ -95,10 +103,14 @@
   .writer-name {
     color: #000;
     font-size: 15px;
+    line-height: 2;
   }
 
   #delete-icon {
-    z-index: 100;
+    cursor: pointer;
+  }
+
+  #edit-icon {
     cursor: pointer;
   }
 }

@@ -57,6 +57,18 @@ export class WritersService {
       });
   }
 
+  deleteWriter(id: string) {
+    this.http
+      .delete<{ message: string }>('http://localhost:3000/api/writers/' + id)
+      .subscribe(() => {
+        const updatedWriters = this.writers.filter(
+          (writer) => writer.id !== id
+        );
+        this.writers = updatedWriters;
+        this.writersUpdated.next([...this.writers]);
+      });
+  }
+
   getWritersUpdatedListener() {
     return this.writersUpdated.asObservable();
   }
