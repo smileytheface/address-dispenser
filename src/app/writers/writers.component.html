@@ -1,14 +1,16 @@
 <div class="container">
   <div class="top-wrapper">
     <h3>Writers</h3>
-    <button type="button" id="add-writer">
+    <button type="button" id="add-writer" (click)="onAddWriter()">
       <p>Add Writer</p>
       <span class="spacer"></span>
       <img src="../../assets/images/icons/add-icon.svg" alt="add-icon" />
     </button>
   </div>
-
-  <div class="writers-wrapper">
+  <div class="loading-icon" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div class="writers-wrapper" *ngIf="!isLoading">
     <div *ngFor="let writer of writers" class="writers-section">
       <button [style.backgroundColor]="writer.color">
         <p class="writer-name">{{ writer.name }}</p>

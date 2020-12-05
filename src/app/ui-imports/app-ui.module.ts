@@ -10,6 +10,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 const uiModules = [
   MatSidenavModule,
@@ -22,6 +23,7 @@ const uiModules = [
   MatSlideToggleModule,
   MatProgressSpinnerModule,
   MatDialogModule,
+  MatSelectModule,
 ];
 
 @NgModule({

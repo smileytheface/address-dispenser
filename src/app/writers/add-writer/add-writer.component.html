@@ -1,0 +1,76 @@
+<div class="wrapper">
+  <h3>Add Writer</h3>
+  <form
+    class="add-writer-form"
+    #addWriterForm="ngForm"
+    (ngSubmit)="onSubmit(addWriterForm)"
+  >
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput id="name" name="name" ngModel required />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Email</mat-label>
+      <input type="text" matInput id="email" name="email" ngModel required />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Phone #</mat-label>
+      <input type="text" matInput id="phone" name="phone" ngModel required />
+    </mat-form-field>
+    <mat-slide-toggle matInput id="prefers-text" name="prefersText" ngModel
+      >Prefers text</mat-slide-toggle
+    >
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Default # Of Addresses</mat-label>
+      <mat-select
+        id="default-address-amount"
+        name="defaultAddressAmount"
+        ngModel
+        required
+      >
+        <mat-option>None</mat-option>
+        <!-- https://stackoverflow.com/questions/36354325/angular-2-ngfor-using-numbers-instead-collections -->
+        <mat-option
+          *ngFor="let item of [].constructor(10); let i = index"
+          [value]="i + 1"
+        >
+          {{ i + 1 }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Color</mat-label>
+      <mat-select id="color" name="color" ngModel>
+        <mat-option
+          *ngFor="let color of colors"
+          [ngStyle]="{ 'background-color': color.colorValue }"
+          [value]="color.colorValue"
+        >
+          {{ color.colorName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <br />
+    <br />
+    <button
+      type="submit"
+      class="submit-button"
+      [disabled]="!addWriterForm.valid"
+    >
+      SUBMIT
+    </button>
+    <button
+      type="button"
+      class="cancel-button"
+      style="margin-left: 30px"
+      (click)="onCancel()"
+    >
+      CANCEL
+    </button>
+  </form>
+
+  <div class="success-box" *ngIf="writerAddedSuccessfully" @fadeSlideInOut>
+    "Address Added Successfully!"
+  </div>
+</div>

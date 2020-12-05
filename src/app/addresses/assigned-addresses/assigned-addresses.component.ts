@@ -26,6 +26,7 @@ export class AssignedAddressesComponent implements OnInit {
       phone: ['708-539-4375'],
       assigned: false,
       writer: {
+        id: null,
         name: 'Mark Way',
         email: '',
         phone: '',
@@ -82,6 +83,7 @@ export class AssignedAddressesComponent implements OnInit {
       phone: ['708-539-4375'],
       assigned: true,
       writer: {
+        id: null,
         name: 'Iola Blackman',
         email: '',
         phone: '',
@@ -102,6 +104,7 @@ export class AssignedAddressesComponent implements OnInit {
       phone: ['708-539-4375'],
       assigned: true,
       writer: {
+        id: null,
         name: 'Mark Way',
         email: '',
         phone: '',
@@ -122,6 +125,7 @@ export class AssignedAddressesComponent implements OnInit {
       phone: ['708-539-4375'],
       assigned: true,
       writer: {
+        id: null,
         name: 'Iola Blackman',
         email: '',
         phone: '',

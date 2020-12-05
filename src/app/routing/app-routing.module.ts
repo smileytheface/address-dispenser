@@ -8,6 +8,7 @@ import { WritersComponent } from '../writers/writers.component';
 import { AddAddressesComponent } from '../addresses/add-addresses/add-addresses.component';
 import { AddOneComponent } from '../addresses/add-addresses/add-one/add-one.component';
 import { AddManyComponent } from '../addresses/add-addresses/add-many/add-many.component';
+import { AddWriterComponent } from '../writers/add-writer/add-writer.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   },
   { path: 'assigned-addresses', component: AssignedAddressesComponent },
   { path: 'writers', component: WritersComponent },
+  { path: 'writers/add-writer', component: AddWriterComponent },
 ];
 
 @NgModule({

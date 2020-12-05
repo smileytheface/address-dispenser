@@ -7,8 +7,9 @@ import { Writer } from '../shared/models/writer.model';
 
 @Injectable({ providedIn: 'root' })
 export class WritersService {
-  private writers: Writer[];
+  private writers: Writer[] = [];
   private writersUpdated = new Subject<Writer[]>();
+  private writerAdded = new Subject<Writer>();
 
   constructor(private http: HttpClient) {}
 
@@ -40,7 +41,27 @@ export class WritersService {
       });
   }
 
+  addWriter(writer: Writer) {
+    let newWriter: Writer = writer;
+    this.http
+      .post<{ message: string; createdWriterId: string }>(
+        'http://localhost:3000/api/writers',
+        newWriter
+      )
+      .subscribe((responseData) => {
+        const id = responseData.createdWriterId;
+        newWriter.id = id;
+        this.writers.push(newWriter);
+        this.writersUpdated.next([...this.writers]);
+        this.writerAdded.next(newWriter);
+      });
+  }
+
   getWritersUpdatedListener() {
     return this.writersUpdated.asObservable();
+  }
+
+  getWriterAddedListener() {
+    return this.writerAdded.asObservable();
   }
 }

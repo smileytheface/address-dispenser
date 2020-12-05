@@ -1,0 +1,62 @@
+.wrapper {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+
+  h3 {
+    font-size: 30px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .add-writer-form {
+    padding-bottom: 0;
+    margin-top: 30px;
+
+    .mat-form-field-wrapper {
+      margin-bottom: -1.5em !important;
+    }
+
+    .my-mat-form-field {
+      margin-bottom: 20px;
+
+      .mat-form-field-infix {
+        line-height: 1.35;
+      }
+    }
+  }
+
+  .mat-slide-toggle-content {
+    vertical-align: top;
+    display: inline-block;
+    line-height: 24px;
+  }
+
+  #email-label {
+    margin-right: 8px;
+  }
+
+  #color-option {
+    float: left !important;
+    height: 30px;
+    width: 30px;
+  }
+
+  #prefers-text {
+    margin-bottom: 18px;
+  }
+
+  .success-box {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 25px;
+    padding: 10px;
+    background-color: #ff5555;
+    opacity: 0.7;
+    border-radius: 10px;
+  }
+}

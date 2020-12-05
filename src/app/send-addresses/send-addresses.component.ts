@@ -10,6 +10,7 @@ import { Writer } from '../shared/models/writer.model';
 export class SendAddressesComponent implements OnInit {
   writers: Writer[] = [
     {
+      id: null,
       name: 'Mark Way',
       email: '',
       phone: '',
@@ -19,6 +20,7 @@ export class SendAddressesComponent implements OnInit {
       color: '#E2F1FF',
     },
     {
+      id: null,
       name: 'Iola Blackman',
       email: '',
       phone: '',
@@ -28,6 +30,7 @@ export class SendAddressesComponent implements OnInit {
       color: '#FFCFD5',
     },
     {
+      id: null,
       name: 'Amalia Comprat',
       email: '',
       phone: '',
