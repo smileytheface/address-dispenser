@@ -40,12 +40,14 @@ export class AddWriterComponent implements OnInit, OnDestroy {
     { colorValue: '#FFCFD5', colorName: 'Salmon' },
     { colorValue: '#FFECEF', colorName: 'Light Pink' },
   ];
-  @ViewChild('addWriterForm') form: NgForm;
   writerAddedSuccessfully: boolean = false;
   lastSubmittedWriter: Writer;
   writerAddedSub: Subscription;
   editMode: boolean = false;
   writerId: string;
+  writer: Writer = null;
+  loading: boolean = false;
+  @ViewChild('addWriterForm') form;
 
   constructor(
     public router: Router,
@@ -58,8 +60,17 @@ export class AddWriterComponent implements OnInit, OnDestroy {
       if (paramMap.has('writerId')) {
         this.editMode = true;
         this.writerId = paramMap.get('writerId');
+        this.loading = true;
         this.writersService.getWriter(this.writerId).subscribe((writer) => {
-          console.log(writer);
+          this.loading = false;
+          this.form.setValue({
+            name: writer.name,
+            email: writer.email,
+            phone: writer.phone,
+            prefersText: writer.prefersText,
+            defaultAddressAmount: writer.defaultAddressAmount,
+            color: writer.color,
+          });
         });
       }
     });
@@ -76,7 +87,7 @@ export class AddWriterComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm) {
     console.log(form);
     let newWriter: Writer = {
-      id: null,
+      id: this.editMode ? this.writerId : null,
       name: form.value.name,
       email: form.value.email,
       phone: form.value.phone,
@@ -89,9 +100,15 @@ export class AddWriterComponent implements OnInit, OnDestroy {
             .colorValue,
     };
 
-    this.writersService.addWriter(newWriter);
+    if (this.editMode) {
+      this.writersService.updateWriter(newWriter.id, newWriter);
+      this.router.navigate(['/writers']);
+    } else {
+      this.writersService.addWriter(newWriter);
+      this.form.resetForm();
+    }
+
     this.lastSubmittedWriter = newWriter;
-    this.form.resetForm();
   }
 
   onCancel() {

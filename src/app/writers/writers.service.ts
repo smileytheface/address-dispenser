@@ -61,6 +61,24 @@ export class WritersService {
       });
   }
 
+  updateWriter(id: string, updatedWriter: Writer) {
+    const newWriter = updatedWriter;
+    this.http
+      .put<{ message: string }>(
+        'http://localhost:3000/api/writers/' + id,
+        newWriter
+      )
+      .subscribe((responseMessage) => {
+        const updatedWriters = [...this.writers];
+        const oldWriterIndex = updatedWriters.findIndex(
+          (writer) => writer.id === newWriter.id
+        );
+        updatedWriters[oldWriterIndex] = newWriter;
+        this.writers = updatedWriters;
+        this.writersUpdated.next([...this.writers]);
+      });
+  }
+
   deleteWriter(id: string) {
     this.http
       .delete<{ message: string }>('http://localhost:3000/api/writers/' + id)
