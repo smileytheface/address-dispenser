@@ -6,11 +6,11 @@
     #addWriterForm="ngForm"
     (ngSubmit)="onSubmit(addWriterForm)"
   >
-    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+    <mat-form-field appearance="outline" class="full-width my-mat-form-fields">
       <mat-label>Name</mat-label>
       <input type="text" matInput id="name" name="name" ngModel required />
     </mat-form-field>
-    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+    <mat-form-field appearance="outline" class="full-width my-mat-form-fields">
       <mat-label>Email</mat-label>
       <input
         type="text"
@@ -22,14 +22,14 @@
         required
       />
     </mat-form-field>
-    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+    <mat-form-field appearance="outline" class="full-width my-mat-form-fields">
       <mat-label>Phone #</mat-label>
       <input type="text" matInput id="phone" name="phone" ngModel required />
     </mat-form-field>
     <mat-slide-toggle matInput id="prefers-text" name="prefersText" ngModel
       >Prefers text</mat-slide-toggle
     >
-    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+    <mat-form-field appearance="outline" class="full-width my-mat-form-fields">
       <mat-label>Default # Of Addresses</mat-label>
       <mat-select
         id="default-address-amount"
@@ -47,7 +47,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+    <mat-form-field appearance="outline" class="full-width my-mat-form-fields">
       <mat-label>Color</mat-label>
       <mat-select id="color" name="color" ngModel>
         <mat-option
