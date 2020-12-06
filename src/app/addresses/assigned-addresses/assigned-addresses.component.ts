@@ -25,16 +25,7 @@ export class AssignedAddressesComponent implements OnInit {
       zip: '60417',
       phone: ['708-539-4375'],
       assigned: false,
-      writer: {
-        id: null,
-        name: 'Mark Way',
-        email: '',
-        phone: '',
-        prefersText: true,
-        defaultAddressAmount: 6,
-        totalCheckedOut: 6,
-        color: '#E2F1FF',
-      },
+      writer: '12343',
     },
     {
       id: '0',
@@ -82,16 +73,7 @@ export class AssignedAddressesComponent implements OnInit {
       zip: '60417',
       phone: ['708-539-4375'],
       assigned: true,
-      writer: {
-        id: null,
-        name: 'Iola Blackman',
-        email: '',
-        phone: '',
-        prefersText: true,
-        defaultAddressAmount: 6,
-        totalCheckedOut: 15,
-        color: '#FFCFD5',
-      },
+      writer: 'j32l4kj23lk4',
     },
     {
       id: '0',
@@ -103,16 +85,7 @@ export class AssignedAddressesComponent implements OnInit {
       zip: '60417',
       phone: ['708-539-4375'],
       assigned: true,
-      writer: {
-        id: null,
-        name: 'Mark Way',
-        email: '',
-        phone: '',
-        prefersText: true,
-        defaultAddressAmount: 6,
-        totalCheckedOut: 6,
-        color: '#E2F1FF',
-      },
+      writer: 'dksfjnlo2ik3jo4i2j3n4',
     },
     {
       id: '0',
@@ -124,16 +97,7 @@ export class AssignedAddressesComponent implements OnInit {
       zip: '60417',
       phone: ['708-539-4375'],
       assigned: true,
-      writer: {
-        id: null,
-        name: 'Iola Blackman',
-        email: '',
-        phone: '',
-        prefersText: true,
-        defaultAddressAmount: 6,
-        totalCheckedOut: 15,
-        color: '#FFCFD5',
-      },
+      writer: 'alskdjflakjdsf',
     },
   ];
 
@@ -165,40 +129,42 @@ export class AssignedAddressesComponent implements OnInit {
 
   ngOnInit(): void {
     // creating writers array
-    for (const address of this.addressData) {
-      // adding addresses to local addresses array from addressData
-      if (address.writer) {
-        this.addresses.push(address);
-      }
+    // call to writers service
 
-      // if there is nothing in writers yet, push first writer in addresses
-      if (!this.writers.length && address.writer) {
-        this.writers.push(address.writer);
-        // console.log('hey');
-      } else {
-        // if there is something in writers and the writer for the address in question has a writer,
-        // only push a new writer if it's not already in writers
-        if (address.writer) {
-          let writerAlreadyExists = false;
+    // for (const address of this.addressData) {
+    //   // adding addresses to local addresses array from addressData
+    //   if (address.writer) {
+    //     this.addresses.push(address);
+    //   }
 
-          // go through writers array checking for an existing writer
-          for (const writer of this.writers) {
-            if (address.writer.name === writer.name) {
-              writerAlreadyExists = true;
-              break;
-            } else {
-              writerAlreadyExists = false;
-            }
-          }
+    //   // if there is nothing in writers yet, push first writer in addresses
+    //   if (!this.writers.length && address.writer) {
+    //     this.writers.push(address.writer);
+    //     // console.log('hey');
+    //   } else {
+    //     // if there is something in writers and the writer for the address in question has a writer,
+    //     // only push a new writer if it's not already in writers
+    //     if (address.writer) {
+    //       let writerAlreadyExists = false;
 
-          // if after going through writers array there is no writer that is the same as the addresses writer
-          // push the new writer
-          if (!writerAlreadyExists) {
-            this.writers.push(address.writer);
-          }
-        }
-      }
-    }
+    //       // go through writers array checking for an existing writer
+    //       for (const writer of this.writers) {
+    //         if (address.writer.name === writer.name) {
+    //           writerAlreadyExists = true;
+    //           break;
+    //         } else {
+    //           writerAlreadyExists = false;
+    //         }
+    //       }
+
+    //       // if after going through writers array there is no writer that is the same as the addresses writer
+    //       // push the new writer
+    //       if (!writerAlreadyExists) {
+    //         this.writers.push(address.writer);
+    //       }
+    //     }
+    //   }
+    // }
 
     this.breakpointObserver
       .observe(['(max-width: 800px)'])
@@ -217,7 +183,7 @@ export class AssignedAddressesComponent implements OnInit {
     let writersAddresses: Address[] = [];
 
     this.addressData.forEach((address) => {
-      if (address.writer && address.writer.name === writer.name) {
+      if (address.writer && address.writer === writer.id) {
         writersAddresses.push(address);
       }
     });

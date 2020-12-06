@@ -1,5 +1,3 @@
-import { Writer } from './writer.model';
-
 export interface Address {
   id: string;
   age: number;
@@ -10,5 +8,5 @@ export interface Address {
   zip: string;
   phone: string[];
   assigned: boolean;
-  writer: Writer;
+  writer: string;
 }
