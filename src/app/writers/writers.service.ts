@@ -91,6 +91,10 @@ export class WritersService {
       });
   }
 
+  getWriterName(id: string) {
+    return this.writers.find((writer) => writer.id === id).name;
+  }
+
   getWritersUpdatedListener() {
     return this.writersUpdated.asObservable();
   }

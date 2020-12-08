@@ -96,6 +96,7 @@ export class AddressesService {
 
   updateAddress(id: string, updatedAddress: Address) {
     const newAddress = updatedAddress;
+    console.log(newAddress);
     this.http
       .put<{ message: string }>(
         'http://localhost:3000/api/addresses/' + id,

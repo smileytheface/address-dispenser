@@ -29,6 +29,18 @@
     <mat-label>Zip</mat-label>
     <input type="text" matInput formControlName="zip" />
   </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+    <mat-label>Assigned Writer</mat-label>
+    <mat-select formControlName="writer">
+      <mat-option>None</mat-option>
+      <mat-option
+        *ngFor="let writer of writers"
+        [ngStyle]="{ 'background-color': writer.color }"
+        [value]="writer.id"
+        >{{ writer.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
   <!-- phone numbers -->
   <div
     class="phone-controls full-width"
