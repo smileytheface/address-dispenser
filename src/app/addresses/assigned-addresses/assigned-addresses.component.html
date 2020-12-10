@@ -8,7 +8,8 @@
   </mat-form-field>
 
   <div class="container" id="container">
-    <div class="addresses-section">
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    <div class="addresses-section" *ngIf="!loading">
       <div
         *ngFor="let writer of filteredWriters; first as isFirst"
         [class.first]="isFirst"
@@ -27,8 +28,12 @@
               {{ address.phone }}
             </p>
             <mat-action-row>
-              <button mat-button color="primary">Edit</button>
-              <button mat-button color="warn">Delete</button>
+              <button mat-button color="primary" (click)="onEdit(address)">
+                Edit
+              </button>
+              <button mat-button color="warn" (click)="onDelete(address)">
+                Delete
+              </button>
             </mat-action-row>
           </mat-expansion-panel>
         </mat-accordion>
@@ -46,10 +51,13 @@
 
       <mat-divider></mat-divider>
 
-      <p *ngFor="let writer of writers">
-        <a (click)="filter(writer.name)">{{ writer.name }}</a>
-      </p>
-      <p (click)="clearFilter()" class="none">None</p>
+      <mat-spinner *ngIf="writersLoading"></mat-spinner>
+      <div class="filterWriterOptions" *ngIf="!writersLoading">
+        <p *ngFor="let writer of writers">
+          <a (click)="filter(writer.name)">{{ writer.name }}</a>
+        </p>
+        <p (click)="clearFilter()" class="none">None</p>
+      </div>
     </div>
   </div>
 

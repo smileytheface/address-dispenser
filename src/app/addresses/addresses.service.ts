@@ -8,7 +8,9 @@ import { Address } from '../shared/models/address.model';
 @Injectable({ providedIn: 'root' })
 export class AddressesService {
   private addresses: Address[] = [];
+  private assignedAddresses: Address[] = [];
   private addressesUpdated = new Subject<Address[]>();
+  private assignedAddressesUpdated = new Subject<Address[]>();
   private addressAdded = new Subject<Address>();
   private addressesAdded = new Subject<Address[]>();
   private addressEdited = new Subject<string>();
@@ -48,6 +50,35 @@ export class AddressesService {
     return this.http.get<any>(
       'http://localhost:3000/api/addresses/' + addressId
     );
+  }
+
+  getAssignedAddresses() {
+    this.http
+      .get<{ assignedAddresses: any }>(
+        'http://localhost:3000/api/addresses/assigned'
+      )
+      .pipe(
+        map((assignedAddressData) => {
+          return assignedAddressData.assignedAddresses.map((address) => {
+            return {
+              id: address._id,
+              name: address.name,
+              age: address.age,
+              street: address.street,
+              city: address.city,
+              state: address.state,
+              zip: address.zip,
+              phone: address.phone,
+              assigned: address.assigned,
+              writer: address.writer,
+            };
+          });
+        })
+      )
+      .subscribe((transformedAddresses) => {
+        this.assignedAddresses = transformedAddresses;
+        this.assignedAddressesUpdated.next([...this.assignedAddresses]);
+      });
   }
 
   addAddress(address: Address) {
@@ -91,6 +122,7 @@ export class AddressesService {
         );
         this.addresses = updatedAddresses;
         this.addressesUpdated.next([...this.addresses]);
+        this.assignedAddressesUpdated.next([...this.assignedAddresses]);
       });
   }
 
@@ -112,6 +144,10 @@ export class AddressesService {
         this.addressesUpdated.next([...this.addresses]);
         this.addressEdited.next(newAddress.id);
       });
+  }
+
+  getAssignedAddressesUpdatedListener() {
+    return this.assignedAddressesUpdated.asObservable();
   }
 
   getAddressesUpdatedListener() {
