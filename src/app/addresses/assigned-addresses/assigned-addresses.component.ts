@@ -83,15 +83,6 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
         this.assignedAddresses = assignedAddresses;
         this.addressesLoading = false;
         this.checkLoad();
-        // if (this.tempCounter < 1) {
-        //   this.assignedAddresses = assignedAddresses;
-        //   this.addressesLoading = false;
-        //   this.checkLoad();
-        // } else {
-        //   console.log('hey');
-        //   this.assignedAddresses = [];
-        // }
-        // this.tempCounter++;
       });
 
     this.breakpointObserver

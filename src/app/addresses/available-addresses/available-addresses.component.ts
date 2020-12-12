@@ -13,7 +13,7 @@ import { AddressesService } from '../addresses.service';
   styleUrls: ['./available-addresses.component.scss'],
 })
 export class AvailableAddressesComponent implements OnInit, OnDestroy {
-  addresses: Address[] = [];
+  availableAddresses: Address[] = [];
   isLoading: boolean = false;
   private addressesSub: Subscription;
 
@@ -29,7 +29,7 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
   }
 
   filterAddresses(searchString: string) {
-    return this.addresses.filter(
+    return this.availableAddresses.filter(
       (address) =>
         address.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
     );
@@ -48,8 +48,10 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
     this.addressesSub = this.addressesService
       .getAddressesUpdatedListener()
       .subscribe((addresses: Address[]) => {
-        this.addresses = addresses;
-        this.filteredAddresses = this.addresses;
+        this.availableAddresses = addresses.filter(
+          (address) => !address.assigned
+        );
+        this.filteredAddresses = this.availableAddresses;
         this.isLoading = false;
       });
   }
