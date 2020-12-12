@@ -24,6 +24,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   private assignedAddressesSub: Subscription;
   private writersSub: Subscription;
+  private allAddressesSub: Subscription;
 
   loading: boolean = false;
   addressesLoading: boolean = false;
@@ -46,6 +47,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   }
 
   mobile: boolean;
+  // tempCounter: number = 0;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -74,10 +76,18 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     this.assignedAddressesSub = this.addressesService
       .getAssignedAddressesUpdatedListener()
       .subscribe((assignedAddresses) => {
-        console.log('hey');
         this.assignedAddresses = assignedAddresses;
         this.addressesLoading = false;
         this.checkLoad();
+        // if (this.tempCounter < 1) {
+        //   this.assignedAddresses = assignedAddresses;
+        //   this.addressesLoading = false;
+        //   this.checkLoad();
+        // } else {
+        //   console.log('hey');
+        //   this.assignedAddresses = [];
+        // }
+        // this.tempCounter++;
       });
 
     this.breakpointObserver
@@ -108,8 +118,15 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   }
 
   onDelete(address: Address) {
-    this.addressesService.deleteAddress(address.id);
-    // this.writersService.getWriters();
+    this.addressesService.getAddresses();
+
+    this.allAddressesSub = this.addressesService
+      .getAddressesUpdatedListener()
+      .subscribe(() => {
+        this.addressesService.deleteAddress(address);
+      });
+    // this.addressesService.getAddresses();
+    // this.addressesService.filterTest();
   }
 
   filter(name: string) {
@@ -139,5 +156,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.assignedAddressesSub.unsubscribe();
     this.writersSub.unsubscribe();
+    if (this.allAddressesSub) {
+      this.allAddressesSub.unsubscribe();
+    }
   }
 }

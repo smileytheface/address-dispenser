@@ -88,13 +88,18 @@ export class AddressesService {
         'http://localhost:3000/api/addresses',
         newAddress
       )
-      .subscribe((responseData) => {
-        const id = responseData.addressId;
-        newAddress.id = id;
-        this.addresses.push(newAddress);
-        this.addressesUpdated.next([...this.addresses]);
-        this.addressAdded.next(newAddress);
-      });
+      .subscribe(
+        (responseData) => {
+          const id = responseData.addressId;
+          newAddress.id = id;
+          this.addresses.push(newAddress);
+          this.addressesUpdated.next([...this.addresses]);
+          this.addressAdded.next(newAddress);
+        },
+        (error) => {
+          console.error(error.data.message);
+        }
+      );
   }
 
   addAddresses(addresses: Address[]) {
@@ -113,17 +118,32 @@ export class AddressesService {
       });
   }
 
-  deleteAddress(id: string) {
+  deleteAddress(address: Address) {
     this.http
-      .delete<{ message: string }>('http://localhost:3000/api/addresses/' + id)
+      .delete<{ message: string }>(
+        'http://localhost:3000/api/addresses/' + address.id
+      )
       .subscribe(() => {
         const updatedAddresses = this.addresses.filter(
-          (address) => address.id !== id
+          (add) => add.id !== address.id
         );
         this.addresses = updatedAddresses;
         this.addressesUpdated.next([...this.addresses]);
-        this.assignedAddressesUpdated.next([...this.assignedAddresses]);
+
+        if (address.assigned) {
+          const assignedAddresses = this.addresses.filter(
+            (address) => address.assigned
+          );
+          this.assignedAddresses = assignedAddresses;
+          this.assignedAddressesUpdated.next([...this.assignedAddresses]);
+        }
       });
+  }
+
+  filterTest() {
+    console.log(this.addresses);
+    // console.log(this.addresses[0].assigned);
+    // console.log(this.addresses.filter((address) => address.assigned));
   }
 
   updateAddress(id: string, updatedAddress: Address) {
