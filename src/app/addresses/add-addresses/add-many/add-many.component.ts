@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Address } from '../../../shared/models/address.model';
 import { AddressesService } from '../../addresses.service';
@@ -31,7 +32,8 @@ export class AddManyComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    public addressesService: AddressesService
+    public addressesService: AddressesService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +77,10 @@ export class AddManyComponent implements OnInit {
         this.form.resetForm();
       }
     });
+  }
+
+  onCancel() {
+    this.router.navigate(['/available-addresses']);
   }
 
   parseStringIntoAddresses(addressString: string): Address[] {

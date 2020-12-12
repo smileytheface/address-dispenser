@@ -64,6 +64,9 @@
   <button type="submit" class="submit-button" id="address-submit">
     SUBMIT
   </button>
+  <button type="button" class="cancel-button" (click)="onCancel()">
+    CANCEL
+  </button>
 </form>
 
 <div class="success-box" *ngIf="addressSuccessfullyAdded" @fadeSlideInOut>

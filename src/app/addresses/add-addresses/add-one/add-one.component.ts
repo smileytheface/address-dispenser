@@ -1,11 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ThrowStmt } from '@angular/compiler';
 import { OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { throwIfEmpty } from 'rxjs/operators';
 import { Address } from 'src/app/shared/models/address.model';
 import { Writer } from 'src/app/shared/models/writer.model';
 import { WritersService } from 'src/app/writers/writers.service';
@@ -168,6 +166,10 @@ export class AddOneComponent implements OnInit, OnDestroy {
     console.log(newAddress);
 
     this.lastSubmittedAddress = newAddress;
+  }
+
+  onCancel() {
+    this.router.navigate(['/available-addresses']);
   }
 
   showAddressAddedMessage() {

@@ -42,6 +42,14 @@
     <button type="submit" class="submit-button" [disabled]="!addManyForm.valid">
       SUBMIT
     </button>
+    <button
+      type="button"
+      class="cancel-button"
+      id="cancel-button"
+      (click)="onCancel()"
+    >
+      CANCEL
+    </button>
     <div class="successfull-box" *ngIf="addedSuccessfully" @fadeSlideInOut>
       Addresses Added Successfully!
     </div>
