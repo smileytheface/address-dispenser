@@ -21,7 +21,7 @@ import { AddManyComponent } from './addresses/add-addresses/add-many/add-many.co
 import { AddManyConfirmationComponent } from './addresses/add-addresses/add-many/add-many-confirmation/add-many-confirmation.component';
 import { ValidAddressDirective } from './addresses/add-addresses/add-many/valid-address.directive';
 import { AddWriterComponent } from './writers/add-writer/add-writer.component';
-import { DeleteWriterConfirmationComponent } from './writers/delete-writer-confirmation/delete-writer-confirmation.component';
+import { DeleteConfirmationComponent } from './shared/models/delete-confirmation/delete-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { DeleteWriterConfirmationComponent } from './writers/delete-writer-confi
     AddManyConfirmationComponent,
     ValidAddressDirective,
     AddWriterComponent,
-    DeleteWriterConfirmationComponent,
+    DeleteConfirmationComponent,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [

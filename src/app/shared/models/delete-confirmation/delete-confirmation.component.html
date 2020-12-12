@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>
-  Are you sure you would like to delete {{ data.name }} from your writers list?
+  {{ data.messageTitle }}
 </h2>
+<mat-dialog-content [innerHTML]="data.messageContent"></mat-dialog-content>
+<br *ngIf="data.messageContent" />
 <mat-dialog-actions>
   <button mat-button mat-dialog-close mat-dialog-close="true" class="danger">
     Delete

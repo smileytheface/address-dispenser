@@ -2,9 +2,12 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { defaultThrottleConfig } from 'rxjs/internal/operators/throttle';
 import { Address } from 'src/app/shared/models/address.model';
+import { DeleteConfirmationComponent } from 'src/app/shared/models/delete-confirmation/delete-confirmation.component';
 import { Writer } from 'src/app/shared/models/writer.model';
 import { WritersService } from 'src/app/writers/writers.service';
 import { AddressesService } from '../addresses.service';
@@ -54,7 +57,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     private bottomSheet: MatBottomSheet,
     private addressesService: AddressesService,
     private writersService: WritersService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -119,12 +123,35 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   onDelete(address: Address) {
     this.addressesService.getAddresses();
+    const dialogTitle =
+      'Are you sure you would like to delete the following address?';
+    const dialogContent =
+      address.name +
+      (address.age ? ' (Age: ' + address.age + ') ' : '') +
+      '<br/>' +
+      address.street +
+      '<br/>' +
+      address.city +
+      ', ' +
+      address.state +
+      ' ' +
+      address.zip;
 
     this.allAddressesSub = this.addressesService
       .getAddressesUpdatedListener()
       .subscribe(() => {
-        this.addressesService.deleteAddress(address);
+        let dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+          data: { messageTitle: dialogTitle, messageContent: dialogContent },
+        });
+
+        dialogRef.afterClosed().subscribe((deletetionConfirmed) => {
+          this.allAddressesSub.unsubscribe();
+          if (deletetionConfirmed === 'true') {
+            this.addressesService.deleteAddress(address);
+          }
+        });
       });
+
     // this.addressesService.getAddresses();
     // this.addressesService.filterTest();
   }

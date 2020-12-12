@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Writer } from '../shared/models/writer.model';
-import { DeleteWriterConfirmationComponent } from './delete-writer-confirmation/delete-writer-confirmation.component';
+import { DeleteConfirmationComponent } from '../shared/models/delete-confirmation/delete-confirmation.component';
 
 import { WritersService } from './writers.service';
 
@@ -40,8 +40,13 @@ export class WritersComponent implements OnInit, OnDestroy {
   }
 
   onDelete(writer: Writer) {
-    let dialogRef = this.dialog.open(DeleteWriterConfirmationComponent, {
-      data: writer,
+    const dialogMessage =
+      'Are you sure you would like to delete ' +
+      writer.name +
+      ' from your writers list?';
+
+    let dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      data: { messageTitle: dialogMessage },
     });
 
     dialogRef.afterClosed().subscribe((deletionConfirmed) => {

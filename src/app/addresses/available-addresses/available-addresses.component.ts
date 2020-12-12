@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DeleteConfirmationComponent } from 'src/app/shared/models/delete-confirmation/delete-confirmation.component';
 
 import { Address } from '../../shared/models/address.model';
 import { AddressesService } from '../addresses.service';
@@ -36,7 +38,8 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
   constructor(
     private addressesService: AddressesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +59,29 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
   }
 
   onDelete(address: Address) {
-    this.addressesService.deleteAddress(address);
+    const dialogTitle =
+      'Are you sure you would like to delete the following address?';
+    const dialogContent =
+      address.name +
+      (address.age ? ' (Age: ' + address.age + ') ' : '') +
+      '<br/>' +
+      address.street +
+      '<br/>' +
+      address.city +
+      ', ' +
+      address.state +
+      ' ' +
+      address.zip;
+
+    let dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      data: { messageTitle: dialogTitle, messageContent: dialogContent },
+    });
+
+    dialogRef.afterClosed().subscribe((deletionConfirmed) => {
+      if (deletionConfirmed === 'true') {
+        this.addressesService.deleteAddress(address);
+      }
+    });
   }
 
   onEdit(id: string) {
