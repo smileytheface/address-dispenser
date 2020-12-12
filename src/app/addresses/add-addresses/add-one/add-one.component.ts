@@ -1,10 +1,14 @@
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ThrowStmt } from '@angular/compiler';
 import { OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { throwIfEmpty } from 'rxjs/operators';
 import { Address } from 'src/app/shared/models/address.model';
+import { Writer } from 'src/app/shared/models/writer.model';
+import { WritersService } from 'src/app/writers/writers.service';
 import { AddressesService } from '../../addresses.service';
 
 @Component({
@@ -36,15 +40,25 @@ export class AddOneComponent implements OnInit, OnDestroy {
   @ViewChild('form') form;
   editMode = false;
   addressId: string;
+  writers: Writer[] = [];
+  writersSub: Subscription;
 
   constructor(
     private addressesService: AddressesService,
     public route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private writersService: WritersService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
+
+    this.writersService.getWriters();
+    this.writersSub = this.writersService
+      .getWritersUpdatedListener()
+      .subscribe((writers) => {
+        this.writers = writers;
+      });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('addressId')) {
@@ -57,14 +71,16 @@ export class AddOneComponent implements OnInit, OnDestroy {
               this.addPhone(phoneNum);
             }
 
-            this.addressForm.setValue({
+            console.log(this.writers);
+
+            this.addressForm.patchValue({
               name: address.name,
               age: address.age ? address.age : null,
               street: address.street,
               city: address.city,
               state: address.state,
               zip: address.zip,
-
+              writer: address.writer,
               phone: address.phone,
             });
           });
@@ -100,6 +116,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
       city: new FormControl(null, Validators.required),
       state: new FormControl(null, Validators.required),
       zip: new FormControl(null, Validators.required),
+      writer: new FormControl(null),
       phone: this.phoneNumbers,
     });
   }
@@ -124,6 +141,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
     if (this.addressForm.invalid) {
       return;
     }
+    console.log(this.addressForm.value.writer);
 
     const newAddress: Address = {
       id: this.editMode ? this.addressId : null,
@@ -134,8 +152,10 @@ export class AddOneComponent implements OnInit, OnDestroy {
       state: this.addressForm.value.state,
       zip: this.addressForm.value.zip,
       phone: this.addressForm.value.phone,
-      assigned: false,
-      writer: null,
+      assigned: this.addressForm.value.writer ? true : false,
+      writer: this.addressForm.value.writer
+        ? this.addressForm.value.writer
+        : null,
     };
 
     if (this.editMode) {
@@ -144,6 +164,8 @@ export class AddOneComponent implements OnInit, OnDestroy {
       this.addressesService.addAddress(newAddress);
       this.form.resetForm();
     }
+
+    console.log(newAddress);
 
     this.lastSubmittedAddress = newAddress;
   }
@@ -157,5 +179,6 @@ export class AddOneComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.addressAddedSub.unsubscribe();
+    this.writersSub.unsubscribe();
   }
 }

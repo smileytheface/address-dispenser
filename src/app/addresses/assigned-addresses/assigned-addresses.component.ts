@@ -1,9 +1,13 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { TitleCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Address } from 'src/app/shared/models/address.model';
 import { Writer } from 'src/app/shared/models/writer.model';
+import { WritersService } from 'src/app/writers/writers.service';
+import { AddressesService } from '../addresses.service';
 import { FilterBottomSheetComponent } from './filter-bottom-sheet/filter-bottom-sheet.component';
 
 @Component({
@@ -11,98 +15,20 @@ import { FilterBottomSheetComponent } from './filter-bottom-sheet/filter-bottom-
   templateUrl: './assigned-addresses.component.html',
   styleUrls: ['./assigned-addresses.component.scss'],
 })
-export class AssignedAddressesComponent implements OnInit {
+export class AssignedAddressesComponent implements OnInit, OnDestroy {
   writers: Writer[] = [];
 
-  addressData: Address[] = [
-    {
-      id: '0',
-      name: 'Gregory Jones',
-      age: 20,
-      street: '1000 Street St',
-      city: 'Crete',
-      state: 'IL',
-      zip: '60417',
-      phone: ['708-539-4375'],
-      assigned: false,
-      writer: '12343',
-    },
-    {
-      id: '0',
-      name: 'Josh Figelhorn',
-      age: 20,
-      street: '1000 Street St',
-      city: 'Crete',
-      state: 'IL',
-      zip: '60417',
-      phone: ['708-539-4375'],
-      assigned: false,
-      writer: null,
-    },
-    {
-      id: '0',
-      name: 'Arnold Ord',
-      age: 20,
-      street: '1000 Street St',
-      city: 'Crete',
-      state: 'IL',
-      zip: '60417',
-      phone: ['708-539-4375'],
-      assigned: false,
-      writer: null,
-    },
-    {
-      id: '0',
-      name: 'Joshua Ezekiel',
-      age: 20,
-      street: '1000 Street St',
-      city: 'Crete',
-      state: 'IL',
-      zip: '60417',
-      phone: ['708-539-4375'],
-      assigned: false,
-      writer: null,
-    },
-    {
-      id: '0',
-      name: 'Plop Juice',
-      age: 20,
-      street: '1000 Street St',
-      city: 'Crete',
-      state: 'IL',
-      zip: '60417',
-      phone: ['708-539-4375'],
-      assigned: true,
-      writer: 'j32l4kj23lk4',
-    },
-    {
-      id: '0',
-      name: 'Justine Killo',
-      age: 20,
-      street: '1000 Street St',
-      city: 'Crete',
-      state: 'IL',
-      zip: '60417',
-      phone: ['708-539-4375'],
-      assigned: true,
-      writer: 'dksfjnlo2ik3jo4i2j3n4',
-    },
-    {
-      id: '0',
-      name: 'Fun Fran',
-      age: 20,
-      street: '1000 Street St',
-      city: 'Crete',
-      state: 'IL',
-      zip: '60417',
-      phone: ['708-539-4375'],
-      assigned: true,
-      writer: 'alskdjflakjdsf',
-    },
-  ];
+  assignedAddresses: Address[] = [];
 
-  addresses: Address[] = [];
   filteredWriters: Writer[];
+
+  private assignedAddressesSub: Subscription;
+  private writersSub: Subscription;
+  private allAddressesSub: Subscription;
+
+  loading: boolean = false;
+  addressesLoading: boolean = false;
+  writersLoading: boolean = false;
 
   private _searchTerm: string;
   get searchTerm(): string {
@@ -121,50 +47,48 @@ export class AssignedAddressesComponent implements OnInit {
   }
 
   mobile: boolean;
+  // tempCounter: number = 0;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private addressesService: AddressesService,
+    private writersService: WritersService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    // creating writers array
-    // call to writers service
+    this.addressesService.getAssignedAddresses();
+    this.writersService.getWriters();
+    this.loading = true;
 
-    // for (const address of this.addressData) {
-    //   // adding addresses to local addresses array from addressData
-    //   if (address.writer) {
-    //     this.addresses.push(address);
-    //   }
+    this.writersLoading = true;
+    this.writersSub = this.writersService
+      .getWritersUpdatedListener()
+      .subscribe((writers) => {
+        this.writers = writers;
+        this.filteredWriters = this.writers;
+        this.writersLoading = false;
+        this.checkLoad();
+      });
 
-    //   // if there is nothing in writers yet, push first writer in addresses
-    //   if (!this.writers.length && address.writer) {
-    //     this.writers.push(address.writer);
-    //     // console.log('hey');
-    //   } else {
-    //     // if there is something in writers and the writer for the address in question has a writer,
-    //     // only push a new writer if it's not already in writers
-    //     if (address.writer) {
-    //       let writerAlreadyExists = false;
-
-    //       // go through writers array checking for an existing writer
-    //       for (const writer of this.writers) {
-    //         if (address.writer.name === writer.name) {
-    //           writerAlreadyExists = true;
-    //           break;
-    //         } else {
-    //           writerAlreadyExists = false;
-    //         }
-    //       }
-
-    //       // if after going through writers array there is no writer that is the same as the addresses writer
-    //       // push the new writer
-    //       if (!writerAlreadyExists) {
-    //         this.writers.push(address.writer);
-    //       }
-    //     }
-    //   }
-    // }
+    this.addressesLoading = true;
+    this.assignedAddressesSub = this.addressesService
+      .getAssignedAddressesUpdatedListener()
+      .subscribe((assignedAddresses) => {
+        this.assignedAddresses = assignedAddresses;
+        this.addressesLoading = false;
+        this.checkLoad();
+        // if (this.tempCounter < 1) {
+        //   this.assignedAddresses = assignedAddresses;
+        //   this.addressesLoading = false;
+        //   this.checkLoad();
+        // } else {
+        //   console.log('hey');
+        //   this.assignedAddresses = [];
+        // }
+        // this.tempCounter++;
+      });
 
     this.breakpointObserver
       .observe(['(max-width: 800px)'])
@@ -175,19 +99,34 @@ export class AssignedAddressesComponent implements OnInit {
           this.mobile = false;
         }
       });
-
-    this.filteredWriters = this.writers;
   }
 
   addressesByName(writer: Writer): Address[] {
     let writersAddresses: Address[] = [];
+    let allAddresses: Address[] = this.assignedAddresses;
 
-    this.addressData.forEach((address) => {
+    allAddresses.forEach((address) => {
       if (address.writer && address.writer === writer.id) {
         writersAddresses.push(address);
       }
     });
     return writersAddresses;
+  }
+
+  onEdit(address: Address) {
+    this.router.navigate(['/available-addresses/edit', address.id]);
+  }
+
+  onDelete(address: Address) {
+    this.addressesService.getAddresses();
+
+    this.allAddressesSub = this.addressesService
+      .getAddressesUpdatedListener()
+      .subscribe(() => {
+        this.addressesService.deleteAddress(address);
+      });
+    // this.addressesService.getAddresses();
+    // this.addressesService.filterTest();
   }
 
   filter(name: string) {
@@ -206,5 +145,19 @@ export class AssignedAddressesComponent implements OnInit {
     sheet.afterDismissed().subscribe((writer) => {
       this.searchTerm = writer;
     });
+  }
+
+  checkLoad() {
+    if (!this.addressesLoading && !this.writersLoading) {
+      this.loading = false;
+    }
+  }
+
+  ngOnDestroy() {
+    this.assignedAddressesSub.unsubscribe();
+    this.writersSub.unsubscribe();
+    if (this.allAddressesSub) {
+      this.allAddressesSub.unsubscribe();
+    }
   }
 }
