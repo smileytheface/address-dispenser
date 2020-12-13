@@ -40,6 +40,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
   addressId: string;
   writers: Writer[] = [];
   writersSub: Subscription;
+  loadedAddress: Address;
 
   constructor(
     private addressesService: AddressesService,
@@ -69,7 +70,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
               this.addPhone(phoneNum);
             }
 
-            console.log(this.writers);
+            this.loadedAddress = address;
 
             this.addressForm.patchValue({
               name: address.name,
@@ -169,7 +170,20 @@ export class AddOneComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['/available-addresses']);
+    // navigate to last page that was on
+    // if the loaded address has a writer, the last page was assigned addresses
+    // else it is available addresses
+    if (this.editMode) {
+      console.log(this.loadedAddress);
+      if (this.loadedAddress.writer) {
+        console.log('hey');
+        this.router.navigate(['/assigned-addresses']);
+      } else {
+        this.router.navigate(['/available-addresses']);
+      }
+    } else {
+      this.router.navigate(['/available-addresses']);
+    }
   }
 
   showAddressAddedMessage() {
