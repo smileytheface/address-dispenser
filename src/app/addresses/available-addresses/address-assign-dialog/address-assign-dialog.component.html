@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Choose a writer to assign {{ data.addressName }} to:</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Select a writer</mat-label>
+    <mat-select [(value)]="selectedWriterId">
+      <mat-option>None</mat-option>
+      <mat-option
+        *ngFor="let writer of writers"
+        [value]="writer.id"
+        [ngStyle]="{ 'background-color': writer.color }"
+        >{{ writer.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-button
+    mat-dialog-close
+    [mat-dialog-close]="selectedWriterId"
+    color="primary"
+    [disabled]="!selectedWriterId"
+  >
+    Confirm
+  </button>
+  <button mat-button mat-dialog-close mat-dialog-close="cancel">Cancel</button>
+</mat-dialog-actions>

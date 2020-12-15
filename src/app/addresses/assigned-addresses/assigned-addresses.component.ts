@@ -151,6 +151,10 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     // this.addressesService.filterTest();
   }
 
+  onUnassign(addressId: string, writerId: string) {
+    this.addressesService.unassignAddress(addressId, writerId);
+  }
+
   filter(name: string) {
     this.searchTerm = name;
   }

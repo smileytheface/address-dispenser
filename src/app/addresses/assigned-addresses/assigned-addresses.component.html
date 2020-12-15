@@ -38,6 +38,13 @@
               {{ address.phone }}
             </p>
             <mat-action-row>
+              <button
+                mat-button
+                color="primary"
+                (click)="onUnassign(address.id, writer.id)"
+              >
+                Unassign
+              </button>
               <button mat-button color="primary" (click)="onEdit(address)">
                 Edit
               </button>

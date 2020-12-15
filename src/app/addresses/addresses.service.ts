@@ -166,6 +166,45 @@ export class AddressesService {
       });
   }
 
+  assignAddress(addressId: string, writerId: string) {
+    // id of writer that is getting assigned this address
+    const writer = { writer: writerId };
+    this.http
+      .put<{ message: string }>(
+        'http://localhost:3000/api/addresses/assign/' + addressId,
+        writer
+      )
+      .subscribe((responseMessage) => {
+        let updatedAddresses = [...this.addresses];
+        const updatedAddressIndex = updatedAddresses.findIndex(
+          (address) => address.id === addressId
+        );
+        updatedAddresses[updatedAddressIndex].writer = writerId;
+        updatedAddresses[updatedAddressIndex].assigned = true;
+        this.addresses = updatedAddresses;
+        this.addressesUpdated.next([...this.addresses]);
+      });
+  }
+
+  unassignAddress(addressId: string, writerId: string) {
+    // id of writer that will no longer be assigned to this address
+    const writer = { writer: writerId };
+    this.http
+      .put<{ message: string }>(
+        'http://localhost:3000/api/addresses/unassign/' + addressId,
+        writer
+      )
+      .subscribe((responseMessage) => {
+        let updatedAssignedAddresses = this.assignedAddresses;
+        const updatedAddressId = updatedAssignedAddresses.findIndex(
+          (address) => address.id === addressId
+        );
+        updatedAssignedAddresses.splice(updatedAddressId);
+        this.assignedAddresses = updatedAssignedAddresses;
+        this.assignedAddressesUpdated.next([...this.assignedAddresses]);
+      });
+  }
+
   getAssignedAddressesUpdatedListener() {
     return this.assignedAddressesUpdated.asObservable();
   }

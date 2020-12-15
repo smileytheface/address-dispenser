@@ -6,6 +6,7 @@ import { DeleteConfirmationComponent } from 'src/app/shared/models/delete-confir
 
 import { Address } from '../../shared/models/address.model';
 import { AddressesService } from '../addresses.service';
+import { AddressAssignDialogComponent } from './address-assign-dialog/address-assign-dialog.component';
 
 @Component({
   selector: 'app-available-addresses',
@@ -88,6 +89,18 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
 
   onEdit(id: string) {
     this.router.navigate(['edit', id], { relativeTo: this.route });
+  }
+
+  onAssign(address: Address) {
+    let dialogRef = this.dialog.open(AddressAssignDialogComponent, {
+      data: { addressName: address.name },
+    });
+
+    dialogRef.afterClosed().subscribe((chosenWriter) => {
+      if (chosenWriter !== 'cancel') {
+        this.addressesService.assignAddress(address.id, chosenWriter);
+      }
+    });
   }
 
   ngOnDestroy() {

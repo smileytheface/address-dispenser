@@ -32,6 +32,9 @@
         <span *ngFor="let phone of address.phone">{{ phone }} <br /> </span>
       </p>
       <mat-action-row>
+        <button mat-button color="primary" (click)="onAssign(address)">
+          Assign
+        </button>
         <button mat-button color="primary" (click)="onEdit(address.id)">
           Edit
         </button>
