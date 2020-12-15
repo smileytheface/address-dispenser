@@ -1,6 +1,16 @@
 <div class="page-wrapper">
-  <h2>Assigned Addresses</h2>
-  <form></form>
+  <div class="top-section">
+    <h2>Assigned Addresses</h2>
+    <span class="spacer"></span>
+    <div class="add-address-button">
+      <button type="button" class="add-button" (click)="onAddAddresses()">
+        <p>Add Address</p>
+        <span class="spacer"></span>
+        <img src="../../assets/images/icons/add-icon.svg" alt="add-icon" />
+      </button>
+    </div>
+  </div>
+
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Search</mat-label>
     <input type="search" matInput [(ngModel)]="searchTerm" />

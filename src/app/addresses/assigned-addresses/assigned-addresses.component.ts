@@ -112,6 +112,10 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/available-addresses/edit', address.id]);
   }
 
+  onAddAddresses() {
+    this.router.navigate(['/available-addresses/add-addresses/add-one']);
+  }
+
   onDelete(address: Address) {
     this.addressesService.getAddresses();
     const dialogTitle =

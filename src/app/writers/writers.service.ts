@@ -37,7 +37,6 @@ export class WritersService {
       .subscribe((transformedWriters) => {
         this.writers = transformedWriters;
         this.writersUpdated.next([...this.writers]);
-        console.log(this.writers);
       });
   }
 
