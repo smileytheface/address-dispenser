@@ -20,23 +20,28 @@
     <img src="../../assets/images/icons/Send_Icon.svg" alt="airplane" />
   </button>
 </div>
-<button
-  type="button"
-  id="writers-button"
-  class="pen-button"
-  *ngFor="let writer of writers"
-  [style.backgroundColor]="writer.color"
->
-  <div class="writer-info">
-    <p>{{ writer.name }}</p>
-    <p class="address-amount">
-      {{ writer.defaultAddressAmount }} Addresses | <a href="#">Edit</a>
-    </p>
-  </div>
-  <span class="spacer"></span>
-  <img
-    src="../../assets/images/icons/send-icon-black.svg"
-    alt="airplane"
-    id="pen-icon"
-  />
-</button>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="!isLoading">
+  <button
+    type="button"
+    id="writers-button"
+    class="pen-button"
+    *ngFor="let writer of writers"
+    [style.backgroundColor]="writer.color"
+    (click)="onSend(writer)"
+  >
+    <div class="writer-info">
+      <p>{{ writer.name }}</p>
+      <p class="address-amount">
+        {{ writer.defaultAddressAmount }} Addresses |
+        <a (click)="onEdit(writer.id)" stlye="cursor: pointer">Edit</a>
+      </p>
+    </div>
+    <span class="spacer"></span>
+    <img
+      src="../../assets/images/icons/send-icon-black.svg"
+      alt="airplane"
+      id="pen-icon"
+    />
+  </button>
+</div>

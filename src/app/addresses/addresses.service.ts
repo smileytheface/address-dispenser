@@ -9,8 +9,10 @@ import { Address } from '../shared/models/address.model';
 export class AddressesService {
   private addresses: Address[] = [];
   private assignedAddresses: Address[] = [];
+  private unassignedAddresses: Address[] = [];
   private addressesUpdated = new Subject<Address[]>();
   private assignedAddressesUpdated = new Subject<Address[]>();
+  private unassignedAddressesUpdated = new Subject<Address[]>();
   private addressAdded = new Subject<Address>();
   private addressesAdded = new Subject<Address[]>();
   private addressEdited = new Subject<string>();
@@ -78,6 +80,36 @@ export class AddressesService {
       .subscribe((transformedAddresses) => {
         this.assignedAddresses = transformedAddresses;
         this.assignedAddressesUpdated.next([...this.assignedAddresses]);
+      });
+  }
+
+  // Getting Unassigned Addresses
+  getUnassignedAddresses() {
+    this.http
+      .get<{ unassignedAddresses: any }>(
+        'http://localhost:3000/api/addresses/unassigned'
+      )
+      .pipe(
+        map((unassignedAddressData) => {
+          return unassignedAddressData.unassignedAddresses.map((address) => {
+            return {
+              id: address._id,
+              name: address.name,
+              age: address.age,
+              street: address.street,
+              city: address.city,
+              state: address.state,
+              zip: address.zip,
+              phone: address.phone,
+              assigned: address.assigned,
+              writer: address.writer,
+            };
+          });
+        })
+      )
+      .subscribe((transformedAddresses) => {
+        this.unassignedAddresses = transformedAddresses;
+        this.unassignedAddressesUpdated.next([...this.unassignedAddresses]);
       });
   }
 
@@ -223,5 +255,9 @@ export class AddressesService {
 
   getAddressEditedListener() {
     return this.addressEdited.asObservable();
+  }
+
+  getUnassignedAddressesUpdatedListener() {
+    return this.unassignedAddressesUpdated.asObservable();
   }
 }
