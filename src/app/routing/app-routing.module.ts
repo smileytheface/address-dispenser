@@ -9,10 +9,12 @@ import { AddAddressesComponent } from '../addresses/add-addresses/add-addresses.
 import { AddOneComponent } from '../addresses/add-addresses/add-one/add-one.component';
 import { AddManyComponent } from '../addresses/add-addresses/add-many/add-many.component';
 import { AddWriterComponent } from '../writers/add-writer/add-writer.component';
+import { CustomSendComponent } from '../send-addresses/custom-send/custom-send.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'send-addresses', component: SendAddressesComponent },
+  { path: 'send-addresses/custom-send', component: CustomSendComponent },
   {
     path: 'available-addresses',
     component: AvailableAddressesComponent,

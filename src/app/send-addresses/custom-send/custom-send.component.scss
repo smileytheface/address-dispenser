@@ -1,0 +1,37 @@
+.custom-send-margin {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.custom-send-wrapper {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+
+  #custom-send-header {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  #slide-toggle {
+    margin-bottom: 20px;
+  }
+
+  // Fixing letters being cut off at bottom
+  .mat-form-field-wrapper {
+    margin-bottom: -1.5em !important;
+  }
+
+  .my-mat-form-field {
+    margin-bottom: 20px;
+
+    .mat-form-field-infix {
+      line-height: 1.35;
+    }
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}

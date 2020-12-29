@@ -1,0 +1,98 @@
+<div class="custom-send-margin">
+  <div class="custom-send-wrapper">
+    <h3 id="custom-send-header">Custom Send</h3>
+
+    <mat-slide-toggle
+      color="primary"
+      [(ngModel)]="prefersText"
+      id="slide-toggle"
+    >
+      Prefers Text
+    </mat-slide-toggle>
+    <form #customSendForm="ngForm" (ngSubmit)="onSubmit(customSendForm)">
+      <!-- Email/Phone # field -->
+      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+        <mat-label>
+          {{ prefersText ? "Writer's Phone Number" : "Writer's Email Address" }}
+        </mat-label>
+        <input
+          type="text"
+          matInput
+          id="email"
+          name="email"
+          ngModel
+          email
+          required
+          *ngIf="!prefersText"
+        />
+        <input
+          type="text"
+          matInput
+          id="phone"
+          name="phone"
+          ngModel
+          phone
+          required
+          *ngIf="prefersText"
+        />
+      </mat-form-field>
+      <!-- Email subject -->
+      <mat-form-field
+        appearance="outline"
+        class="full-width my-mat-form-field"
+        *ngIf="!prefersText"
+      >
+        <mat-label>Email Subject</mat-label>
+        <input type="text" matInput id="subject" name="subject" ngModel />
+      </mat-form-field>
+      <!-- Opening comments -->
+      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+        <mat-label>Opening Comments</mat-label>
+        <textarea
+          name="openingComments"
+          id="opening-comments"
+          rows="3"
+          matInput
+          ngModel
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+        <mat-label># Of Addresses</mat-label>
+        <mat-select id="address-amount" name="addressAmount" ngModel required>
+          <!-- https://stackoverflow.com/questions/36354325/angular-2-ngfor-using-numbers-instead-collections -->
+          <mat-option
+            *ngFor="let item of [].constructor(10); let i = index"
+            [value]="i + 1"
+          >
+            {{ i + 1 }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+        <mat-label>Closing Comments</mat-label>
+        <textarea
+          name="closingComments"
+          id="closing-comments"
+          rows="3"
+          matInput
+          ngModel
+        ></textarea>
+      </mat-form-field>
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="!customSendForm.valid"
+      >
+        SUBMIT
+      </button>
+      <button
+        type="button"
+        class="cancel-button"
+        style="margin-left: 30px"
+        (click)="onCancel()"
+      >
+        CANCEL
+      </button>
+    </form>
+  </div>
+</div>

@@ -23,6 +23,7 @@ import { ValidAddressDirective } from './addresses/add-addresses/add-many/valid-
 import { AddWriterComponent } from './writers/add-writer/add-writer.component';
 import { DeleteConfirmationComponent } from './shared/models/delete-confirmation/delete-confirmation.component';
 import { AddressAssignDialogComponent } from './addresses/available-addresses/address-assign-dialog/address-assign-dialog.component';
+import { CustomSendComponent } from './send-addresses/custom-send/custom-send.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddressAssignDialogComponent } from './addresses/available-addresses/ad
     AddWriterComponent,
     DeleteConfirmationComponent,
     AddressAssignDialogComponent,
+    CustomSendComponent,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [

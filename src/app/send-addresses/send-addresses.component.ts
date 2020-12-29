@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Writer } from '../shared/models/writer.model';
 
@@ -41,7 +42,15 @@ export class SendAddressesComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {}
+
+  onCustomSend() {
+    this.router.navigate(['custom-send'], { relativeTo: this.route });
+  }
+
+  onAddWriter() {
+    this.router.navigate(['/writers/add-writer']);
+  }
 }
