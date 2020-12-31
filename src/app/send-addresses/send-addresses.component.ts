@@ -84,9 +84,7 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe((sendConfirmed) => {
           if (sendConfirmed === 'true') {
-            console.log('ayyy');
-            console.log(textData);
-            // this.sendAddressesService.textAddresses(textData);
+            this.sendAddressesService.textAddresses(textData);
           }
         });
       });
