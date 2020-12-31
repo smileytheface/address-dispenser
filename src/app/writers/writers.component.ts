@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Writer } from '../shared/models/writer.model';
-import { DeleteConfirmationComponent } from '../shared/models/delete-confirmation/delete-confirmation.component';
+import { DeleteConfirmationComponent } from '../shared/delete-confirmation/delete-confirmation.component';
 
 import { WritersService } from './writers.service';
 

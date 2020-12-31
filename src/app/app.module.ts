@@ -21,9 +21,10 @@ import { AddManyComponent } from './addresses/add-addresses/add-many/add-many.co
 import { AddManyConfirmationComponent } from './addresses/add-addresses/add-many/add-many-confirmation/add-many-confirmation.component';
 import { ValidAddressDirective } from './addresses/add-addresses/add-many/valid-address.directive';
 import { AddWriterComponent } from './writers/add-writer/add-writer.component';
-import { DeleteConfirmationComponent } from './shared/models/delete-confirmation/delete-confirmation.component';
+import { DeleteConfirmationComponent } from './shared/delete-confirmation/delete-confirmation.component';
 import { AddressAssignDialogComponent } from './addresses/available-addresses/address-assign-dialog/address-assign-dialog.component';
 import { CustomSendComponent } from './send-addresses/custom-send/custom-send.component';
+import { SendConfirmationComponent } from './send-addresses/send-confirmation/send-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { CustomSendComponent } from './send-addresses/custom-send/custom-send.co
     DeleteConfirmationComponent,
     AddressAssignDialogComponent,
     CustomSendComponent,
+    SendConfirmationComponent,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [

@@ -172,12 +172,6 @@ export class AddressesService {
       });
   }
 
-  filterTest() {
-    console.log(this.addresses);
-    // console.log(this.addresses[0].assigned);
-    // console.log(this.addresses.filter((address) => address.assigned));
-  }
-
   updateAddress(id: string, updatedAddress: Address) {
     const newAddress = updatedAddress;
     console.log(newAddress);

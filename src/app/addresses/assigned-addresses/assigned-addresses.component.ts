@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { defaultThrottleConfig } from 'rxjs/internal/operators/throttle';
 import { Address } from 'src/app/shared/models/address.model';
-import { DeleteConfirmationComponent } from 'src/app/shared/models/delete-confirmation/delete-confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/shared/delete-confirmation/delete-confirmation.component';
 import { Writer } from 'src/app/shared/models/writer.model';
 import { WritersService } from 'src/app/writers/writers.service';
 import { AddressesService } from '../addresses.service';

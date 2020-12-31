@@ -1,11 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AddressesService } from '../addresses/addresses.service';
-import { Address } from '../shared/models/address.model';
 
-import { Writer } from '../shared/models/writer.model';
+import { AddressesService } from '../addresses/addresses.service';
 import { WritersService } from '../writers/writers.service';
+import { SendAddressesService } from './send-addresses.service';
+
+import { Address } from '../shared/models/address.model';
+import { Writer } from '../shared/models/writer.model';
+import { TextData } from '../shared/models/text-data.model';
+import { MatDialog } from '@angular/material/dialog';
+import { SendConfirmationComponent } from './send-confirmation/send-confirmation.component';
 
 @Component({
   selector: 'app-send-addresses',
@@ -17,12 +22,16 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   writersSub: Subscription;
   addressesSub: Subscription;
+  startComment: string = 'Here you go!';
+  endComment: string = 'Sent from Address Dispenser!';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private writersService: WritersService,
-    private addressesService: AddressesService
+    private addressesService: AddressesService,
+    private sendAddressesService: SendAddressesService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +58,38 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
   }
 
   onSend(writer: Writer) {
-    // let addressToAssigne;
+    let textData: TextData;
+    const addressAmount = writer.defaultAddressAmount;
+    const writerId = writer.id;
+    const writerPhone = writer.phone;
+    const writerEmail = writer.email;
+    this.addressesService.getUnassignedAddresses();
+    this.addressesSub = this.addressesService
+      .getUnassignedAddressesUpdatedListener()
+      .subscribe((unassignedAddresses) => {
+        let availableAddresses: Address[] = unassignedAddresses;
+        let addressesToAssign = availableAddresses.splice(0, addressAmount);
+        this.addressesSub.unsubscribe();
+        textData = {
+          writerPhone: writerPhone,
+          startComment: this.startComment,
+          endComment: this.endComment,
+          addresses: addressesToAssign,
+          writerId: writerId,
+        };
+
+        let dialogRef = this.dialog.open(SendConfirmationComponent, {
+          data: textData,
+        });
+
+        dialogRef.afterClosed().subscribe((sendConfirmed) => {
+          if (sendConfirmed === 'true') {
+            console.log('ayyy');
+            console.log(textData);
+            // this.sendAddressesService.textAddresses(textData);
+          }
+        });
+      });
   }
 
   getUnassignedAddressesTest() {
@@ -61,6 +101,7 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
       .subscribe((unassignedAddresses) => {
         availableAddresses = unassignedAddresses;
         console.log(availableAddresses);
+        this.addressesSub.unsubscribe();
       });
   }
 

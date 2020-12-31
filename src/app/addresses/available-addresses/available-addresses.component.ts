@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DeleteConfirmationComponent } from 'src/app/shared/models/delete-confirmation/delete-confirmation.component';
+import { DeleteConfirmationComponent } from 'src/app/shared/delete-confirmation/delete-confirmation.component';
 
 import { Address } from '../../shared/models/address.model';
 import { AddressesService } from '../addresses.service';
