@@ -1,8 +1,13 @@
 <h2 mat-dialog-title>
   Please confirm that you would like to send the following message to
-  {{ data.writerPhone }}:
+  {{ data.writerPhone ? data.writerPhone : data.writerEmail }}:
 </h2>
 <mat-dialog-content>
+  <span *ngIf="data.subject" style="font-weight: bold">
+    Subject: {{ data.subject }}
+    <br />
+    <br />
+  </span>
   <span *ngIf="data.startComment">
     {{ data.startComment }}
     <br />

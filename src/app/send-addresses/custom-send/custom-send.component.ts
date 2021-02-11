@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AddressesService } from 'src/app/addresses/addresses.service';
 import { Address } from 'src/app/shared/models/address.model';
+import { EmailData } from 'src/app/shared/models/email-data.model';
 
 import { TextData } from 'src/app/shared/models/text-data.model';
 import { SendAddressesService } from '../send-addresses.service';
@@ -30,7 +31,6 @@ export class CustomSendComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
-    let textData: TextData;
     const addressAmount = form.value.addressAmount;
     this.addressesService.getUnassignedAddresses();
     this.addressesSub = this.addressesService
@@ -39,23 +39,47 @@ export class CustomSendComponent implements OnInit {
         let addresses: Address[] = availableAddresses;
         let addressesToAssign = availableAddresses.splice(0, addressAmount);
         this.addressesSub.unsubscribe();
-        textData = {
-          writerPhone: form.value.phone,
-          startComment: form.value.openingComments,
-          endComment: form.value.closingComments,
-          addresses: addressesToAssign,
-          writerId: null,
-        };
 
-        let dialogRef = this.dialog.open(SendConfirmationComponent, {
-          data: textData,
-        });
+        if (this.prefersText) {
+          let textData: TextData;
+          textData = {
+            writerPhone: form.value.phone,
+            startComment: form.value.openingComments,
+            endComment: form.value.closingComments,
+            addresses: addressesToAssign,
+            writerId: null,
+          };
 
-        dialogRef.afterClosed().subscribe((sendConfirmed) => {
-          if (sendConfirmed === 'true') {
-            this.sendAddressesService.textAddresses(textData);
-          }
-        });
+          let dialogRef = this.dialog.open(SendConfirmationComponent, {
+            data: textData,
+          });
+
+          dialogRef.afterClosed().subscribe((sendConfirmed) => {
+            if (sendConfirmed === 'true') {
+              this.sendAddressesService.textAddresses(textData);
+            }
+          });
+        } else {
+          let emailData: EmailData;
+          emailData = {
+            writerEmail: form.value.email,
+            startComment: form.value.openingComments,
+            endComment: form.value.closingComments,
+            addresses: addressesToAssign,
+            writerId: null,
+            subject: form.value.subject,
+          };
+
+          let dialogRef = this.dialog.open(SendConfirmationComponent, {
+            data: emailData,
+          });
+
+          dialogRef.afterClosed().subscribe((sendConfirmed) => {
+            if (sendConfirmed === 'true') {
+              this.sendAddressesService.emailAddresses(emailData);
+            }
+          });
+        }
       });
   }
 

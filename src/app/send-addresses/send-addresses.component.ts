@@ -11,6 +11,7 @@ import { Writer } from '../shared/models/writer.model';
 import { TextData } from '../shared/models/text-data.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SendConfirmationComponent } from './send-confirmation/send-confirmation.component';
+import { EmailData } from '../shared/models/email-data.model';
 
 @Component({
   selector: 'app-send-addresses',
@@ -24,6 +25,7 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
   addressesSub: Subscription;
   startComment: string = 'Here you go!';
   endComment: string = 'Sent from Address Dispenser!';
+  subject: string = 'Your Addresses';
 
   constructor(
     private router: Router,
@@ -58,11 +60,11 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
   }
 
   onSend(writer: Writer) {
-    let textData: TextData;
     const addressAmount = writer.defaultAddressAmount;
     const writerId = writer.id;
     const writerPhone = writer.phone;
     const writerEmail = writer.email;
+    const prefersText = writer.prefersText;
     this.addressesService.getUnassignedAddresses();
     this.addressesSub = this.addressesService
       .getUnassignedAddressesUpdatedListener()
@@ -70,23 +72,47 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
         let availableAddresses: Address[] = unassignedAddresses;
         let addressesToAssign = availableAddresses.splice(0, addressAmount);
         this.addressesSub.unsubscribe();
-        textData = {
-          writerPhone: writerPhone,
-          startComment: this.startComment,
-          endComment: this.endComment,
-          addresses: addressesToAssign,
-          writerId: writerId,
-        };
 
-        let dialogRef = this.dialog.open(SendConfirmationComponent, {
-          data: textData,
-        });
+        if (writer.prefersText) {
+          let textData: TextData;
+          textData = {
+            writerPhone: writerPhone,
+            startComment: this.startComment,
+            endComment: this.endComment,
+            addresses: addressesToAssign,
+            writerId: writerId,
+          };
 
-        dialogRef.afterClosed().subscribe((sendConfirmed) => {
-          if (sendConfirmed === 'true') {
-            this.sendAddressesService.textAddresses(textData);
-          }
-        });
+          let dialogRef = this.dialog.open(SendConfirmationComponent, {
+            data: textData,
+          });
+
+          dialogRef.afterClosed().subscribe((sendConfirmed) => {
+            if (sendConfirmed === 'true') {
+              this.sendAddressesService.textAddresses(textData);
+            }
+          });
+        } else {
+          let emailData: EmailData;
+          emailData = {
+            writerEmail: writerEmail,
+            startComment: this.startComment,
+            endComment: this.endComment,
+            addresses: addressesToAssign,
+            writerId: writerId,
+            subject: this.subject,
+          };
+
+          let dialogRef = this.dialog.open(SendConfirmationComponent, {
+            data: emailData,
+          });
+
+          dialogRef.afterClosed().subscribe((sendConfirmed) => {
+            if (sendConfirmed === 'true') {
+              this.sendAddressesService.emailAddresses(emailData);
+            }
+          });
+        }
       });
   }
 
