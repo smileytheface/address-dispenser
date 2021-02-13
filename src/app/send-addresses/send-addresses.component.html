@@ -34,7 +34,13 @@
       <p>{{ writer.name }}</p>
       <p class="address-amount">
         {{ writer.defaultAddressAmount }} Addresses |
-        <a (click)="onEdit(writer.id)" stlye="cursor: pointer">Edit</a>
+        <a
+          (click)="onEdit(writer.id)"
+          style="cursor: pointer"
+          href="javascript:void(0)"
+        >
+          Edit
+        </a>
       </p>
     </div>
     <span class="spacer"></span>
