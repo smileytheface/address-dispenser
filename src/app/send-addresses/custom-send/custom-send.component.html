@@ -11,7 +11,10 @@
     </mat-slide-toggle>
     <form #customSendForm="ngForm" (ngSubmit)="onSubmit(customSendForm)">
       <!-- Email/Phone # field -->
-      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-form-field
+        appearance="outline"
+        class="full-width custom-send-mat-form-field"
+      >
         <mat-label>
           {{ prefersText ? "Writer's Phone Number" : "Writer's Email Address" }}
         </mat-label>
@@ -39,14 +42,17 @@
       <!-- Email subject -->
       <mat-form-field
         appearance="outline"
-        class="full-width my-mat-form-field"
+        class="full-width custom-send-mat-form-field"
         *ngIf="!prefersText"
       >
         <mat-label>Subject</mat-label>
         <input type="text" matInput id="subject" name="subject" ngModel />
       </mat-form-field>
       <!-- Opening comments -->
-      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-form-field
+        appearance="outline"
+        class="full-width custom-send-mat-form-field"
+      >
         <mat-label>Opening Comments</mat-label>
         <textarea
           name="openingComments"
@@ -56,7 +62,10 @@
           ngModel
         ></textarea>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-form-field
+        appearance="outline"
+        class="full-width custom-send-mat-form-field"
+      >
         <mat-label># Of Addresses</mat-label>
         <mat-select id="address-amount" name="addressAmount" ngModel required>
           <!-- https://stackoverflow.com/questions/36354325/angular-2-ngfor-using-numbers-instead-collections -->
@@ -68,7 +77,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-form-field
+        appearance="outline"
+        class="full-width custom-send-mat-form-field"
+      >
         <mat-label>Closing Comments</mat-label>
         <textarea
           name="closingComments"
