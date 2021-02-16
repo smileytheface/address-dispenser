@@ -11,6 +11,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const uiModules = [
   MatSidenavModule,
@@ -24,6 +25,7 @@ const uiModules = [
   MatProgressSpinnerModule,
   MatDialogModule,
   MatSelectModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({

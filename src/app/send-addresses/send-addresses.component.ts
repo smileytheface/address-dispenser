@@ -12,6 +12,7 @@ import { TextData } from '../shared/models/text-data.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SendConfirmationComponent } from './send-confirmation/send-confirmation.component';
 import { EmailData } from '../shared/models/email-data.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-send-addresses',
@@ -33,7 +34,8 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
     private writersService: WritersService,
     private addressesService: AddressesService,
     private sendAddressesService: SendAddressesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -70,8 +72,17 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
       .getUnassignedAddressesUpdatedListener()
       .subscribe((unassignedAddresses) => {
         let availableAddresses: Address[] = unassignedAddresses;
-        let addressesToAssign = availableAddresses.splice(0, addressAmount);
         this.addressesSub.unsubscribe();
+
+        if (availableAddresses.length < addressAmount) {
+          this.openSnackBar(
+            'Cannot send, not enough available addresses',
+            'Okay'
+          );
+          return;
+        }
+
+        let addressesToAssign = availableAddresses.splice(0, addressAmount);
 
         if (writer.prefersText) {
           let textData: TextData;
@@ -127,6 +138,10 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
         console.log(availableAddresses);
         this.addressesSub.unsubscribe();
       });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 2000 });
   }
 
   ngOnDestroy() {
