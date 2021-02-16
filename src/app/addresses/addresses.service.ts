@@ -225,9 +225,10 @@ export class AddressesService {
         const updatedAddressId = updatedAssignedAddresses.findIndex(
           (address) => address.id === addressId
         );
-        updatedAssignedAddresses.splice(updatedAddressId);
+        updatedAssignedAddresses.splice(updatedAddressId, 1);
         this.assignedAddresses = updatedAssignedAddresses;
         this.assignedAddressesUpdated.next([...this.assignedAddresses]);
+        console.log(this.assignedAddresses);
       });
   }
 
