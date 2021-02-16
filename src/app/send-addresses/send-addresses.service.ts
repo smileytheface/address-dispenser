@@ -8,6 +8,9 @@ import { EmailData } from '../shared/models/email-data.model';
   providedIn: 'root',
 })
 export class SendAddressesService {
+  sharedTextData: TextData;
+  sharedEmailData: EmailData;
+
   constructor(private http: HttpClient) {}
 
   textAddresses(textData: TextData) {

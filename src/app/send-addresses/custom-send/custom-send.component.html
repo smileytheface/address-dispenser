@@ -7,7 +7,7 @@
       [(ngModel)]="prefersText"
       id="slide-toggle"
     >
-      Prefers Text
+      Text
     </mat-slide-toggle>
     <form #customSendForm="ngForm" (ngSubmit)="onSubmit(customSendForm)">
       <!-- Email/Phone # field -->
@@ -55,8 +55,8 @@
       >
         <mat-label>Opening Comments</mat-label>
         <textarea
-          name="openingComments"
-          id="opening-comments"
+          name="startComment"
+          id="start-comment"
           rows="3"
           matInput
           ngModel

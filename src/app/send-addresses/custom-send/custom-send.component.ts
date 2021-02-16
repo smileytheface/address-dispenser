@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { AddressesService } from 'src/app/addresses/addresses.service';
 import { Address } from 'src/app/shared/models/address.model';
 import { EmailData } from 'src/app/shared/models/email-data.model';
@@ -20,6 +20,8 @@ import { SendConfirmationComponent } from '../send-confirmation/send-confirmatio
 export class CustomSendComponent implements OnInit {
   prefersText: boolean;
   addressesSub: Subscription;
+  emailData: EmailData;
+  @ViewChild('customSendForm') customSendForm: NgForm;
 
   constructor(
     private router: Router,
@@ -28,7 +30,36 @@ export class CustomSendComponent implements OnInit {
     private sendAddressesService: SendAddressesService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.sendAddressesService.sharedEmailData) {
+      this.prefersText = false;
+      let emailData = this.sendAddressesService.sharedEmailData;
+      let formData = {
+        email: emailData.writerEmail,
+        subject: emailData.subject,
+        startComment: emailData.startComment,
+        addressAmount: emailData.addresses.length,
+        closingComments: emailData.endComment,
+      };
+      setTimeout(() => {
+        this.customSendForm.setValue(formData);
+        this.sendAddressesService.sharedEmailData = null;
+      });
+    } else if (this.sendAddressesService.sharedTextData) {
+      this.prefersText = true;
+      let textData = this.sendAddressesService.sharedTextData;
+      let formData = {
+        phone: textData.writerPhone,
+        startComment: textData.startComment,
+        addressAmount: textData.addresses.length,
+        closingComments: textData.endComment,
+      };
+      setTimeout(() => {
+        this.customSendForm.setValue(formData);
+        this.sendAddressesService.sharedTextData = null;
+      });
+    }
+  }
 
   onSubmit(form: NgForm) {
     const addressAmount = form.value.addressAmount;
@@ -63,7 +94,7 @@ export class CustomSendComponent implements OnInit {
           let emailData: EmailData;
           emailData = {
             writerEmail: form.value.email,
-            startComment: form.value.openingComments,
+            startComment: form.value.startComment,
             endComment: form.value.closingComments,
             addresses: addressesToAssign,
             writerId: null,

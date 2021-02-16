@@ -101,6 +101,9 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
           dialogRef.afterClosed().subscribe((sendConfirmed) => {
             if (sendConfirmed === 'true') {
               this.sendAddressesService.textAddresses(textData);
+            } else if (sendConfirmed === 'edit') {
+              this.sendAddressesService.sharedTextData = textData;
+              this.router.navigate(['custom-send'], { relativeTo: this.route });
             }
           });
         } else {
@@ -121,6 +124,9 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
           dialogRef.afterClosed().subscribe((sendConfirmed) => {
             if (sendConfirmed === 'true') {
               this.sendAddressesService.emailAddresses(emailData);
+            } else if (sendConfirmed === 'edit') {
+              this.sendAddressesService.sharedEmailData = emailData;
+              this.router.navigate(['custom-send'], { relativeTo: this.route });
             }
           });
         }
