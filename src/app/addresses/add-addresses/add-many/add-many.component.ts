@@ -42,7 +42,7 @@ export class AddManyComponent implements OnInit {
         }
 
         if (addressesMatch) {
-          this._snackBar.open('Addresses Added Successfully!', null, {
+          this._snackBar.open('Addresses Added Successfully!', 'Close', {
             duration: 3000,
           });
         }
@@ -51,7 +51,6 @@ export class AddManyComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
-      console.log('hey');
       return;
     }
 
@@ -63,7 +62,6 @@ export class AddManyComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((confirmed) => {
-      console.log(confirmed);
       if (confirmed === 'true') {
         this.addressesService.addAddresses(addressArray);
         this.lastSubmittedAddresses = addressArray;

@@ -135,7 +135,6 @@ export class AddressesService {
   }
 
   addAddresses(addresses: Address[]) {
-    console.log('fired!');
     let newAddresses: Address[] = addresses;
     this.http
       .post<any>('http://localhost:3000/api/addresses/add-many', newAddresses)

@@ -67,7 +67,7 @@ export class AddWriterComponent implements OnInit, OnDestroy {
       .getWriterAddedListener()
       .subscribe((writerAdded) => {
         if (this.lastSubmittedWriter.name === writerAdded.name) {
-          this._snackBar.open('Writer Added Successfully!', null, {
+          this._snackBar.open('Writer Added Successfully!', 'Close', {
             duration: 3000,
           });
         }

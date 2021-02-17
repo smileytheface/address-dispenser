@@ -79,7 +79,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
       .getAddressAddedListener()
       .subscribe((address) => {
         if (address === this.lastSubmittedAddress) {
-          this._snackBar.open('Address Added Successfully!', null, {
+          this._snackBar.open('Address Added Successfully!', 'Close', {
             duration: 3000,
           });
         } else {
@@ -91,7 +91,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
       .getAddressEditedListener()
       .subscribe((id: string) => {
         if (id === this.lastSubmittedAddress.id) {
-          this._snackBar.open('Address Updated Successfully!', null, {
+          this._snackBar.open('Address Updated Successfully!', 'Close', {
             duration: 3000,
           });
         } else {
