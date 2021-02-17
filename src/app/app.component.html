@@ -29,11 +29,25 @@
       class="sidenav"
       (click)="onSideNavClick()"
     >
-      <a mat-button routerLink="/">Home</a>
-      <a mat-button routerLink="/send-addresses">Send Addresses</a>
-      <a mat-button routerLink="/writers">Writers</a>
-      <a mat-button routerLink="/available-addresses">Available Addresses</a>
-      <a mat-button routerLink="/assigned-addresses">Assigned Addresses</a>
+      <a mat-button routerLink="/">
+        <mat-icon class="nav-icon">home</mat-icon><span>Home</span>
+      </a>
+      <a mat-button routerLink="/send-addresses">
+        <mat-icon class="nav-icon">send</mat-icon>
+        <span>Send Addresses</span>
+      </a>
+      <a mat-button routerLink="/writers">
+        <mat-icon class="nav-icon">create</mat-icon>
+        <span>Writers</span>
+      </a>
+      <a mat-button routerLink="/available-addresses">
+        <mat-icon class="nav-icon">place</mat-icon>
+        <span>Available Addresses</span>
+      </a>
+      <a mat-button routerLink="/assigned-addresses">
+        <mat-icon class="nav-icon">edit_location_alt</mat-icon>
+        <span>Assigned Addresses</span>
+      </a>
     </mat-sidenav>
     <mat-sidenav-content>
       <main>
