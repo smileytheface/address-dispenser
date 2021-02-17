@@ -27,8 +27,10 @@
         <h3>{{ writer.name }}</h3>
 
         <mat-accordion>
-          <mat-expansion-panel *ngFor="let address of addressesByName(writer)">
-            <mat-expansion-panel-header>
+          <mat-expansion-panel
+            *ngFor="let address of addressesByName(writer); let i = index"
+          >
+            <mat-expansion-panel-header *ngIf="address">
               <mat-panel-title> {{ address.name }} </mat-panel-title>
             </mat-expansion-panel-header>
             <p>
@@ -54,6 +56,9 @@
             </mat-action-row>
           </mat-expansion-panel>
         </mat-accordion>
+        <div *ngIf="addressesByName(writer).length < 1">
+          No addresses assigned to {{ writer.name }}
+        </div>
       </div>
     </div>
 

@@ -1,11 +1,9 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { TitleCasePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { defaultThrottleConfig } from 'rxjs/internal/operators/throttle';
 import { Address } from 'src/app/shared/models/address.model';
 import { DeleteConfirmationComponent } from 'src/app/shared/delete-confirmation/delete-confirmation.component';
 import { Writer } from 'src/app/shared/models/writer.model';
@@ -121,6 +119,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
         writersAddresses.push(address);
       }
     });
+
     return writersAddresses;
   }
 
