@@ -21,6 +21,17 @@ import { FilterBottomSheetComponent } from './filter-bottom-sheet/filter-bottom-
 export class AssignedAddressesComponent implements OnInit, OnDestroy {
   writers: Writer[] = [];
 
+  other: Writer = {
+    id: null,
+    name: 'Other',
+    email: null,
+    phone: null,
+    prefersText: null,
+    defaultAddressAmount: null,
+    totalCheckedOut: null,
+    color: null,
+  };
+
   assignedAddresses: Address[] = [];
 
   filteredWriters: Writer[];
@@ -71,6 +82,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       .getWritersUpdatedListener()
       .subscribe((writers) => {
         this.writers = writers;
+        this.writers.push(this.other);
+        console.log(this.writers);
         this.filteredWriters = this.writers;
         this.writersLoading = false;
         this.checkLoad();
@@ -101,7 +114,10 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     let allAddresses: Address[] = this.assignedAddresses;
 
     allAddresses.forEach((address) => {
-      if (address.writer && address.writer === writer.id) {
+      if (
+        (address.writer && address.writer === writer.id) ||
+        (writer.name === 'Other' && !address.writer && address.assigned)
+      ) {
         writersAddresses.push(address);
       }
     });
