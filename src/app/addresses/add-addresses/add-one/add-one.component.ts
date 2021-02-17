@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Address } from 'src/app/shared/models/address.model';
@@ -14,19 +15,6 @@ import { AddressesService } from '../../addresses.service';
   templateUrl: './add-one.component.html',
   styleUrls: ['./add-one.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // animation taken from https://indepth.dev/in-depth-guide-into-animations-in-angular/
-  // author: William Tjondrosuharto
-  animations: [
-    trigger('fadeSlideInOut', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(10px)' }),
-        animate('500ms', style({ opacity: 0.6, transform: 'translateY(0)' })),
-      ]),
-      transition(':leave', [
-        animate('500ms', style({ opacity: 0, transform: 'translateY(10px)' })),
-      ]),
-    ]),
-  ],
 })
 export class AddOneComponent implements OnInit, OnDestroy {
   addressForm: FormGroup;
@@ -46,7 +34,8 @@ export class AddOneComponent implements OnInit, OnDestroy {
     private addressesService: AddressesService,
     public route: ActivatedRoute,
     public router: Router,
-    private writersService: WritersService
+    private writersService: WritersService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +79,9 @@ export class AddOneComponent implements OnInit, OnDestroy {
       .getAddressAddedListener()
       .subscribe((address) => {
         if (address === this.lastSubmittedAddress) {
-          this.showAddressAddedMessage();
+          this._snackBar.open('Address Added Successfully!', null, {
+            duration: 3000,
+          });
         } else {
           return;
         }
@@ -100,7 +91,9 @@ export class AddOneComponent implements OnInit, OnDestroy {
       .getAddressEditedListener()
       .subscribe((id: string) => {
         if (id === this.lastSubmittedAddress.id) {
-          this.showAddressAddedMessage();
+          this._snackBar.open('Address Updated Successfully!', null, {
+            duration: 3000,
+          });
         } else {
           return;
         }
@@ -184,13 +177,6 @@ export class AddOneComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/available-addresses']);
     }
-  }
-
-  showAddressAddedMessage() {
-    this.addressSuccessfullyAdded = true;
-    setTimeout(() => {
-      this.addressSuccessfullyAdded = false;
-    }, 4000);
   }
 
   ngOnDestroy() {

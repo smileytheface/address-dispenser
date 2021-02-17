@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Address } from '../../../shared/models/address.model';
@@ -12,17 +13,6 @@ import { AddManyConfirmationComponent } from './add-many-confirmation/add-many-c
   selector: 'app-add-many',
   templateUrl: './add-many.component.html',
   styleUrls: ['./add-many.component.scss'],
-  animations: [
-    trigger('fadeSlideInOut', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(10px)' }),
-        animate('500ms', style({ opacity: 0.6, transform: 'translateY(0)' })),
-      ]),
-      transition(':leave', [
-        animate('500ms', style({ opacity: 0, transform: 'translateY(10px)' })),
-      ]),
-    ]),
-  ],
 })
 export class AddManyComponent implements OnInit {
   addedSuccessfully: boolean;
@@ -33,7 +23,8 @@ export class AddManyComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public addressesService: AddressesService,
-    public router: Router
+    public router: Router,
+    public _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +42,9 @@ export class AddManyComponent implements OnInit {
         }
 
         if (addressesMatch) {
-          this.addedSuccessfullyMsg();
+          this._snackBar.open('Addresses Added Successfully!', null, {
+            duration: 3000,
+          });
         }
       });
   }
@@ -111,12 +104,5 @@ export class AddManyComponent implements OnInit {
     }
 
     return addresses;
-  }
-
-  addedSuccessfullyMsg() {
-    this.addedSuccessfully = true;
-    setTimeout(() => {
-      this.addedSuccessfully = false;
-    }, 4000);
   }
 }

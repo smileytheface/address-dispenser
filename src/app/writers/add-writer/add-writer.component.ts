@@ -7,6 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { throwIfEmpty } from 'rxjs/operators';
@@ -19,19 +20,6 @@ import { WritersService } from '../writers.service';
   templateUrl: './add-writer.component.html',
   styleUrls: ['./add-writer.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // animation taken from https://indepth.dev/in-depth-guide-into-animations-in-angular/
-  // author: William Tjondrosuharto
-  animations: [
-    trigger('fadeSlideInOut', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(10px)' }),
-        animate('500ms', style({ opacity: 0.6, transform: 'translateY(0)' })),
-      ]),
-      transition(':leave', [
-        animate('500ms', style({ opacity: 0, transform: 'translateY(10px)' })),
-      ]),
-    ]),
-  ],
 })
 export class AddWriterComponent implements OnInit, OnDestroy {
   colors = [
@@ -40,7 +28,6 @@ export class AddWriterComponent implements OnInit, OnDestroy {
     { colorValue: '#FFCFD5', colorName: 'Salmon' },
     { colorValue: '#FFECEF', colorName: 'Light Pink' },
   ];
-  writerAddedSuccessfully: boolean = false;
   lastSubmittedWriter: Writer;
   writerAddedSub: Subscription;
   editMode: boolean = false;
@@ -52,7 +39,8 @@ export class AddWriterComponent implements OnInit, OnDestroy {
   constructor(
     public router: Router,
     public route: ActivatedRoute,
-    private writersService: WritersService
+    private writersService: WritersService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +67,9 @@ export class AddWriterComponent implements OnInit, OnDestroy {
       .getWriterAddedListener()
       .subscribe((writerAdded) => {
         if (this.lastSubmittedWriter.name === writerAdded.name) {
-          this.successfullyAddedMessage();
+          this._snackBar.open('Writer Added Successfully!', null, {
+            duration: 3000,
+          });
         }
       });
   }
@@ -113,13 +103,6 @@ export class AddWriterComponent implements OnInit, OnDestroy {
 
   onCancel() {
     this.router.navigate(['/writers']);
-  }
-
-  successfullyAddedMessage() {
-    this.writerAddedSuccessfully = true;
-    setTimeout(() => {
-      this.writerAddedSuccessfully = false;
-    }, 4000);
   }
 
   // Javascript By Grepper on Jul 23 2019
