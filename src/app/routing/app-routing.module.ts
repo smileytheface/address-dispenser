@@ -10,6 +10,7 @@ import { AddOneComponent } from '../addresses/add-addresses/add-one/add-one.comp
 import { AddManyComponent } from '../addresses/add-addresses/add-many/add-many.component';
 import { AddWriterComponent } from '../writers/add-writer/add-writer.component';
 import { CustomSendComponent } from '../send-addresses/custom-send/custom-send.component';
+import { SignInComponent } from '../auth/sign-in/sign-in.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -46,6 +47,7 @@ const routes: Routes = [
   { path: 'writers', component: WritersComponent },
   { path: 'writers/add-writer', component: AddWriterComponent },
   { path: 'writers/edit/:writerId', component: AddWriterComponent },
+  { path: 'sign-in', component: SignInComponent },
 ];
 
 @NgModule({

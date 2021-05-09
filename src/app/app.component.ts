@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'address-dispenser';
   isMenuOpen: boolean = false;
+  isSignedIn: boolean = false;
 
   onSideNavClick() {
     this.isMenuOpen = false;

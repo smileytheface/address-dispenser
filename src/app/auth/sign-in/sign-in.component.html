@@ -1,0 +1,55 @@
+<div class="page-container">
+  <div id="sign-in-form">
+    <img
+      src="../../../assets/images/logos/Address-Dispenser-Long-Text.svg"
+      alt="Address-Dispenser-Logo"
+      id="logo"
+    />
+    <!-- <h1>Sign In</h1> -->
+    <br />
+    <form
+      #signInForm="ngForm"
+      class="sign-in"
+      (ngSubmit)="onSubmit(signInForm)"
+    >
+      <mat-form-field
+        appearance="outline"
+        class="full-width my-mat-form-fields"
+      >
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          id="email"
+          name="email"
+          email
+          ngModel
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        class="full-width my-mat-form-fields"
+      >
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          id="password"
+          name="password"
+          password
+          ngModel
+          required
+        />
+      </mat-form-field>
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="!signInForm.valid"
+      >
+        SIGN IN
+      </button>
+    </form>
+  </div>
+</div>

@@ -25,6 +25,7 @@ import { DeleteConfirmationComponent } from './shared/delete-confirmation/delete
 import { AddressAssignDialogComponent } from './addresses/available-addresses/address-assign-dialog/address-assign-dialog.component';
 import { CustomSendComponent } from './send-addresses/custom-send/custom-send.component';
 import { SendConfirmationComponent } from './send-addresses/send-confirmation/send-confirmation.component';
+import { SignInComponent } from './auth/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { SendConfirmationComponent } from './send-addresses/send-confirmation/se
     AddressAssignDialogComponent,
     CustomSendComponent,
     SendConfirmationComponent,
+    SignInComponent,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [

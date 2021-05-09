@@ -1,0 +1,33 @@
+.page-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  #logo {
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .sign-in {
+    .mat-form-field-wrapper {
+      margin-bottom: -1.5em !important;
+    }
+    .my-mat-form-fields {
+      margin-bottom: 20px;
+
+      .mat-form-field-infix {
+        line-height: 1.35;
+      }
+    }
+  }
+}

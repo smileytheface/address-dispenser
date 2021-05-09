@@ -1,5 +1,5 @@
 <div class="page-container">
-  <div id="heading-wrapper">
+  <div id="heading-wrapper" *ngIf="isSignedIn">
     <button
       mat-button
       class="menu-button"
@@ -50,7 +50,7 @@
       </a>
     </mat-sidenav>
     <mat-sidenav-content>
-      <main>
+      <main [class.noPadding]="!isSignedIn">
         <router-outlet></router-outlet>
       </main>
     </mat-sidenav-content>
