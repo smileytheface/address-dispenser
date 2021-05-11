@@ -24,6 +24,8 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   writersSub: Subscription;
   addressesSub: Subscription;
+  messageSentSub: Subscription;
+  messageNotSentSub: Subscription;
   startComment: string = 'Here you go!';
   endComment: string = 'Sent from Address Dispenser!';
   subject: string = 'Your Addresses';
@@ -46,6 +48,20 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
       .subscribe((writers: Writer[]) => {
         this.writers = writers;
         this.isLoading = false;
+      });
+
+    // Alert user when message is sent successfully
+    this.messageSentSub = this.sendAddressesService
+      .getMesageSentListener()
+      .subscribe((message: string) => {
+        this.openSnackBar(message, 'Okay');
+      });
+
+    // Alert for errors in sending message
+    this.messageNotSentSub = this.sendAddressesService
+      .getMessageNotSentListener()
+      .subscribe((message: string) => {
+        this.openSnackBar(message, 'Okay');
       });
   }
 
@@ -147,10 +163,12 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
   }
 
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, { duration: 2000 });
+    this._snackBar.open(message, action, { duration: 4000 });
   }
 
   ngOnDestroy() {
     this.writersSub.unsubscribe();
+    this.messageSentSub.unsubscribe();
+    this.messageNotSentSub.unsubscribe();
   }
 }

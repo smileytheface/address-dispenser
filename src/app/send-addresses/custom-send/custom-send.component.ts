@@ -1,6 +1,13 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { AddressesService } from 'src/app/addresses/addresses.service';
@@ -17,17 +24,20 @@ import { SendConfirmationComponent } from '../send-confirmation/send-confirmatio
   styleUrls: ['./custom-send.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CustomSendComponent implements OnInit {
+export class CustomSendComponent implements OnInit, OnDestroy {
   prefersText: boolean;
   addressesSub: Subscription;
   emailData: EmailData;
+  messageSentSub: Subscription;
+  messageNotSentSub: Subscription;
   @ViewChild('customSendForm') customSendForm: NgForm;
 
   constructor(
     private router: Router,
     private addressesService: AddressesService,
     private dialog: MatDialog,
-    private sendAddressesService: SendAddressesService
+    private sendAddressesService: SendAddressesService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +69,20 @@ export class CustomSendComponent implements OnInit {
         this.sendAddressesService.sharedTextData = null;
       });
     }
+
+    // Alert user when message is sent successfully
+    this.messageSentSub = this.sendAddressesService
+      .getMesageSentListener()
+      .subscribe((message: string) => {
+        this.openSnackBar(message, 'Okay');
+      });
+
+    // Alert for errors in sending message
+    this.messageNotSentSub = this.sendAddressesService
+      .getMessageNotSentListener()
+      .subscribe((message: string) => {
+        this.openSnackBar(message, 'Okay');
+      });
   }
 
   onSubmit(form: NgForm) {
@@ -116,5 +140,14 @@ export class CustomSendComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['/send-addresses']);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 4000 });
+  }
+
+  ngOnDestroy() {
+    this.messageSentSub.unsubscribe();
+    this.messageNotSentSub.unsubscribe();
   }
 }
