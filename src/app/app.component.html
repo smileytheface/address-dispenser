@@ -16,10 +16,6 @@
           height="38"
       /></a>
     </div>
-
-    <div class="logout">
-      <button mat-button (click)="logout()">Logout</button>
-    </div>
   </div>
 
   <mat-sidenav-container class="sidenav-container">
@@ -49,6 +45,10 @@
       <a mat-button routerLink="/assigned-addresses">
         <mat-icon class="nav-icon">edit_location_alt</mat-icon>
         <span>Assigned Addresses</span>
+      </a>
+      <a mat-button id="side-nav-logout-button" (click)="logout()">
+        <mat-icon class="nav-icon">logout</mat-icon>
+        <span>Logout</span>
       </a>
     </mat-sidenav>
     <mat-sidenav-content>
