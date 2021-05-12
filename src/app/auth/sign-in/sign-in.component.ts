@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -9,12 +11,27 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./sign-in.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SignInComponent implements OnInit {
-  constructor(private router: Router, private authService: AuthService) {}
+export class SignInComponent implements OnInit, OnDestroy {
+  private authErrorSub: Subscription;
 
-  ngOnInit(): void {}
+  constructor(
+    private authService: AuthService,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.authErrorSub = this.authService
+      .getAuthError()
+      .subscribe((errorMessage) => {
+        this.snackBar.open(errorMessage, 'Okay');
+      });
+  }
 
   onSubmit(form: NgForm) {
     this.authService.signIn(form.value.email, form.value.password);
+  }
+
+  ngOnDestroy() {
+    this.authErrorSub.unsubscribe();
   }
 }
