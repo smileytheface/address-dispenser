@@ -33,8 +33,11 @@
     margin-top: 20px;
   }
 
-  .account {
-    flex: 1;
+  .logout {
+    left: 100%;
+    right: 0%;
+    transform: translateX(-100px);
+    margin-top: 20px;
     text-align: right;
   }
 }

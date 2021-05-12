@@ -29,6 +29,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isMenuOpen = false;
   }
 
+  logout() {
+    this.authService.logout();
+  }
+
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
   }

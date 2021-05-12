@@ -65,6 +65,16 @@ export class AuthService {
       });
   }
 
+  logout() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    this.userId = null;
+    clearTimeout(this.tokenTimer);
+    this.clearAuthData();
+    this.router.navigate(['/sign-in']);
+  }
+
   private setAuthTimer(duration: number) {
     this.tokenTimer = setTimeout(() => {
       // this.logout();
@@ -76,5 +86,12 @@ export class AuthService {
     localStorage.setItem('token', token);
     localStorage.setItem('userId', userId);
     localStorage.setItem('expirationDate', expirationDate.toISOString());
+  }
+
+  // Clear token user id and expiration date from local storage
+  private clearAuthData() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('expirationDate');
   }
 }
