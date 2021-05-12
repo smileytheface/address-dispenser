@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './routing/app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -26,6 +26,7 @@ import { AddressAssignDialogComponent } from './addresses/available-addresses/ad
 import { CustomSendComponent } from './send-addresses/custom-send/custom-send.component';
 import { SendConfirmationComponent } from './send-addresses/send-confirmation/send-confirmation.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,9 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
     LayoutModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

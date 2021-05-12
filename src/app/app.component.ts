@@ -1,16 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'address-dispenser';
   isMenuOpen: boolean = false;
   isSignedIn: boolean = false;
+  authStatusSub: Subscription;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.isSignedIn = this.authService.getIsAuthenticated();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.isSignedIn = isAuthenticated;
+        console.log(this.isSignedIn);
+      });
+  }
 
   onSideNavClick() {
     this.isMenuOpen = false;
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 }

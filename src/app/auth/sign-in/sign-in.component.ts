@@ -15,7 +15,6 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
-    // this.router.navigate(['/']);
     this.authService.signIn(form.value.email, form.value.password);
   }
 }
