@@ -4,6 +4,9 @@ import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { Address } from '../shared/models/address.model';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl + '/addresses';
 
 @Injectable({ providedIn: 'root' })
 export class AddressesService {
@@ -21,9 +24,7 @@ export class AddressesService {
 
   getAddresses() {
     this.http
-      .get<{ message: string; addresses: any }>(
-        'http://localhost:3000/api/addresses'
-      )
+      .get<{ message: string; addresses: any }>(BACKEND_URL)
       .pipe(
         map((addressData) => {
           return addressData.addresses.map((address) => {
@@ -49,16 +50,12 @@ export class AddressesService {
   }
 
   getAddress(addressId: string) {
-    return this.http.get<any>(
-      'http://localhost:3000/api/addresses/' + addressId
-    );
+    return this.http.get<any>(BACKEND_URL + '/' + addressId);
   }
 
   getAssignedAddresses() {
     this.http
-      .get<{ assignedAddresses: any }>(
-        'http://localhost:3000/api/addresses/assigned'
-      )
+      .get<{ assignedAddresses: any }>(BACKEND_URL + '/assigned')
       .pipe(
         map((assignedAddressData) => {
           return assignedAddressData.assignedAddresses.map((address) => {
@@ -86,9 +83,7 @@ export class AddressesService {
   // Getting Unassigned Addresses
   getUnassignedAddresses() {
     this.http
-      .get<{ unassignedAddresses: any }>(
-        'http://localhost:3000/api/addresses/unassigned'
-      )
+      .get<{ unassignedAddresses: any }>(BACKEND_URL + '/unassigned')
       .pipe(
         map((unassignedAddressData) => {
           return unassignedAddressData.unassignedAddresses.map((address) => {
@@ -116,10 +111,7 @@ export class AddressesService {
   addAddress(address: Address) {
     const newAddress = address;
     this.http
-      .post<{ message: string; addressId: string }>(
-        'http://localhost:3000/api/addresses',
-        newAddress
-      )
+      .post<{ message: string; addressId: string }>(BACKEND_URL, newAddress)
       .subscribe(
         (responseData) => {
           const id = responseData.addressId;
@@ -137,7 +129,7 @@ export class AddressesService {
   addAddresses(addresses: Address[]) {
     let newAddresses: Address[] = addresses;
     this.http
-      .post<any>('http://localhost:3000/api/addresses/add-many', newAddresses)
+      .post<any>(BACKEND_URL + '/add-many', newAddresses)
       .subscribe((responseData) => {
         const ids: string[] = responseData.addressIDs;
         for (let i = 0; i < newAddresses.length; i++) {
@@ -151,9 +143,7 @@ export class AddressesService {
 
   deleteAddress(address: Address) {
     this.http
-      .delete<{ message: string }>(
-        'http://localhost:3000/api/addresses/' + address.id
-      )
+      .delete<{ message: string }>(BACKEND_URL + '/' + address.id)
       .subscribe(() => {
         const updatedAddresses = this.addresses.filter(
           (add) => add.id !== address.id
@@ -175,10 +165,7 @@ export class AddressesService {
     const newAddress = updatedAddress;
     console.log(newAddress);
     this.http
-      .put<{ message: string }>(
-        'http://localhost:3000/api/addresses/' + id,
-        newAddress
-      )
+      .put<{ message: string }>(BACKEND_URL + '/' + id, newAddress)
       .subscribe((responseMessage) => {
         const updatedAddresses = [...this.addresses];
         const oldAddressIndex = updatedAddresses.findIndex(
@@ -195,10 +182,7 @@ export class AddressesService {
     // id of writer that is getting assigned this address
     const writer = { writer: writerId };
     this.http
-      .put<{ message: string }>(
-        'http://localhost:3000/api/addresses/assign/' + addressId,
-        writer
-      )
+      .put<{ message: string }>(BACKEND_URL + '/assign/' + addressId, writer)
       .subscribe((responseMessage) => {
         let updatedAddresses = [...this.addresses];
         const updatedAddressIndex = updatedAddresses.findIndex(
@@ -215,10 +199,7 @@ export class AddressesService {
     // id of writer that will no longer be assigned to this address
     const writer = { writer: writerId };
     this.http
-      .put<{ message: string }>(
-        'http://localhost:3000/api/addresses/unassign/' + addressId,
-        writer
-      )
+      .put<{ message: string }>(BACKEND_URL + '/unassign/' + addressId, writer)
       .subscribe((responseMessage) => {
         let updatedAssignedAddresses = this.assignedAddresses;
         const updatedAddressId = updatedAssignedAddresses.findIndex(

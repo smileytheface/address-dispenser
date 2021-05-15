@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { AuthData } from '../shared/models/auth-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl + '/users';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +45,7 @@ export class AuthService {
     const authData: AuthData = { email: email, password: password };
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
-        'http://localhost:3000/api/users/signin',
+        BACKEND_URL + '/signin',
         authData
       )
       .subscribe(

@@ -4,6 +4,9 @@ import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { Writer } from '../shared/models/writer.model';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl + '/writers';
 
 @Injectable({ providedIn: 'root' })
 export class WritersService {
@@ -15,9 +18,7 @@ export class WritersService {
 
   getWriters() {
     this.http
-      .get<{ message: string; writers: any }>(
-        'http://localhost:3000/api/writers'
-      )
+      .get<{ message: string; writers: any }>(BACKEND_URL)
       .pipe(
         map((writerData) => {
           return writerData.writers.map((writer) => {
@@ -41,14 +42,14 @@ export class WritersService {
   }
 
   getWriter(writerId: string) {
-    return this.http.get<any>('http://localhost:3000/api/writers/' + writerId);
+    return this.http.get<any>(BACKEND_URL + '/' + writerId);
   }
 
   addWriter(writer: Writer) {
     let newWriter: Writer = writer;
     this.http
       .post<{ message: string; createdWriterId: string }>(
-        'http://localhost:3000/api/writers',
+        BACKEND_URL,
         newWriter
       )
       .subscribe((responseData) => {
@@ -63,10 +64,7 @@ export class WritersService {
   updateWriter(id: string, updatedWriter: Writer) {
     const newWriter = updatedWriter;
     this.http
-      .put<{ message: string }>(
-        'http://localhost:3000/api/writers/' + id,
-        newWriter
-      )
+      .put<{ message: string }>(BACKEND_URL + '/' + id, newWriter)
       .subscribe((responseMessage) => {
         const updatedWriters = [...this.writers];
         const oldWriterIndex = updatedWriters.findIndex(
@@ -80,7 +78,7 @@ export class WritersService {
 
   deleteWriter(id: string) {
     this.http
-      .delete<{ message: string }>('http://localhost:3000/api/writers/' + id)
+      .delete<{ message: string }>(BACKEND_URL + '/' + id)
       .subscribe(() => {
         const updatedWriters = this.writers.filter(
           (writer) => writer.id !== id
