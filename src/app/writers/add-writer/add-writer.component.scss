@@ -27,6 +27,14 @@
         line-height: 1.35;
       }
     }
+
+    input[type="text"],
+    mat-label,
+    mat-slide-toggle,
+    mat-select,
+    mat-option {
+      font-size: 16px;
+    }
   }
 
   .mat-slide-toggle-content {

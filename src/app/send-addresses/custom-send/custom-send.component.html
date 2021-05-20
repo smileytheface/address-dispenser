@@ -9,7 +9,11 @@
     >
       Text
     </mat-slide-toggle>
-    <form #customSendForm="ngForm" (ngSubmit)="onSubmit(customSendForm)">
+    <form
+      #customSendForm="ngForm"
+      (ngSubmit)="onSubmit(customSendForm)"
+      class="custom-send-form"
+    >
       <!-- Email/Phone # field -->
       <mat-form-field
         appearance="outline"

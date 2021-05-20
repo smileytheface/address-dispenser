@@ -25,6 +25,16 @@ form {
   }
 }
 
+.add-one-form {
+  input[type="text"],
+  input[type="number"],
+  mat-select,
+  mat-label,
+  mat-option {
+    font-size: 16px;
+  }
+}
+
 .my-mat-form-field:first-of-type {
   margin-top: 20px;
 }
