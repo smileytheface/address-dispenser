@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { throwIfEmpty } from 'rxjs/operators';
@@ -40,13 +41,16 @@ export class AddWriterComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     private writersService: WritersService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Add Writer | Address Dispenser');
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('writerId')) {
         this.editMode = true;
+        this.titleService.setTitle('Edit Writer | Address Dispenser');
         this.writerId = paramMap.get('writerId');
         this.loading = true;
         this.writersService.getWriter(this.writerId).subscribe((writer) => {

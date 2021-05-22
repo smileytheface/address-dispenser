@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeleteConfirmationComponent } from 'src/app/shared/delete-confirmation/delete-confirmation.component';
@@ -40,10 +41,12 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
     private addressesService: AddressesService,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Available Addresses | Address Dispenser');
     this.addressesService.getAddresses();
     this.isLoading = true;
     this.addressesSub = this.addressesService

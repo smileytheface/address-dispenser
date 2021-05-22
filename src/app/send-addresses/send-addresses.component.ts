@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SendConfirmationComponent } from './send-confirmation/send-confirmation.component';
 import { EmailData } from '../shared/models/email-data.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-send-addresses',
@@ -37,10 +38,13 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
     private addressesService: AddressesService,
     private sendAddressesService: SendAddressesService,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    console.log('heyyy');
+    this.titleService.setTitle('Send Addresses | Address Dispenser');
     this.writersService.getWriters();
     this.isLoading = true;
     this.writersSub = this.writersService

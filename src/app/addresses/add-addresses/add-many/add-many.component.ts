@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Address } from '../../../shared/models/address.model';
@@ -24,10 +25,12 @@ export class AddManyComponent implements OnInit {
     public dialog: MatDialog,
     public addressesService: AddressesService,
     public router: Router,
-    public _snackBar: MatSnackBar
+    public _snackBar: MatSnackBar,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Add Addresses | Address Dispenser');
     this.successSub = this.addressesService
       .getAddressesAddedListener()
       .subscribe((addresses) => {

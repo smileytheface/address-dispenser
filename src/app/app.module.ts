@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppUiModule } from './ui-imports/app-ui.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -63,6 +63,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    Title,
   ],
   bootstrap: [AppComponent],
 })

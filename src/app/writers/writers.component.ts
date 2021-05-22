@@ -6,6 +6,7 @@ import { Writer } from '../shared/models/writer.model';
 import { DeleteConfirmationComponent } from '../shared/delete-confirmation/delete-confirmation.component';
 
 import { WritersService } from './writers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-writers',
@@ -21,10 +22,12 @@ export class WritersComponent implements OnInit, OnDestroy {
     public writersService: WritersService,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Writers | Address Dispenser');
     this.writersService.getWriters();
     this.isLoading = true;
     this.writersSub = this.writersService

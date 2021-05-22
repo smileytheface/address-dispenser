@@ -3,6 +3,7 @@ import { OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Address } from 'src/app/shared/models/address.model';
@@ -35,10 +36,13 @@ export class AddOneComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public router: Router,
     private writersService: WritersService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Add Address | Address Dispenser');
+
     this.initForm();
 
     this.writersService.getWriters();
@@ -51,6 +55,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('addressId')) {
         this.editMode = true;
+        this.titleService.setTitle('Edit Address | Address Dispenser');
         this.addressId = paramMap.get('addressId');
         this.addressesService
           .getAddress(this.addressId)

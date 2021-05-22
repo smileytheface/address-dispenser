@@ -8,6 +8,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { AddressesService } from 'src/app/addresses/addresses.service';
@@ -37,10 +38,19 @@ export class CustomSendComponent implements OnInit, OnDestroy {
     private addressesService: AddressesService,
     private dialog: MatDialog,
     private sendAddressesService: SendAddressesService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Custom Send | Address Dispenser');
+    if (
+      this.sendAddressesService.sharedEmailData ||
+      this.sendAddressesService.sharedTextData
+    ) {
+      this.titleService.setTitle('Edit Message | Address Dispenser');
+    }
+
     if (this.sendAddressesService.sharedEmailData) {
       this.prefersText = false;
       let emailData = this.sendAddressesService.sharedEmailData;
