@@ -1,4 +1,7 @@
+<!-- Top section -->
 <div class="container">
+  <h3>Send Addresses</h3>
+  <!-- Add writer button -->
   <button
     type="button"
     class="top-button"
@@ -7,8 +10,9 @@
   >
     <p>Add Writer</p>
     <span class="spacer"></span>
-    <img src="../../assets/images/icons/add-icon.svg" alt="airplane" />
+    <img src="../../assets/images/icons/add-icon.svg" alt="add-icon" />
   </button>
+  <!-- Custom send button -->
   <button
     type="button"
     class="top-button"
@@ -21,33 +25,35 @@
   </button>
 </div>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<div *ngIf="!isLoading">
-  <button
-    type="button"
-    id="writers-button"
-    class="pen-button"
-    *ngFor="let writer of writers"
-    [style.backgroundColor]="writer.color"
-    (click)="onSend(writer)"
-  >
-    <div class="writer-info">
-      <p>{{ writer.name }}</p>
-      <p class="address-amount">
-        {{ writer.defaultAddressAmount }} Addresses |
-        <a
-          (click)="onEdit(writer.id)"
-          style="cursor: pointer"
-          href="javascript:void(0)"
-        >
-          Edit Defaults
-        </a>
-      </p>
-    </div>
-    <span class="spacer"></span>
-    <img
-      src="../../assets/images/icons/send-icon-black.svg"
-      alt="airplane"
-      id="pen-icon"
-    />
-  </button>
+<!-- Send Buttons -->
+<div *ngIf="!isLoading" class="quick-send-wrapper">
+  <div class="writers-button-wrapper" *ngFor="let writer of writers">
+    <button
+      type="button"
+      id="writers-button"
+      class="pen-button"
+      [style.backgroundColor]="writer.color"
+      (click)="onSend(writer)"
+    >
+      <div class="writer-info">
+        <p>{{ writer.name }}</p>
+        <p class="address-amount">
+          {{ writer.defaultAddressAmount }} Addresses |
+          <a
+            (click)="onEdit(writer.id)"
+            style="cursor: pointer"
+            href="javascript:void(0)"
+          >
+            Edit Defaults
+          </a>
+        </p>
+      </div>
+      <span class="spacer"></span>
+      <img
+        src="../../assets/images/icons/send-icon-black.svg"
+        alt="airplane"
+        id="pen-icon"
+      />
+    </button>
+  </div>
 </div>

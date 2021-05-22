@@ -1,8 +1,39 @@
+// Media Queries for desktop look
+@media screen and (min-device-width: 600px) {
+  .container {
+    width: auto !important;
+    max-width: 1000px !important;
+    grid-template-columns: 3fr 1fr 1fr !important;
+    margin-top: 30px !important;
+
+    h3 {
+      display: block !important;
+      font-size: 40px;
+    }
+
+    #add-writer {
+      justify-self: end !important;
+      margin-right: 10px;
+    }
+  }
+}
+
+// media quesries for non-desktop looks
+@media screen and (max-device-width: 700px) {
+  .writers-button-wrapper {
+    justify-self: center;
+    width: 268px !important;
+  }
+
+  #writers-button {
+    width: 268px !important;
+  }
+}
+
 button {
   width: 268px;
   height: 88px;
-  margin: auto;
-  margin-top: 33px;
+  // margin-top: 33px;
   display: flex;
   background-color: #e2f1ff;
   border: none;
@@ -43,11 +74,17 @@ button {
   flex: 1 1 auto;
 }
 
+// top section
 .container {
   display: grid;
   margin: auto;
   width: 268px;
   grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 33px;
+
+  h3 {
+    display: none;
+  }
 
   #add-writer {
     justify-self: start;
@@ -87,8 +124,18 @@ button {
   }
 }
 
+.quick-send-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(237px, 1fr));
+  grid-gap: 40px;
+  max-width: 1000px;
+  margin: auto;
+}
+
 #writers-button {
   background-color: #ffecef;
+  width: 100%;
+  justify-self: center;
 }
 
 #addresses-button {
