@@ -208,6 +208,7 @@ export class AddressesService {
         updatedAssignedAddresses.splice(updatedAddressId, 1);
         this.assignedAddresses = updatedAssignedAddresses;
         this.assignedAddressesUpdated.next([...this.assignedAddresses]);
+        this.unassignedAddressesUpdated.next([...this.unassignedAddresses]);
       });
   }
 

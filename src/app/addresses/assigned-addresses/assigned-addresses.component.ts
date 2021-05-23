@@ -10,6 +10,7 @@ import { Writer } from 'src/app/shared/models/writer.model';
 import { WritersService } from 'src/app/writers/writers.service';
 import { AddressesService } from '../addresses.service';
 import { FilterBottomSheetComponent } from './filter-bottom-sheet/filter-bottom-sheet.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-assigned-addresses',
@@ -37,6 +38,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   private assignedAddressesSub: Subscription;
   private writersSub: Subscription;
   private allAddressesSub: Subscription;
+  private unassignedAddressesSub: Subscription;
 
   loading: boolean = false;
   addressesLoading: boolean = false;
@@ -67,7 +69,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     private addressesService: AddressesService,
     private writersService: WritersService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -104,6 +107,15 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
         } else {
           this.mobile = false;
         }
+      });
+
+    // alerting user when address is successfully unassigned
+    this.unassignedAddressesSub = this.addressesService
+      .getUnassignedAddressesUpdatedListener()
+      .subscribe((addresses) => {
+        this.snackBar.open('Address successfully unassigned', 'Okay', {
+          duration: 3000,
+        });
       });
   }
 

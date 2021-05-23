@@ -74,7 +74,7 @@ const routes: Routes = [
     component: AddWriterComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'sign-in', component: SignInComponent, canActivate: [!AuthGuard] },
+  { path: 'sign-in', component: SignInComponent },
 ];
 
 @NgModule({

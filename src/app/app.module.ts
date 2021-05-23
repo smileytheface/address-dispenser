@@ -27,6 +27,7 @@ import { CustomSendComponent } from './send-addresses/custom-send/custom-send.co
 import { SendConfirmationComponent } from './send-addresses/send-confirmation/send-confirmation.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
