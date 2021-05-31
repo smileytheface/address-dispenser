@@ -10,25 +10,44 @@
       <mat-label>Name</mat-label>
       <input type="text" matInput id="name" name="name" ngModel required />
     </mat-form-field>
+    <mat-slide-toggle
+      matInput
+      id="prefers-email"
+      name="prefersEmail"
+      (change)="onPrefersEmailChange()"
+      ngModel
+    >
+      Prefers email
+    </mat-slide-toggle>
     <mat-form-field appearance="outline" class="full-width my-mat-form-fields">
-      <mat-label>Email</mat-label>
+      <mat-label>
+        Email
+        <span *ngIf="emailInput.errors?.required"> *</span>
+      </mat-label>
       <input
         type="text"
         matInput
         id="email"
         name="email"
+        #emailInput="ngModel"
         ngModel
         email
-        required
       />
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width my-mat-form-fields">
-      <mat-label>Phone #</mat-label>
-      <input type="text" matInput id="phone" name="phone" ngModel required />
+      <mat-label>
+        Phone #
+        <span *ngIf="phoneInput.errors?.required"> *</span>
+      </mat-label>
+      <input
+        type="text"
+        matInput
+        id="phone"
+        name="phone"
+        ngModel
+        #phoneInput="ngModel"
+      />
     </mat-form-field>
-    <mat-slide-toggle matInput id="prefers-text" name="prefersText" ngModel
-      >Prefers text</mat-slide-toggle
-    >
     <mat-form-field appearance="outline" class="full-width my-mat-form-fields">
       <mat-label>Default # Of Addresses</mat-label>
       <mat-select
@@ -64,8 +83,8 @@
     <br />
     <button
       type="submit"
-      class="submit-button"
       [disabled]="!addWriterForm.valid"
+      class="submit-button"
     >
       SUBMIT
     </button>

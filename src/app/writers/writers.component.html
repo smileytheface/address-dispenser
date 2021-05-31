@@ -19,8 +19,8 @@
         <div class="writer-card-content">
           <div class="info">
             <p class="writer-name">{{ writer.name }}</p>
-            <p>Phone: {{ writer.phone }}</p>
-            <p>Email: {{ writer.email }}</p>
+            <p *ngIf="writer.phone">Phone: {{ writer.phone }}</p>
+            <p *ngIf="writer.email">Email: {{ writer.email }}</p>
             <p>
               Preferred Mode Of Contant:
               {{ writer.prefersText ? "Phone" : "Email" }}

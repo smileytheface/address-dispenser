@@ -1,12 +1,13 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import {
+  AfterViewInit,
   Component,
   OnDestroy,
   OnInit,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -35,7 +36,8 @@ export class AddWriterComponent implements OnInit, OnDestroy {
   writerId: string;
   writer: Writer = null;
   loading: boolean = false;
-  @ViewChild('addWriterForm') form;
+  @ViewChild('addWriterForm') form: NgForm;
+  @ViewChild('emailInput') emailInput: NgModel;
 
   constructor(
     public router: Router,
@@ -59,13 +61,24 @@ export class AddWriterComponent implements OnInit, OnDestroy {
             name: writer.name,
             email: writer.email,
             phone: writer.phone,
-            prefersText: writer.prefersText,
+            prefersEmail: !writer.prefersText,
             defaultAddressAmount: writer.defaultAddressAmount,
             color: writer.color,
+          });
+
+          setTimeout(() => {
+            this.onPrefersEmailChange();
           });
         });
       }
     });
+
+    if (!this.editMode) {
+      setTimeout(() => {
+        this.form.form.get('phone').setValidators(Validators.required);
+        this.form.form.get('phone').updateValueAndValidity();
+      });
+    }
 
     this.writerAddedSub = this.writersService
       .getWriterAddedListener()
@@ -79,13 +92,12 @@ export class AddWriterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form);
     let newWriter: Writer = {
       id: this.editMode ? this.writerId : null,
       name: form.value.name,
       email: form.value.email,
       phone: form.value.phone,
-      prefersText: form.value.prefersText ? form.value.prefersText : false,
+      prefersText: form.value.prefersEmail ? !form.value.prefersEmail : true,
       defaultAddressAmount: form.value.defaultAddressAmount,
       totalCheckedOut: 0,
       color: form.value.color
@@ -103,6 +115,22 @@ export class AddWriterComponent implements OnInit, OnDestroy {
     }
 
     this.lastSubmittedWriter = newWriter;
+  }
+
+  onPrefersEmailChange() {
+    const emailField = this.form.form.get('email');
+    const phoneField = this.form.form.get('phone');
+    if (this.form.value.prefersEmail) {
+      emailField.setValidators([Validators.email, Validators.required]);
+      phoneField.setValidators([]);
+      emailField.updateValueAndValidity();
+      phoneField.updateValueAndValidity();
+    } else {
+      emailField.setValidators([Validators.email]);
+      phoneField.setValidators([Validators.required]);
+      emailField.updateValueAndValidity();
+      phoneField.updateValueAndValidity();
+    }
   }
 
   onCancel() {
