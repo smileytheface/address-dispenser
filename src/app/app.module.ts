@@ -28,6 +28,7 @@ import { SendConfirmationComponent } from './send-addresses/send-confirmation/se
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthGuard } from './auth/auth.guard';
+import { ChooseAddressesComponent } from './send-addresses/choose-addresses/choose-addresses.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { AuthGuard } from './auth/auth.guard';
     CustomSendComponent,
     SendConfirmationComponent,
     SignInComponent,
+    ChooseAddressesComponent,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [

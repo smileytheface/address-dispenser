@@ -18,6 +18,7 @@ import { EmailData } from 'src/app/shared/models/email-data.model';
 import { TextData } from 'src/app/shared/models/text-data.model';
 import { SendAddressesService } from '../send-addresses.service';
 import { SendConfirmationComponent } from '../send-confirmation/send-confirmation.component';
+import { ChooseAddressesComponent } from '../choose-addresses/choose-addresses.component';
 
 @Component({
   selector: 'app-custom-send',
@@ -32,6 +33,8 @@ export class CustomSendComponent implements OnInit, OnDestroy {
   messageSentSub: Subscription;
   messageNotSentSub: Subscription;
   writerId: string = null;
+  manuallySelect: boolean;
+  chosenAddresses: Address[] = [];
   @ViewChild('customSendForm') customSendForm: NgForm;
 
   constructor(
@@ -59,6 +62,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
         email: emailData.writerEmail,
         subject: emailData.subject,
         startComment: emailData.startComment,
+        manuallySelect: false,
         addressAmount: emailData.addresses.length,
         closingComments: emailData.endComment,
       };
@@ -73,6 +77,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
       let formData = {
         phone: textData.writerPhone,
         startComment: textData.startComment,
+        manuallySelect: false,
         addressAmount: textData.addresses.length,
         closingComments: textData.endComment,
       };
@@ -99,56 +104,124 @@ export class CustomSendComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    const addressAmount = form.value.addressAmount;
-    this.addressesService.getUnassignedAddresses();
-    this.addressesSub = this.addressesService
-      .getUnassignedAddressesUpdatedListener()
-      .subscribe((availableAddresses) => {
-        let addresses: Address[] = availableAddresses;
-        let addressesToAssign = availableAddresses.splice(0, addressAmount);
-        this.addressesSub.unsubscribe();
+    let addressesToAssign: Address[];
+    if (form.value.manuallySelect) {
+      addressesToAssign = this.chosenAddresses;
+      this.sendAddresses(addressesToAssign, form);
+    } else {
+      this.addressesService.getUnassignedAddresses();
+      this.addressesSub = this.addressesService
+        .getUnassignedAddressesUpdatedListener()
+        .subscribe((addresses) => {
+          this.addressesSub.unsubscribe();
+          addressesToAssign = addresses.splice(0, form.value.addressAmount);
+          this.sendAddresses(addressesToAssign, form);
+        });
+    }
+    // this.addressesSub = this.addressesService
+    //   .getUnassignedAddressesUpdatedListener()
+    //   .subscribe((availableAddresses) => {
+    //     let addresses: Address[] = availableAddresses;
+    //     let addressesToAssign = availableAddresses.splice(0, addressAmount);
+    //     this.addressesSub.unsubscribe();
 
-        if (this.prefersText) {
-          let textData: TextData;
-          textData = {
-            writerPhone: form.value.phone,
-            startComment: form.value.openingComments,
-            endComment: form.value.closingComments,
-            addresses: addressesToAssign,
-            writerId: this.writerId,
-          };
+    //     if (this.prefersText) {
+    //       let textData: TextData;
+    //       textData = {
+    //         writerPhone: form.value.phone,
+    //         startComment: form.value.openingComments,
+    //         endComment: form.value.closingComments,
+    //         addresses: addressesToAssign,
+    //         writerId: this.writerId,
+    //       };
 
-          let dialogRef = this.dialog.open(SendConfirmationComponent, {
-            data: textData,
-          });
+    //       let dialogRef = this.dialog.open(SendConfirmationComponent, {
+    //         data: textData,
+    //       });
 
-          dialogRef.afterClosed().subscribe((sendConfirmed) => {
-            if (sendConfirmed === 'true') {
-              this.sendAddressesService.textAddresses(textData);
-            }
-          });
-        } else {
-          let emailData: EmailData;
-          emailData = {
-            writerEmail: form.value.email,
-            startComment: form.value.startComment,
-            endComment: form.value.closingComments,
-            addresses: addressesToAssign,
-            writerId: this.writerId,
-            subject: form.value.subject,
-          };
+    //       dialogRef.afterClosed().subscribe((sendConfirmed) => {
+    //         if (sendConfirmed === 'true') {
+    //           this.sendAddressesService.textAddresses(textData);
+    //         }
+    //       });
+    //     } else {
+    //       let emailData: EmailData;
+    //       emailData = {
+    //         writerEmail: form.value.email,
+    //         startComment: form.value.startComment,
+    //         endComment: form.value.closingComments,
+    //         addresses: addressesToAssign,
+    //         writerId: this.writerId,
+    //         subject: form.value.subject,
+    //       };
 
-          let dialogRef = this.dialog.open(SendConfirmationComponent, {
-            data: emailData,
-          });
+    //       let dialogRef = this.dialog.open(SendConfirmationComponent, {
+    //         data: emailData,
+    //       });
 
-          dialogRef.afterClosed().subscribe((sendConfirmed) => {
-            if (sendConfirmed === 'true') {
-              this.sendAddressesService.emailAddresses(emailData);
-            }
-          });
+    //       dialogRef.afterClosed().subscribe((sendConfirmed) => {
+    //         if (sendConfirmed === 'true') {
+    //           this.sendAddressesService.emailAddresses(emailData);
+    //         }
+    //       });
+    //     }
+    //   });
+  }
+
+  onManuallySelect() {
+    let dialogRef = this.dialog.open(ChooseAddressesComponent, {
+      data: null,
+    });
+
+    dialogRef.afterClosed().subscribe((selectedAddresses) => {
+      if (selectedAddresses !== 'false')
+        this.chosenAddresses = selectedAddresses;
+    });
+  }
+
+  sendAddresses(addresses: Address[], form: NgForm) {
+    if (this.prefersText) {
+      let textData: TextData;
+      textData = {
+        writerPhone: form.value.phone,
+        startComment: form.value.openingComments,
+        endComment: form.value.closingComments,
+        addresses: addresses,
+        writerId: this.writerId,
+      };
+
+      let dialogRef = this.dialog.open(SendConfirmationComponent, {
+        data: textData,
+      });
+
+      dialogRef.afterClosed().subscribe((sendConfirmed) => {
+        if (sendConfirmed === 'true') {
+          this.sendAddressesService.textAddresses(textData);
+          this.chosenAddresses = [];
         }
       });
+    } else {
+      let emailData: EmailData;
+      emailData = {
+        writerEmail: form.value.email,
+        startComment: form.value.startComment,
+        endComment: form.value.closingComments,
+        addresses: addresses,
+        writerId: this.writerId,
+        subject: form.value.subject,
+      };
+
+      let dialogRef = this.dialog.open(SendConfirmationComponent, {
+        data: emailData,
+      });
+
+      dialogRef.afterClosed().subscribe((sendConfirmed) => {
+        if (sendConfirmed === 'true') {
+          this.sendAddressesService.emailAddresses(emailData);
+          this.chosenAddresses = [];
+        }
+      });
+    }
   }
 
   onCancel() {

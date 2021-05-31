@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>{{ amountSelected }} addresses selected</h2>
+<mat-dialog-content>
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <mat-accordion *ngIf="!loading">
+    <mat-expansion-panel *ngFor="let address of unassignedAddresses">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-checkbox
+            (change)="onCheckboxClick(address, $event.checked)"
+            (click)="$event.stopPropagation()"
+            (keydown)="$event.stopPropagation()"
+          >
+            {{ address.name }}
+          </mat-checkbox>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>
+        <span *ngIf="address.age">Age: {{ address.age }}<br /></span>
+        {{ address.street }} <br />
+        {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
+        <span *ngFor="let phone of address.phone">{{ phone }} <br /> </span>
+      </p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-button
+    mat-dialog-close
+    [mat-dialog-close]="selectedAddresses"
+    [disabled]="amountSelected <= 0"
+  >
+    Confirm
+  </button>
+  <button mat-button mat-dialog-close mat-dialog-close="false">Cancel</button>
+</mat-dialog-actions>

@@ -66,9 +66,17 @@
           ngModel
         ></textarea>
       </mat-form-field>
+      <mat-slide-toggle
+        id="manual-select"
+        [(ngModel)]="manuallySelect"
+        name="manuallySelect"
+      >
+        Manually select addresses
+      </mat-slide-toggle>
       <mat-form-field
         appearance="outline"
         class="full-width custom-send-mat-form-field"
+        *ngIf="!manuallySelect"
       >
         <mat-label># Of Addresses</mat-label>
         <mat-select id="address-amount" name="addressAmount" ngModel required>
@@ -81,6 +89,19 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <br />
+      <button
+        mat-raised-button
+        type="button"
+        id="choose-addresses"
+        *ngIf="manuallySelect"
+        (click)="onManuallySelect()"
+      >
+        Choose Addresses
+      </button>
+      <p *ngIf="manuallySelect">
+        {{ chosenAddresses.length }} Addresses selected
+      </p>
       <mat-form-field
         appearance="outline"
         class="full-width custom-send-mat-form-field"

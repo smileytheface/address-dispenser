@@ -32,12 +32,21 @@
       }
     }
 
+    mat-slide-toggle,
     input[type="text"],
     mat-label,
     textarea,
     mat-select,
     a mat-option {
       font-size: 16px;
+    }
+
+    #manual-select {
+      margin-bottom: 16px;
+    }
+
+    #choose-addresses {
+      margin-bottom: 16px;
     }
   }
   // Fixing letters being cut off at bottom

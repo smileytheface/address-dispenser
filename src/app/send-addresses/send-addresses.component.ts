@@ -43,7 +43,6 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('heyyy');
     this.titleService.setTitle('Send Addresses | Address Dispenser');
     this.writersService.getWriters();
     this.isLoading = true;

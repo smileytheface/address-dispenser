@@ -212,5 +212,6 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     if (this.allAddressesSub) {
       this.allAddressesSub.unsubscribe();
     }
+    this.unassignedAddressesSub.unsubscribe();
   }
 }

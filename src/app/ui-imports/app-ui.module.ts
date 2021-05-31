@@ -12,6 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const uiModules = [
   MatSidenavModule,
@@ -26,6 +27,7 @@ const uiModules = [
   MatDialogModule,
   MatSelectModule,
   MatSnackBarModule,
+  MatCheckboxModule,
 ];
 
 @NgModule({
