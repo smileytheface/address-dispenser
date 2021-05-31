@@ -31,6 +31,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
   emailData: EmailData;
   messageSentSub: Subscription;
   messageNotSentSub: Subscription;
+  writerId: string = null;
   @ViewChild('customSendForm') customSendForm: NgForm;
 
   constructor(
@@ -61,6 +62,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
         addressAmount: emailData.addresses.length,
         closingComments: emailData.endComment,
       };
+      this.writerId = emailData.writerId;
       setTimeout(() => {
         this.customSendForm.setValue(formData);
         this.sendAddressesService.sharedEmailData = null;
@@ -74,6 +76,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
         addressAmount: textData.addresses.length,
         closingComments: textData.endComment,
       };
+      this.writerId = textData.writerId;
       setTimeout(() => {
         this.customSendForm.setValue(formData);
         this.sendAddressesService.sharedTextData = null;
@@ -112,7 +115,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
             startComment: form.value.openingComments,
             endComment: form.value.closingComments,
             addresses: addressesToAssign,
-            writerId: null,
+            writerId: this.writerId,
           };
 
           let dialogRef = this.dialog.open(SendConfirmationComponent, {
@@ -131,7 +134,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
             startComment: form.value.startComment,
             endComment: form.value.closingComments,
             addresses: addressesToAssign,
-            writerId: null,
+            writerId: this.writerId,
             subject: form.value.subject,
           };
 
