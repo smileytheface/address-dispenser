@@ -18,7 +18,7 @@
   </mat-form-field>
 
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <mat-accordion *ngIf="!isLoading">
+  <mat-accordion *ngIf="!isLoading && filteredAddresses">
     <mat-expansion-panel *ngFor="let address of filteredAddresses">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -44,4 +44,7 @@
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
+  <p *ngIf="availableAddresses.length <= 0 && !isLoading">
+    No available addresses
+  </p>
 </div>

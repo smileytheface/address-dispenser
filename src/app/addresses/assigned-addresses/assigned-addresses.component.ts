@@ -84,7 +84,6 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       .subscribe((writers) => {
         this.writers = writers;
         this.writers.push(this.other);
-        console.log(this.writers);
         this.filteredWriters = this.writers;
         this.writersLoading = false;
         this.checkLoad();
