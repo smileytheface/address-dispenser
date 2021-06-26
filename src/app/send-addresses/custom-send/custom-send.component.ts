@@ -27,7 +27,7 @@ import { ChooseAddressesComponent } from '../choose-addresses/choose-addresses.c
   encapsulation: ViewEncapsulation.None,
 })
 export class CustomSendComponent implements OnInit, OnDestroy {
-  prefersText: boolean;
+  prefersEmail: boolean;
   addressesSub: Subscription;
   emailData: EmailData;
   messageSentSub: Subscription;
@@ -55,8 +55,9 @@ export class CustomSendComponent implements OnInit, OnDestroy {
       this.titleService.setTitle('Edit Message | Address Dispenser');
     }
 
+    // Checking if message is email or text when editing a message
     if (this.sendAddressesService.sharedEmailData) {
-      this.prefersText = false;
+      this.prefersEmail = true;
       let emailData = this.sendAddressesService.sharedEmailData;
       let formData = {
         email: emailData.writerEmail,
@@ -72,7 +73,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
         this.sendAddressesService.sharedEmailData = null;
       });
     } else if (this.sendAddressesService.sharedTextData) {
-      this.prefersText = true;
+      this.prefersEmail = false;
       let textData = this.sendAddressesService.sharedTextData;
       let formData = {
         phone: textData.writerPhone,
@@ -180,7 +181,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
   }
 
   sendAddresses(addresses: Address[], form: NgForm) {
-    if (this.prefersText) {
+    if (!this.prefersEmail) {
       let textData: TextData;
       textData = {
         writerPhone: form.value.phone,

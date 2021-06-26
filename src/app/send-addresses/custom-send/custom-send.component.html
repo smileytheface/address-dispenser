@@ -4,10 +4,10 @@
 
     <mat-slide-toggle
       color="primary"
-      [(ngModel)]="prefersText"
+      [(ngModel)]="prefersEmail"
       id="slide-toggle"
     >
-      Text
+      Email
     </mat-slide-toggle>
     <form
       #customSendForm="ngForm"
@@ -20,7 +20,9 @@
         class="full-width custom-send-mat-form-field"
       >
         <mat-label>
-          {{ prefersText ? "Writer's Phone Number" : "Writer's Email Address" }}
+          {{
+            !prefersEmail ? "Writer's Phone Number" : "Writer's Email Address"
+          }}
         </mat-label>
         <input
           type="text"
@@ -30,7 +32,7 @@
           ngModel
           email
           required
-          *ngIf="!prefersText"
+          *ngIf="prefersEmail"
         />
         <input
           type="text"
@@ -40,14 +42,14 @@
           ngModel
           phone
           required
-          *ngIf="prefersText"
+          *ngIf="!prefersEmail"
         />
       </mat-form-field>
       <!-- Email subject -->
       <mat-form-field
         appearance="outline"
         class="full-width custom-send-mat-form-field"
-        *ngIf="!prefersText"
+        *ngIf="prefersEmail"
       >
         <mat-label>Subject</mat-label>
         <input type="text" matInput id="subject" name="subject" ngModel />
