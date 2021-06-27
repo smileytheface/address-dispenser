@@ -184,7 +184,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
       let textData: TextData;
       textData = {
         writerPhone: form.value.phone,
-        startComment: form.value.openingComments,
+        startComment: form.value.startComment,
         endComment: form.value.closingComments,
         addresses: addresses,
         writerId: this.writerId,
