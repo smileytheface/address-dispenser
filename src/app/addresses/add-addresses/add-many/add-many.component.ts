@@ -86,7 +86,8 @@ export class AddManyComponent implements OnInit {
       let addressPhones: string[] = [];
 
       for (let y = 6; y < addressInfoArray.length; y++) {
-        addressPhones.push(addressInfoArray[y]);
+        if (addressInfoArray[y].trim())
+          addressPhones.push(addressInfoArray[y].trim());
       }
       let newAddress: Address = {
         id: null,
