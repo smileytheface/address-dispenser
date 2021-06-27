@@ -75,6 +75,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'sign-in', component: SignInComponent },
+  { path: '**', redirectTo: '/', canActivate: [AuthGuard] },
 ];
 
 @NgModule({
