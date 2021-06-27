@@ -175,8 +175,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((selectedAddresses) => {
-      if (selectedAddresses !== 'false')
-        this.chosenAddresses = selectedAddresses;
+      if (selectedAddresses) this.chosenAddresses = selectedAddresses;
     });
   }
 
