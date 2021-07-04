@@ -37,7 +37,9 @@
               <span *ngIf="address.age">Age: {{ address.age }}<br /></span>
               {{ address.street }} <br />
               {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
-              {{ address.phone }}
+              <span *ngFor="let phone of address.phone">
+                {{ phone }} <br />
+              </span>
             </p>
             <mat-action-row>
               <button
