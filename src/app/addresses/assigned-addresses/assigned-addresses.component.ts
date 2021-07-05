@@ -89,6 +89,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
         this.checkLoad();
       });
 
+    // getting assigned addresses and putting them in a local array
     this.addressesLoading = true;
     this.assignedAddressesSub = this.addressesService
       .getAssignedAddressesUpdatedListener()
@@ -98,6 +99,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
         this.checkLoad();
       });
 
+    // acts as a media query for showing 'filter by writer' on the side or as a button
     this.breakpointObserver
       .observe(['(max-width: 800px)'])
       .subscribe((state: BreakpointState) => {
@@ -118,6 +120,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       });
   }
 
+  // gets called as the html loops through each writer
+  // gets all addresses that are assigned to the given writer
   addressesByName(writer: Writer): Address[] {
     let writersAddresses: Address[] = [];
     let allAddresses: Address[] = this.assignedAddresses;
