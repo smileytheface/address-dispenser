@@ -149,6 +149,7 @@ export class AddOneComponent implements OnInit, OnDestroy {
       state: this.addressForm.value.state,
       zip: this.addressForm.value.zip,
       phone: this.addressForm.value.phone,
+      dateCreated: this.editMode ? this.loadedAddress.dateCreated : null,
       assigned: this.addressForm.value.writer ? true : false,
       writer: this.addressForm.value.writer
         ? this.addressForm.value.writer
@@ -156,13 +157,12 @@ export class AddOneComponent implements OnInit, OnDestroy {
     };
 
     if (this.editMode) {
+      newAddress.assignmentHistory = this.loadedAddress.assignmentHistory;
       this.addressesService.updateAddress(this.addressId, newAddress);
     } else {
       this.addressesService.addAddress(newAddress);
       this.form.resetForm();
     }
-
-    console.log(newAddress);
 
     this.lastSubmittedAddress = newAddress;
   }

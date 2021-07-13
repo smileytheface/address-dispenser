@@ -98,6 +98,7 @@ export class AddManyComponent implements OnInit {
         state: addressInfoArray[4],
         zip: addressInfoArray[5],
         phone: addressPhones,
+        dateCreated: null,
         assigned: false,
         writer: null,
       };

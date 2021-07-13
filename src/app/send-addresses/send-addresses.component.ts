@@ -152,19 +152,6 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
       });
   }
 
-  getUnassignedAddressesTest() {
-    let availableAddresses: Address[] = [];
-    let addressesToAssign: Address[] = [];
-    this.addressesService.getUnassignedAddresses();
-    this.addressesSub = this.addressesService
-      .getUnassignedAddressesUpdatedListener()
-      .subscribe((unassignedAddresses) => {
-        availableAddresses = unassignedAddresses;
-        console.log(availableAddresses);
-        this.addressesSub.unsubscribe();
-      });
-  }
-
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 4000 });
   }

@@ -1,3 +1,5 @@
+import { AssignmentData } from './assignment-data';
+
 export interface Address {
   id: string;
   age: number;
@@ -7,6 +9,8 @@ export interface Address {
   state: string;
   zip: string;
   phone: string[];
+  dateCreated: Date;
   assigned: boolean;
+  assignmentHistory?: AssignmentData[];
   writer: string;
 }

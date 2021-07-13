@@ -37,7 +37,11 @@ export class AddressesService {
               state: address.state,
               zip: address.zip,
               phone: address.phone,
+              dateCreated: address.dateCreated,
               assigned: address.assigned,
+              assignmentHistory: address.assignmentHistory
+                ? address.assignmentHistory
+                : null,
               writer: address.writer,
             };
           });
@@ -68,7 +72,9 @@ export class AddressesService {
               state: address.state,
               zip: address.zip,
               phone: address.phone,
+              dateCreated: address.dateCreated,
               assigned: address.assigned,
+              assignmentHistory: address.assignmentHistory,
               writer: address.writer,
             };
           });
@@ -76,6 +82,7 @@ export class AddressesService {
       )
       .subscribe((transformedAddresses) => {
         this.assignedAddresses = transformedAddresses;
+        console.log(this.assignedAddresses);
         this.assignedAddressesUpdated.next([...this.assignedAddresses]);
       });
   }
@@ -96,7 +103,11 @@ export class AddressesService {
               state: address.state,
               zip: address.zip,
               phone: address.phone,
+              dateCreated: address.dateCreated,
               assigned: address.assigned,
+              assignmentHistory: address.assignmentHistory
+                ? address.assignmentHistory
+                : null,
               writer: address.writer,
             };
           });
