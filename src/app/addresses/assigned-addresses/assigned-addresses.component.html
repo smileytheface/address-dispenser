@@ -40,6 +40,32 @@
               <span *ngFor="let phone of address.phone">
                 {{ phone }} <br />
               </span>
+              <span *ngIf="address.dateCreated">
+                <br />Address added on
+                {{ address.dateCreated | date: "shortDate" }} at
+                {{ address.dateCreated | date: "shortTime" }}
+              </span>
+              <!-- Assignment Information -->
+              <span *ngIf="address.assignmentHistory[0]">
+                <br />
+                <span *ngFor="let addressData of address.assignmentHistory">
+                  <span *ngIf="addressData.wasAssigned">
+                    <mat-icon class="assignment-data-icon">
+                      edit_location_alt
+                    </mat-icon>
+                    Assigned to
+                    {{ addressData.writerName }}
+                  </span>
+                  <span *ngIf="!addressData.wasAssigned">
+                    <mat-icon class="assignment-data-icon">place</mat-icon>
+                    Unassigned
+                  </span>
+                  on
+                  {{ addressData.date | date: "shortDate" }} at
+                  {{ addressData.date | date: "shortTime" }}
+                  <br />
+                </span>
+              </span>
             </p>
             <mat-action-row>
               <button
