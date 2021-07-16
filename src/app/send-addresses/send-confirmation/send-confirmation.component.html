@@ -1,19 +1,24 @@
 <h2 mat-dialog-title>
   Please confirm that you would like to send the following message to
-  {{ data.writerPhone ? data.writerPhone : data.writerEmail }}:
+  {{ data.writerName }} at
+  {{
+    data.messageData.writerPhone
+      ? data.messageData.writerPhone
+      : data.messageData.writerEmail
+  }}:
 </h2>
 <mat-dialog-content>
-  <span *ngIf="data.subject" style="font-weight: bold">
-    Subject: {{ data.subject }}
+  <span *ngIf="data.messageData.subject" style="font-weight: bold">
+    Subject: {{ data.messageData.subject }}
     <br />
     <br />
   </span>
-  <span *ngIf="data.startComment">
-    {{ data.startComment }}
+  <span *ngIf="data.messageData.startComment">
+    {{ data.messageData.startComment }}
     <br />
     <br />
   </span>
-  <div *ngFor="let address of data.addresses">
+  <div *ngFor="let address of data.messageData.addresses">
     {{ address.name }}{{ address.age ? " (Age: " + address.age + ")" : "" }}
     <br />
     {{ address.street }} <br />
@@ -21,7 +26,9 @@
     <span *ngFor="let phone of address.phone">{{ phone }} <br /></span>
     <br />
   </div>
-  <span *ngIf="data.endComment">{{ data.endComment }}</span>
+  <span *ngIf="data.messageData.endComment">{{
+    data.messageData.endComment
+  }}</span>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close mat-dialog-close="true">Confirm</button>
