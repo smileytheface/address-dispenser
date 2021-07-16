@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -19,9 +19,11 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-send-addresses',
   templateUrl: './send-addresses.component.html',
   styleUrls: ['./send-addresses.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SendAddressesComponent implements OnInit, OnDestroy {
   writers: Writer[] = [];
+  filteredWriters: Writer[];
   isLoading: boolean = false;
   writersSub: Subscription;
   addressesSub: Subscription;
@@ -30,6 +32,23 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
   startComment: string = 'Here you go!';
   endComment: string = 'Sent from Address Dispenser!';
   subject: string = 'Your Addresses';
+  private _searchTerm: string;
+
+  get searchTerm(): string {
+    return this._searchTerm;
+  }
+
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    this.filteredWriters = this.filterWriters(value);
+  }
+
+  filterWriters(searchString: string) {
+    return this.writers.filter(
+      (address) =>
+        address.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+    );
+  }
 
   constructor(
     private router: Router,
@@ -50,6 +69,7 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
       .getWritersUpdatedListener()
       .subscribe((writers: Writer[]) => {
         this.writers = writers;
+        this.filteredWriters = this.writers;
         this.isLoading = false;
       });
 

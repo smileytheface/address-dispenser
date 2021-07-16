@@ -12,6 +12,7 @@ form {
 .form {
   padding-bottom: 0;
 
+  // Fixing letters being cut off in form fields
   .mat-form-field-wrapper {
     margin-bottom: -1.5em !important;
   }

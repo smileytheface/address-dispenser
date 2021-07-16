@@ -1,59 +1,74 @@
-<!-- Top section -->
-<div class="container">
-  <h3>Send Addresses</h3>
-  <!-- Add writer button -->
-  <button
-    type="button"
-    class="top-button"
-    id="add-writer"
-    (click)="onAddWriter()"
-  >
-    <p>Add Writer</p>
-    <span class="spacer"></span>
-    <img src="../../assets/images/icons/add-icon.svg" alt="add-icon" />
-  </button>
-  <!-- Custom send button -->
-  <button
-    type="button"
-    class="top-button"
-    id="custom-send"
-    (click)="onCustomSend()"
-  >
-    <p>Custom Send</p>
-    <span class="spacer"></span>
-    <img src="../../assets/images/icons/Send_Icon.svg" alt="airplane" />
-  </button>
-</div>
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-<!-- Send Buttons -->
-<div *ngIf="!isLoading" class="quick-send-wrapper">
-  <div class="writers-button-wrapper" *ngFor="let writer of writers">
+<div id="send-addresses-page-wrapper">
+  <!-- Top section -->
+  <div class="quick-send-container">
+    <h3>Send Addresses</h3>
+    <!-- Add writer button -->
     <button
       type="button"
-      id="writers-button"
-      class="pen-button"
-      [style.backgroundColor]="writer.color"
-      (click)="onSend(writer)"
+      class="top-button"
+      id="add-writer"
+      (click)="onAddWriter()"
     >
-      <div class="writer-info">
-        <p>{{ writer.name }}</p>
-        <p class="address-amount">
-          {{ writer.defaultAddressAmount }} Addresses |
-          <a
-            (click)="onEdit(writer.id)"
-            style="cursor: pointer"
-            href="javascript:void(0)"
-          >
-            Edit Defaults
-          </a>
-        </p>
-      </div>
+      <p>Add Writer</p>
       <span class="spacer"></span>
-      <img
-        src="../../assets/images/icons/send-icon-black.svg"
-        alt="airplane"
-        id="pen-icon"
-      />
+      <img src="../../assets/images/icons/add-icon.svg" alt="add-icon" />
     </button>
+    <!-- Custom send button -->
+    <button
+      type="button"
+      class="top-button"
+      id="custom-send"
+      (click)="onCustomSend()"
+    >
+      <p>Custom Send</p>
+      <span class="spacer"></span>
+      <img src="../../assets/images/icons/Send_Icon.svg" alt="airplane" />
+    </button>
+    <!-- Search Bar -->
+    <form class="send-addresses-search-bar">
+      <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+        <mat-label>Search</mat-label>
+        <input
+          type="search"
+          matInput
+          [(ngModel)]="searchTerm"
+          name="searchTerm"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </form>
+  </div>
+  <!-- Send Buttons -->
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div *ngIf="!isLoading" class="quick-send-wrapper">
+    <div class="writers-button-wrapper" *ngFor="let writer of filteredWriters">
+      <button
+        type="button"
+        id="writers-button"
+        class="pen-button"
+        [style.backgroundColor]="writer.color"
+        (click)="onSend(writer)"
+      >
+        <div class="writer-info">
+          <p>{{ writer.name }}</p>
+          <p class="address-amount">
+            {{ writer.defaultAddressAmount }} Addresses |
+            <a
+              (click)="onEdit(writer.id)"
+              style="cursor: pointer"
+              href="javascript:void(0)"
+            >
+              Edit Defaults
+            </a>
+          </p>
+        </div>
+        <span class="spacer"></span>
+        <img
+          src="../../assets/images/icons/send-icon-black.svg"
+          alt="airplane"
+          id="pen-icon"
+        />
+      </button>
+    </div>
   </div>
 </div>
