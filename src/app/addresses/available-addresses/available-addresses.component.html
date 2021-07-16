@@ -18,6 +18,9 @@
   </mat-form-field>
 
   <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <p *ngIf="availableAddresses.length" id="available-count">
+    {{ availableAddresses.length }} available addresses
+  </p>
   <mat-accordion *ngIf="!isLoading && filteredAddresses">
     <mat-expansion-panel *ngFor="let address of filteredAddresses">
       <mat-expansion-panel-header>
