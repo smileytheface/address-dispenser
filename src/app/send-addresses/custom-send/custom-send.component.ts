@@ -119,54 +119,6 @@ export class CustomSendComponent implements OnInit, OnDestroy {
           this.sendAddresses(addressesToAssign, form);
         });
     }
-    // this.addressesSub = this.addressesService
-    //   .getUnassignedAddressesUpdatedListener()
-    //   .subscribe((availableAddresses) => {
-    //     let addresses: Address[] = availableAddresses;
-    //     let addressesToAssign = availableAddresses.splice(0, addressAmount);
-    //     this.addressesSub.unsubscribe();
-
-    //     if (this.prefersText) {
-    //       let textData: TextData;
-    //       textData = {
-    //         writerPhone: form.value.phone,
-    //         startComment: form.value.openingComments,
-    //         endComment: form.value.closingComments,
-    //         addresses: addressesToAssign,
-    //         writerId: this.writerId,
-    //       };
-
-    //       let dialogRef = this.dialog.open(SendConfirmationComponent, {
-    //         data: textData,
-    //       });
-
-    //       dialogRef.afterClosed().subscribe((sendConfirmed) => {
-    //         if (sendConfirmed === 'true') {
-    //           this.sendAddressesService.textAddresses(textData);
-    //         }
-    //       });
-    //     } else {
-    //       let emailData: EmailData;
-    //       emailData = {
-    //         writerEmail: form.value.email,
-    //         startComment: form.value.startComment,
-    //         endComment: form.value.closingComments,
-    //         addresses: addressesToAssign,
-    //         writerId: this.writerId,
-    //         subject: form.value.subject,
-    //       };
-
-    //       let dialogRef = this.dialog.open(SendConfirmationComponent, {
-    //         data: emailData,
-    //       });
-
-    //       dialogRef.afterClosed().subscribe((sendConfirmed) => {
-    //         if (sendConfirmed === 'true') {
-    //           this.sendAddressesService.emailAddresses(emailData);
-    //         }
-    //       });
-    //     }
-    //   });
   }
 
   onManuallySelect() {
@@ -181,6 +133,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
 
   sendAddresses(addresses: Address[], form: NgForm) {
     if (!this.prefersEmail) {
+      // Texting addresses
       let textData: TextData;
       textData = {
         writerPhone: form.value.phone,
@@ -191,7 +144,10 @@ export class CustomSendComponent implements OnInit, OnDestroy {
       };
 
       let dialogRef = this.dialog.open(SendConfirmationComponent, {
-        data: textData,
+        data: {
+          messageData: textData,
+          writerName: this.sendAddressesService.sharedWriterName,
+        },
       });
 
       dialogRef.afterClosed().subscribe((sendConfirmed) => {
@@ -201,6 +157,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
         }
       });
     } else {
+      // Emailing addresses
       let emailData: EmailData;
       emailData = {
         writerEmail: form.value.email,
@@ -212,7 +169,10 @@ export class CustomSendComponent implements OnInit, OnDestroy {
       };
 
       let dialogRef = this.dialog.open(SendConfirmationComponent, {
-        data: emailData,
+        data: {
+          messageData: emailData,
+          writerName: this.sendAddressesService.sharedWriterName,
+        },
       });
 
       dialogRef.afterClosed().subscribe((sendConfirmed) => {
@@ -233,6 +193,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.sendAddressesService.sharedWriterName = null;
     this.messageSentSub.unsubscribe();
     this.messageNotSentSub.unsubscribe();
   }

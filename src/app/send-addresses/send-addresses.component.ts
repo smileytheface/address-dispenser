@@ -125,6 +125,7 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
         let addressesToAssign = availableAddresses.splice(0, addressAmount);
 
         if (writer.prefersText) {
+          // If texting addresses
           let textData: TextData;
           textData = {
             writerPhone: writerPhone,
@@ -143,10 +144,12 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
               this.sendAddressesService.textAddresses(textData);
             } else if (sendConfirmed === 'edit') {
               this.sendAddressesService.sharedTextData = textData;
+              this.sendAddressesService.sharedWriterName = writerName;
               this.router.navigate(['custom-send'], { relativeTo: this.route });
             }
           });
         } else {
+          // If emailing addresses
           let emailData: EmailData;
           emailData = {
             writerEmail: writerEmail,
@@ -166,6 +169,7 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
               this.sendAddressesService.emailAddresses(emailData);
             } else if (sendConfirmed === 'edit') {
               this.sendAddressesService.sharedEmailData = emailData;
+              this.sendAddressesService.sharedWriterName = writerName;
               this.router.navigate(['custom-send'], { relativeTo: this.route });
             }
           });

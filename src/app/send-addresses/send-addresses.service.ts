@@ -14,6 +14,8 @@ const BACKEND_URL = environment.apiUrl + '/addresses';
 export class SendAddressesService {
   sharedTextData: TextData;
   sharedEmailData: EmailData;
+  // For sharing writer's name when editing a quick send message
+  sharedWriterName: string;
   private messageSent = new Subject<string>();
   private messageNotSent = new Subject<string>();
 
