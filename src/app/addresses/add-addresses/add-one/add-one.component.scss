@@ -1,82 +1,84 @@
-#edit-header {
-  margin-bottom: 0;
-  margin-top: 20px;
-}
-
-form {
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.form {
-  padding-bottom: 0;
-
-  // Fixing letters being cut off in form fields
-  .mat-form-field-wrapper {
-    margin-bottom: -1.5em !important;
+.add-one-page-wrapper {
+  #edit-header {
+    margin-bottom: 0;
+    margin-top: 20px;
   }
 
-  .my-mat-form-field {
-    margin-bottom: 20px;
+  form {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    .mat-form-field-infix {
-      line-height: 1.35;
+  .form {
+    padding-bottom: 0;
+
+    // Fixing letters being cut off in form fields
+    .mat-form-field-wrapper {
+      margin-bottom: -1.5em !important;
+    }
+
+    .my-mat-form-field {
+      margin-bottom: 20px;
+
+      .mat-form-field-infix {
+        line-height: 1.35;
+      }
     }
   }
-}
 
-.add-one-form {
-  input[type="text"],
-  input[type="number"],
-  mat-select,
-  mat-label,
-  mat-option {
-    font-size: 16px;
-  }
-}
-
-.my-mat-form-field:first-of-type {
-  margin-top: 20px;
-}
-
-#address-submit {
-  margin-top: 35px;
-  margin-right: 30px;
-}
-
-.phone-controls {
-  margin-top: 20px;
-
-  display: flex;
-
-  mat-icon {
-    align-self: center;
-    margin-right: 20px;
-    cursor: pointer;
+  .add-one-form {
+    input[type="text"],
+    input[type="number"],
+    mat-select,
+    mat-label,
+    mat-option {
+      font-size: 16px;
+    }
   }
 
-  mat-form-field {
-    margin-top: 0;
+  .my-mat-form-field:first-of-type {
+    margin-top: 20px;
   }
-}
 
-.add-phone-number {
-  margin-top: 20px;
+  #address-submit {
+    margin-top: 35px;
+    margin-right: 30px;
+  }
 
-  a {
+  .phone-controls {
+    margin-top: 20px;
+
     display: flex;
+
+    mat-icon {
+      align-self: center;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    mat-form-field {
+      margin-top: 0;
+    }
   }
 
-  #add-phone {
-    align-self: center;
+  .add-phone-number {
+    margin-top: 20px;
+
+    a {
+      display: flex;
+    }
+
+    #add-phone {
+      align-self: center;
+    }
+
+    mat-icon {
+      margin-right: 20px;
+    }
   }
 
-  mat-icon {
-    margin-right: 20px;
+  .full-width {
+    width: 100%;
   }
-}
-
-.full-width {
-  width: 100%;
 }

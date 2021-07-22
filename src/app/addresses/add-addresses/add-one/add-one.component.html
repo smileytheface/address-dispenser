@@ -1,70 +1,72 @@
-<form
-  [formGroup]="addressForm"
-  (ngSubmit)="onSubmit()"
-  #form="ngForm"
-  class="form add-one-form"
->
-  <h2 *ngIf="editMode" id="edit-header">Edit Address</h2>
-  <mat-form-field appearance="outline" class="full-width my-mat-form-field">
-    <mat-label>Name</mat-label>
-    <input type="text" matInput formControlName="name" />
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="full-width my-mat-form-field">
-    <mat-label>Age</mat-label>
-    <input type="number" matInput formControlName="age" />
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="full-width my-mat-form-field">
-    <mat-label>Street</mat-label>
-    <input type="text" matInput formControlName="street" />
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="full-width my-mat-form-field">
-    <mat-label>City</mat-label>
-    <input type="text" matInput formControlName="city" />
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="full-width my-mat-form-field">
-    <mat-label>State</mat-label>
-    <input type="text" matInput formControlName="state" />
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="full-width my-mat-form-field">
-    <mat-label>Zip</mat-label>
-    <input type="text" matInput formControlName="zip" />
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="full-width my-mat-form-field">
-    <mat-label>Assigned Writer</mat-label>
-    <mat-select formControlName="writer">
-      <mat-option>None</mat-option>
-      <mat-option
-        *ngFor="let writer of writers"
-        [ngStyle]="{ 'background-color': writer.color }"
-        [value]="writer.id"
-        >{{ writer.name }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-  <!-- phone numbers -->
-  <div
-    class="phone-controls full-width"
-    *ngFor="let phoneControl of phoneControls; let i = index"
-    formArrayName="phone"
+<div class="add-one-page-wrapper">
+  <form
+    [formGroup]="addressForm"
+    (ngSubmit)="onSubmit()"
+    #form="ngForm"
+    class="form add-one-form"
   >
-    <mat-icon (click)="onRemovePhone(i)">remove</mat-icon>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Phone #</mat-label>
-      <input type="text" matInput [formControlName]="i" />
+    <h2 *ngIf="editMode" id="edit-header">Edit Address</h2>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name" />
     </mat-form-field>
-  </div>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Age</mat-label>
+      <input type="number" matInput formControlName="age" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Street</mat-label>
+      <input type="text" matInput formControlName="street" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>City</mat-label>
+      <input type="text" matInput formControlName="city" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>State</mat-label>
+      <input type="text" matInput formControlName="state" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Zip</mat-label>
+      <input type="text" matInput formControlName="zip" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width my-mat-form-field">
+      <mat-label>Assigned Writer</mat-label>
+      <mat-select formControlName="writer">
+        <mat-option>None</mat-option>
+        <mat-option
+          *ngFor="let writer of writers"
+          [ngStyle]="{ 'background-color': writer.color }"
+          [value]="writer.id"
+          >{{ writer.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <!-- phone numbers -->
+    <div
+      class="phone-controls full-width"
+      *ngFor="let phoneControl of phoneControls; let i = index"
+      formArrayName="phone"
+    >
+      <mat-icon (click)="onRemovePhone(i)">remove</mat-icon>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Phone #</mat-label>
+        <input type="text" matInput [formControlName]="i" />
+      </mat-form-field>
+    </div>
 
-  <div
-    class="add-phone-number"
-    (click)="onAddPhoneNumber()"
-    style="cursor: pointer"
-  >
-    <a><mat-icon>add</mat-icon><span id="add-phone">Add Phone #</span></a>
-  </div>
-  <button type="submit" class="submit-button" id="address-submit">
-    SUBMIT
-  </button>
-  <button type="button" class="cancel-button" (click)="onCancel()">
-    CANCEL
-  </button>
-</form>
+    <div
+      class="add-phone-number"
+      (click)="onAddPhoneNumber()"
+      style="cursor: pointer"
+    >
+      <a><mat-icon>add</mat-icon><span id="add-phone">Add Phone #</span></a>
+    </div>
+    <button type="submit" class="submit-button" id="address-submit">
+      SUBMIT
+    </button>
+    <button type="button" class="cancel-button" (click)="onCancel()">
+      CANCEL
+    </button>
+  </form>
+</div>
