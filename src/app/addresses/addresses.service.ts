@@ -82,7 +82,6 @@ export class AddressesService {
       )
       .subscribe((transformedAddresses) => {
         this.assignedAddresses = transformedAddresses;
-        console.log(this.assignedAddresses);
         this.assignedAddressesUpdated.next([...this.assignedAddresses]);
       });
   }
