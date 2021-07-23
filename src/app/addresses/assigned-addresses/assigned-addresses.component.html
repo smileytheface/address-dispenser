@@ -90,6 +90,7 @@
       </div>
     </div>
 
+    <!-- Filtering section -->
     <div class="filter-section" *ngIf="!mobile">
       <img
         src="../../../assets/images/icons/reveal-persons-icon-blue.svg"
@@ -98,11 +99,15 @@
       <!-- dropdown for filter by -->
       <mat-form-field appearance="outline" id="filter-by-dropdown">
         <mat-label>Filter By...</mat-label>
-        <mat-select name="filterBy" [(ngModel)]="filterBy">
+        <mat-select
+          name="filterBy"
+          [(ngModel)]="filterBy"
+          (selectionChange)="onSelectionChange()"
+        >
           <mat-option style="color: red">None</mat-option>
           <mat-option
             *ngFor="let filterByOption of filterByOptions"
-            value="filterByOption"
+            [value]="filterByOption"
             >{{ formatFilterByOption(filterByOption) }}</mat-option
           >
         </mat-select>
@@ -110,6 +115,7 @@
 
       <mat-divider></mat-divider>
 
+      <!-- Filter search -->
       <mat-form-field
         appearance="outline"
         class="full-width"
@@ -121,11 +127,12 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
+      <!-- Filter options -->
       <mat-spinner *ngIf="writersLoading"></mat-spinner>
-      <div class="filterWriterOptions" *ngIf="!writersLoading && filterBy">
-        <p *ngFor="let writer of writers">
+      <div *ngIf="!writersLoading && filterBy">
+        <p *ngFor="let filterOption of filterOptionsSearchResults">
           <mat-checkbox color="primary">
-            {{ writer.name }}
+            {{ filterOption }}
           </mat-checkbox>
         </p>
         <p (click)="clearFilter()" class="none">None</p>

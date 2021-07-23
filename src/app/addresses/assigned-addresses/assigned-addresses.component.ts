@@ -42,6 +42,11 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     color: null,
   };
 
+  // Options to filter such as a list of writer names or a list of address names
+  filterOptions: string[] = [];
+  // Array for results when searching filteroptions
+  filterOptionsSearchResults: string[] = [];
+
   assignedAddresses: Address[] = [];
 
   filteredWriters: Writer[];
@@ -62,13 +67,20 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   }
   set searchTerm(value: string) {
     this._searchTerm = value;
-    this.filteredWriters = this.filterWriters(value);
+    this.filterOptionsSearchResults = this.searchFilterOptions(value);
   }
 
-  filterWriters(searchString: string) {
-    return this.writers.filter(
-      (writer) =>
-        writer.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+  // returns filter options that match the search string
+  searchFilterOptions(searchString: string) {
+    console.log(typeof this.filterOptions[0]);
+    console.log(typeof searchString);
+
+    return this.filterOptions.filter(
+      (filterOption) =>
+        filterOption
+          .toString()
+          .toLowerCase()
+          .indexOf(searchString.toLowerCase()) !== -1
     );
   }
 
@@ -230,6 +242,26 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     return option.replace(/([A-Z])/g, ' $1').replace(/\w\S*/g, (txt) => {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
+  }
+
+  // When filter by is changed
+  onSelectionChange() {
+    let options = [];
+    for (let address of this.assignedAddresses) {
+      // Adding all address.filterBy fields
+      // For example if filterBy is name, this will go through all addresses and add address.name to options
+      // Any duplicates get removed later with the spread operator
+      if (!address[this.filterBy]) {
+        // If the property is null, push No {{ filterBy }}
+        options.push('No ' + this.formatFilterByOption(this.filterBy));
+      } else {
+        options.push(address[this.filterBy]);
+      }
+    }
+
+    this.filterOptions = [...new Set(options)];
+    // Adding the filter options to the array that get changed when searching
+    this.filterOptionsSearchResults = this.filterOptions;
   }
 
   ngOnDestroy() {
