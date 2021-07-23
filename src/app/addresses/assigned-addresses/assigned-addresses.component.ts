@@ -11,6 +11,7 @@ import { WritersService } from 'src/app/writers/writers.service';
 import { AddressesService } from '../addresses.service';
 import { FilterBottomSheetComponent } from './filter-bottom-sheet/filter-bottom-sheet.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-assigned-addresses',
@@ -103,7 +104,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     private writersService: WritersService,
     private router: Router,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -279,6 +281,10 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
         if (!address[this.filterBy]) {
           // If the property is null, push No {{ filterBy }}
           options.push('No ' + this.formatFilterByOption(this.filterBy));
+        } else if (this.filterBy === 'dateCreated') {
+          options.push(
+            this.datePipe.transform(address[this.filterBy], 'short')
+          );
         } else {
           options.push(address[this.filterBy]);
         }

@@ -29,6 +29,7 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthGuard } from './auth/auth.guard';
 import { ChooseAddressesComponent } from './send-addresses/choose-addresses/choose-addresses.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ChooseAddressesComponent } from './send-addresses/choose-addresses/choo
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     Title,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })
