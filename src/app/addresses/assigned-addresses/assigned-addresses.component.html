@@ -91,30 +91,34 @@
     </div>
 
     <div class="filter-section" *ngIf="!mobile">
-      <h3>
-        <img
-          src="../../../assets/images/icons/reveal-persons-icon-blue.svg"
-          alt="filter-icon"
-        />
-        Filter By
-        <!-- dropdown for filter by -->
-        <!-- <mat-form-field appearance="outline">
-          <mat-select name="filterBy" [(ngModel)]="filterBy">
-            <mat-option value="Writer">Writer</mat-option>
-          </mat-select>
-        </mat-form-field> -->
-      </h3>
+      <img
+        src="../../../assets/images/icons/reveal-persons-icon-blue.svg"
+        alt="filter-icon"
+      />
+      <!-- dropdown for filter by -->
+      <mat-form-field appearance="outline" id="filter-by-dropdown">
+        <mat-label>Filter By...</mat-label>
+        <mat-select name="filterBy" [(ngModel)]="filterBy">
+          <mat-option>None</mat-option>
+          <mat-option value="Writer">Writer</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <mat-divider></mat-divider>
 
-      <mat-form-field appearance="outline" class="full-width" id="search-bar">
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+        id="search-bar"
+        *ngIf="filterBy"
+      >
         <mat-label>Search</mat-label>
         <input type="search" matInput [(ngModel)]="searchTerm" />
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
       <mat-spinner *ngIf="writersLoading"></mat-spinner>
-      <div class="filterWriterOptions" *ngIf="!writersLoading">
+      <div class="filterWriterOptions" *ngIf="!writersLoading && filterBy">
         <p *ngFor="let writer of writers">
           <mat-checkbox color="primary">
             {{ writer.name }}

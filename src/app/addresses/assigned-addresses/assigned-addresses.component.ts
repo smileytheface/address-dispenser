@@ -34,7 +34,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   assignedAddresses: Address[] = [];
 
   filteredWriters: Writer[];
-  filterBy: string = 'Writer';
+  filterBy: string;
 
   private assignedAddressesSub: Subscription;
   private writersSub: Subscription;
