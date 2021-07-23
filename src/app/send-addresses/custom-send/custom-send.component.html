@@ -121,7 +121,10 @@
       <button
         type="submit"
         class="submit-button"
-        [disabled]="!customSendForm.valid"
+        [disabled]="
+          !customSendForm.valid ||
+          (manuallySelect && chosenAddresses.length < 1)
+        "
       >
         SUBMIT
       </button>
