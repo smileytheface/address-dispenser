@@ -132,7 +132,7 @@
       <div *ngIf="!writersLoading && filterBy">
         <p *ngFor="let filterOption of filterOptionsSearchResults">
           <mat-checkbox color="primary">
-            {{ filterOption }}
+            {{ filterOption.name ? filterOption.name : filterOption }}
           </mat-checkbox>
         </p>
         <p (click)="clearFilter()" class="none">None</p>

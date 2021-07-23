@@ -43,7 +43,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   };
 
   // Options to filter such as a list of writer names or a list of address names
-  filterOptions: string[] = [];
+  filterOptions: any[] = [];
   // Array for results when searching filteroptions
   filterOptionsSearchResults: string[] = [];
 
@@ -72,9 +72,18 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   // returns filter options that match the search string
   searchFilterOptions(searchString: string) {
-    console.log(typeof this.filterOptions[0]);
-    console.log(typeof searchString);
+    // If searching for a writer name
+    if (this.filterOptions[0].name) {
+      return this.filterOptions.filter(
+        (filterOption) =>
+          filterOption.name
+            .toString()
+            .toLowerCase()
+            .indexOf(searchString.toLowerCase()) !== -1
+      );
+    }
 
+    // If searching anything that's not a writer name
     return this.filterOptions.filter(
       (filterOption) =>
         filterOption
@@ -247,15 +256,20 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   // When filter by is changed
   onSelectionChange() {
     let options = [];
-    for (let address of this.assignedAddresses) {
-      // Adding all address.filterBy fields
-      // For example if filterBy is name, this will go through all addresses and add address.name to options
-      // Any duplicates get removed later with the spread operator
-      if (!address[this.filterBy]) {
-        // If the property is null, push No {{ filterBy }}
-        options.push('No ' + this.formatFilterByOption(this.filterBy));
-      } else {
-        options.push(address[this.filterBy]);
+
+    if (this.filterBy === 'writer') {
+      options = this.writers;
+    } else {
+      for (let address of this.assignedAddresses) {
+        // Adding all address.filterBy fields
+        // For example if filterBy is name, this will go through all addresses and add address.name to options
+        // Any duplicates get removed later with the spread operator
+        if (!address[this.filterBy]) {
+          // If the property is null, push No {{ filterBy }}
+          options.push('No ' + this.formatFilterByOption(this.filterBy));
+        } else {
+          options.push(address[this.filterBy]);
+        }
       }
     }
 
