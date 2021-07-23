@@ -24,8 +24,19 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    console.log(next);
+    console.log(state);
+
     let isAuth = this.authService.getIsAuthenticated();
-    if (!isAuth) {
+    console.log(isAuth);
+    if (isAuth && state.url === '/sign-in') {
+      // If already signed in and router tries to navigate to sign-in, redirect to homepage
+      this.router.navigate(['/']);
+    } else if (!isAuth && state.url === '/sign-in') {
+      // If not signed in and router tries to navigate to sign-in, allow it
+      return true;
+    } else if (!isAuth) {
+      // If not signed in and router tries to navigate to a page other than sign-in, redirect them to sign-in
       this.router.navigate(['/sign-in']);
     }
     return isAuth;

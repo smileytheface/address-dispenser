@@ -74,7 +74,11 @@ const routes: Routes = [
     component: AddWriterComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'sign-in', component: SignInComponent },
+  {
+    path: 'sign-in',
+    component: SignInComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: '/', canActivate: [AuthGuard] },
 ];
 
