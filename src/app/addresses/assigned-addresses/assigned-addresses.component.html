@@ -130,12 +130,14 @@
       <!-- Filter options -->
       <mat-spinner *ngIf="writersLoading"></mat-spinner>
       <div *ngIf="!writersLoading && filterBy">
+        <p (click)="clearFilter()" class="none" *ngIf="searchTerm">
+          Clear search
+        </p>
         <p *ngFor="let filterOption of filterOptionsSearchResults">
           <mat-checkbox color="primary">
             {{ filterOption.name ? filterOption.name : filterOption }}
           </mat-checkbox>
         </p>
-        <p (click)="clearFilter()" class="none">None</p>
       </div>
     </div>
   </div>

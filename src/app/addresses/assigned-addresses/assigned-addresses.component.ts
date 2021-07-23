@@ -253,12 +253,24 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     });
   }
 
-  // When filter by is changed
+  // When filter by select is changed
   onSelectionChange() {
     let options = [];
 
+    // When adding writers to options, set the options to writers objects themselves that get fetched on init
     if (this.filterBy === 'writer') {
       options = this.writers;
+    } else if (this.filterBy === 'phone') {
+      // If filtering by phone number, get all phone numbers
+      for (let address of this.assignedAddresses) {
+        if (address.phone.length > 0) {
+          for (let phone of address.phone) {
+            options.push(phone);
+          }
+        } else {
+          options.push('No ' + this.formatFilterByOption(this.filterBy));
+        }
+      }
     } else {
       for (let address of this.assignedAddresses) {
         // Adding all address.filterBy fields
@@ -274,6 +286,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     }
 
     this.filterOptions = [...new Set(options)];
+
     // Adding the filter options to the array that get changed when searching
     this.filterOptionsSearchResults = this.filterOptions;
   }
