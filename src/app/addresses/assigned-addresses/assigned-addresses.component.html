@@ -11,11 +11,11 @@
     </div>
   </div>
 
-  <mat-form-field appearance="outline" class="full-width">
+  <!-- <mat-form-field appearance="outline" class="full-width">
     <mat-label>Search</mat-label>
     <input type="search" matInput [(ngModel)]="searchTerm" />
     <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+  </mat-form-field> -->
 
   <div class="container" id="container">
     <mat-spinner *ngIf="loading"></mat-spinner>
@@ -96,15 +96,29 @@
           src="../../../assets/images/icons/reveal-persons-icon-blue.svg"
           alt="filter-icon"
         />
-        Filter By Writer
+        Filter By
+        <!-- dropdown for filter by -->
+        <!-- <mat-form-field appearance="outline">
+          <mat-select name="filterBy" [(ngModel)]="filterBy">
+            <mat-option value="Writer">Writer</mat-option>
+          </mat-select>
+        </mat-form-field> -->
       </h3>
 
       <mat-divider></mat-divider>
 
+      <mat-form-field appearance="outline" class="full-width" id="search-bar">
+        <mat-label>Search</mat-label>
+        <input type="search" matInput [(ngModel)]="searchTerm" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
       <mat-spinner *ngIf="writersLoading"></mat-spinner>
       <div class="filterWriterOptions" *ngIf="!writersLoading">
         <p *ngFor="let writer of writers">
-          <a (click)="filter(writer.name)">{{ writer.name }}</a>
+          <mat-checkbox color="primary">
+            {{ writer.name }}
+          </mat-checkbox>
         </p>
         <p (click)="clearFilter()" class="none">None</p>
       </div>
