@@ -33,7 +33,12 @@
 <mat-dialog-actions>
   <button mat-button mat-dialog-close mat-dialog-close="true">Confirm</button>
   <button mat-button mat-dialog-close mat-dialog-close="false">Cancel</button>
-  <button mat-button mat-dialog-close mat-dialog-close="edit">
+  <button
+    *ngIf="!data.customSend"
+    mat-button
+    mat-dialog-close
+    mat-dialog-close="edit"
+  >
     Edit Message
   </button>
 </mat-dialog-actions>

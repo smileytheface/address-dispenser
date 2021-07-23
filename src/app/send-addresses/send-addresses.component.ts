@@ -136,7 +136,11 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
           };
 
           let dialogRef = this.dialog.open(SendConfirmationComponent, {
-            data: { messageData: textData, writerName: writerName },
+            data: {
+              messageData: textData,
+              writerName: writerName,
+              customSend: false,
+            },
           });
 
           dialogRef.afterClosed().subscribe((sendConfirmed) => {
@@ -161,7 +165,11 @@ export class SendAddressesComponent implements OnInit, OnDestroy {
           };
 
           let dialogRef = this.dialog.open(SendConfirmationComponent, {
-            data: { messageData: emailData, writerName: writerName },
+            data: {
+              messageData: emailData,
+              writerName: writerName,
+              customSend: false,
+            },
           });
 
           dialogRef.afterClosed().subscribe((sendConfirmed) => {

@@ -147,6 +147,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
         data: {
           messageData: textData,
           writerName: this.sendAddressesService.sharedWriterName,
+          customSend: true,
         },
       });
 
@@ -172,6 +173,7 @@ export class CustomSendComponent implements OnInit, OnDestroy {
         data: {
           messageData: emailData,
           writerName: this.sendAddressesService.sharedWriterName,
+          customSend: true,
         },
       });
 
