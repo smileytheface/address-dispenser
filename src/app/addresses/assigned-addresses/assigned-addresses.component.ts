@@ -1,5 +1,11 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Optional,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -18,6 +24,7 @@ import * as moment from 'moment';
   selector: 'app-assigned-addresses',
   templateUrl: './assigned-addresses.component.html',
   styleUrls: ['./assigned-addresses.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AssignedAddressesComponent implements OnInit, OnDestroy {
   writers: Writer[] = [];

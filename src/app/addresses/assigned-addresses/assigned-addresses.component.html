@@ -1,4 +1,4 @@
-<div class="page-wrapper">
+<div class="assigned-addresses-page-wrapper">
   <div class="top-section">
     <h2>Assigned Addresses</h2>
     <span class="spacer"></span>
@@ -10,12 +10,6 @@
       </button>
     </div>
   </div>
-
-  <!-- <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Search</mat-label>
-    <input type="search" matInput [(ngModel)]="searchTerm" />
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field> -->
 
   <div class="container" id="container">
     <mat-spinner *ngIf="loading"></mat-spinner>
@@ -97,7 +91,11 @@
         alt="filter-icon"
       />
       <!-- dropdown for filter by -->
-      <mat-form-field appearance="outline" id="filter-by-dropdown">
+      <mat-form-field
+        appearance="outline"
+        id="filter-by-dropdown"
+        class="my-mat-form-field"
+      >
         <mat-label>Filter By...</mat-label>
         <mat-select
           name="filterBy"
@@ -116,16 +114,23 @@
       <mat-divider></mat-divider>
 
       <!-- Filter search -->
-      <mat-form-field
-        appearance="outline"
-        class="full-width"
-        id="search-bar"
-        *ngIf="filterBy"
-      >
-        <mat-label>Search</mat-label>
-        <input type="search" matInput [(ngModel)]="searchTerm" />
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
+      <form class="filter-search">
+        <mat-form-field
+          appearance="outline"
+          class="full-width my-mat-form-field"
+          id="search-bar"
+          *ngIf="filterBy"
+        >
+          <mat-label>Search</mat-label>
+          <input
+            type="search"
+            matInput
+            [(ngModel)]="searchTerm"
+            name="searchTerm"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </form>
 
       <!-- Filter options -->
       <mat-spinner *ngIf="writersLoading"></mat-spinner>
