@@ -1,5 +1,5 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { AddressesService } from '../addresses.service';
 import { FilterBottomSheetComponent } from './filter-bottom-sheet/filter-bottom-sheet.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-assigned-addresses',
@@ -30,6 +31,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     'zip',
     'phone',
     'dateCreated',
+    'dateAssigned',
   ];
 
   other: Writer = {
@@ -250,9 +252,11 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript?page=1&tab=votes#tab-top
     // https://stackoverflow.com/questions/4149276/how-to-convert-camelcase-to-camel-case
     // Adds space between cammel case and makes makes options Title Case
-    return option.replace(/([A-Z])/g, ' $1').replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
+    if (option) {
+      return option.replace(/([A-Z])/g, ' $1').replace(/\w\S*/g, (txt) => {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      });
+    }
   }
 
   // When filter by select is changed
@@ -269,6 +273,17 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
           for (let phone of address.phone) {
             options.push(phone);
           }
+        } else {
+          options.push('No ' + this.formatFilterByOption(this.filterBy));
+        }
+      }
+    } else if (this.filterBy === 'dateAssigned') {
+      // If filtering by date assigned, get the last date assigned for all addresses with assignment history
+      for (let address of this.assignedAddresses) {
+        if (address.assignmentHistory && address.assignmentHistory.length > 0) {
+          options.push(
+            address.assignmentHistory[address.assignmentHistory.length - 1].date
+          );
         } else {
           options.push('No ' + this.formatFilterByOption(this.filterBy));
         }
@@ -295,6 +310,16 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
     // Adding the filter options to the array that get changed when searching
     this.filterOptionsSearchResults = this.filterOptions;
+  }
+
+  formatFilterOption(option: any) {
+    if (option.name) {
+      return option.name;
+    } else if (moment(option, moment.ISO_8601, true).isValid()) {
+      return this.datePipe.transform(option, 'short');
+    } else {
+      return option;
+    }
   }
 
   ngOnDestroy() {

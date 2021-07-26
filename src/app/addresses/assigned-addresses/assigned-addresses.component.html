@@ -135,7 +135,7 @@
         </p>
         <p *ngFor="let filterOption of filterOptionsSearchResults">
           <mat-checkbox color="primary">
-            {{ filterOption.name ? filterOption.name : filterOption }}
+            {{ formatFilterOption(filterOption) }}
           </mat-checkbox>
         </p>
       </div>
