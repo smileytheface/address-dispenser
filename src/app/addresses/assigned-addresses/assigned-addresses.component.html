@@ -14,74 +14,65 @@
   <div class="container" id="container">
     <mat-spinner *ngIf="loading"></mat-spinner>
     <div class="addresses-section" *ngIf="!loading">
-      <div
-        *ngFor="let writer of filteredWriters; first as isFirst"
-        [class.first]="isFirst"
-      >
-        <h3>{{ writer.name }}</h3>
-
-        <mat-accordion>
-          <mat-expansion-panel
-            *ngFor="let address of addressesByName(writer); let i = index"
-          >
-            <mat-expansion-panel-header *ngIf="address">
-              <mat-panel-title> {{ address.name }} </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>
-              <span *ngIf="address.age">Age: {{ address.age }}<br /></span>
-              {{ address.street }} <br />
-              {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
-              <span *ngFor="let phone of address.phone">
-                {{ phone }} <br />
-              </span>
-              <span *ngIf="address.dateCreated">
-                <br />Address added on
-                {{ address.dateCreated | date: "shortDate" }} at
-                {{ address.dateCreated | date: "shortTime" }}
-              </span>
-              <!-- Assignment Information -->
-              <span *ngIf="address.assignmentHistory[0]">
-                <br />
-                <span *ngFor="let addressData of address.assignmentHistory">
-                  <span *ngIf="addressData.wasAssigned">
-                    <mat-icon class="assignment-data-icon">
-                      edit_location_alt
-                    </mat-icon>
-                    Assigned to
-                    {{ addressData.writerName }}
-                  </span>
-                  <span *ngIf="!addressData.wasAssigned">
-                    <mat-icon class="assignment-data-icon">place</mat-icon>
-                    Unassigned
-                  </span>
-                  on
-                  {{ addressData.date | date: "shortDate" }} at
-                  {{ addressData.date | date: "shortTime" }}
-                  <br />
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let address of assignedAddresses">
+          <mat-expansion-panel-header *ngIf="address">
+            <mat-panel-title> {{ address.name }} </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>
+            <span *ngIf="address.age">Age: {{ address.age }}<br /></span>
+            {{ address.street }} <br />
+            {{ address.city }}, {{ address.state }} {{ address.zip }} <br />
+            <span *ngFor="let phone of address.phone">
+              {{ phone }} <br />
+            </span>
+            <span *ngIf="address.dateCreated">
+              <br />Address added on
+              {{ address.dateCreated | date: "shortDate" }} at
+              {{ address.dateCreated | date: "shortTime" }}
+              <br />
+            </span>
+            <!-- Assignment Information -->
+            <br />
+            Currently assigned to {{ getWriter(address.writer).name }}
+            <span *ngIf="address.assignmentHistory[0]">
+              <br />
+              <span *ngFor="let addressData of address.assignmentHistory">
+                <span *ngIf="addressData.wasAssigned">
+                  <mat-icon class="assignment-data-icon">
+                    edit_location_alt
+                  </mat-icon>
+                  Assigned to
+                  {{ addressData.writerName }}
                 </span>
+                <span *ngIf="!addressData.wasAssigned">
+                  <mat-icon class="assignment-data-icon">place</mat-icon>
+                  Unassigned
+                </span>
+                on
+                {{ addressData.date | date: "shortDate" }} at
+                {{ addressData.date | date: "shortTime" }}
+                <br />
               </span>
-            </p>
-            <mat-action-row>
-              <button
-                mat-button
-                color="primary"
-                (click)="onUnassign(address.id, writer.id)"
-              >
-                Unassign
-              </button>
-              <button mat-button color="primary" (click)="onEdit(address)">
-                Edit
-              </button>
-              <button mat-button color="warn" (click)="onDelete(address)">
-                Delete
-              </button>
-            </mat-action-row>
-          </mat-expansion-panel>
-        </mat-accordion>
-        <div *ngIf="addressesByName(writer).length < 1">
-          No addresses assigned to {{ writer.name }}
-        </div>
-      </div>
+            </span>
+          </p>
+          <mat-action-row>
+            <button
+              mat-button
+              color="primary"
+              (click)="onUnassign(address.id, writer.id)"
+            >
+              Unassign
+            </button>
+            <button mat-button color="primary" (click)="onEdit(address)">
+              Edit
+            </button>
+            <button mat-button color="warn" (click)="onDelete(address)">
+              Delete
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
 
     <!-- Filtering section -->

@@ -165,22 +165,26 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       });
   }
 
-  // gets called as the html loops through each writer
-  // gets all addresses that are assigned to the given writer
-  addressesByName(writer: Writer): Address[] {
-    let writersAddresses: Address[] = [];
-    let allAddresses: Address[] = this.assignedAddresses;
+  // // gets called as the html loops through each writer
+  // // gets all addresses that are assigned to the given writer
+  // addressesByName(writer: Writer): Address[] {
+  //   let writersAddresses: Address[] = [];
+  //   let allAddresses: Address[] = this.assignedAddresses;
 
-    allAddresses.forEach((address) => {
-      if (
-        (address.writer && address.writer === writer.id) ||
-        (writer.name === 'Other' && !address.writer && address.assigned)
-      ) {
-        writersAddresses.push(address);
-      }
-    });
+  //   allAddresses.forEach((address) => {
+  //     if (
+  //       (address.writer && address.writer === writer.id) ||
+  //       (writer.name === 'Other' && !address.writer && address.assigned)
+  //     ) {
+  //       writersAddresses.push(address);
+  //     }
+  //   });
 
-    return writersAddresses;
+  //   return writersAddresses;
+  // }
+
+  getWriter(writerId: string) {
+    return this.writers.find((writer) => writer.id === writerId);
   }
 
   onEdit(address: Address) {
