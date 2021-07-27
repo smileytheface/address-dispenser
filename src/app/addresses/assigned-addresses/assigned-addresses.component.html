@@ -130,7 +130,13 @@
           Clear search
         </p>
         <p *ngFor="let filterOption of filterOptionsSearchResults">
-          <mat-checkbox color="primary">
+          <mat-checkbox
+            color="primary"
+            (change)="
+              onFilterOptionChange(filterBy, filterOption, $event.checked)
+            "
+            [checked]="isChecked(filterOption, filterBy)"
+          >
             {{ formatFilterOption(filterOption) }}
           </mat-checkbox>
         </p>

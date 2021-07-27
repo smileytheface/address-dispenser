@@ -10,15 +10,17 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Address } from 'src/app/shared/models/address.model';
 import { DeleteConfirmationComponent } from 'src/app/shared/delete-confirmation/delete-confirmation.component';
-import { Writer } from 'src/app/shared/models/writer.model';
 import { WritersService } from 'src/app/writers/writers.service';
 import { AddressesService } from '../addresses.service';
 import { FilterBottomSheetComponent } from './filter-bottom-sheet/filter-bottom-sheet.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DatePipe } from '@angular/common';
+import { DatePipe, SlicePipe } from '@angular/common';
 import * as moment from 'moment';
+
+import { Writer } from 'src/app/shared/models/writer.model';
+import { Address } from 'src/app/shared/models/address.model';
+import { FilterSelection } from 'src/app/shared/models/filter-selection.model';
 
 @Component({
   selector: 'app-assigned-addresses',
@@ -56,6 +58,9 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   filterOptions: any[] = [];
   // Array for results when searching filteroptions
   filterOptionsSearchResults: string[] = [];
+
+  // Array to hold what filter options are selected
+  filterSelections: FilterSelection[] = [];
 
   assignedAddresses: Address[] = [];
 
@@ -321,6 +326,73 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
     // Adding the filter options to the array that get changed when searching
     this.filterOptionsSearchResults = this.filterOptions;
+  }
+
+  // When checkbox is changed add that option to an array in a filterSelection
+  onFilterOptionChange(filterBy: string, filterOption: any, checked: boolean) {
+    // If there is already a filterSelection for that filterBy option, store the index of that filterSelection for later
+    const filterSelectionsIndex = this.filterSelections.findIndex(
+      (filterSelection) => filterSelection.filterBy === filterBy
+    );
+
+    if (checked) {
+      // If the option was checked...
+      if (filterSelectionsIndex < 0) {
+        const newFilterSelection: FilterSelection = {
+          filterBy: filterBy,
+          selectedFilterOptions: [filterOption],
+        };
+
+        this.filterSelections.push(newFilterSelection);
+      } else {
+        this.filterSelections[filterSelectionsIndex].selectedFilterOptions.push(
+          filterOption
+        );
+      }
+    } else {
+      // If the option was unchecked
+      if (filterSelectionsIndex < 0) {
+        console.error('Option was not already checked');
+      } else {
+        // remove that filter option from the filterSelection's array
+        this.filterSelections[filterSelectionsIndex].selectedFilterOptions =
+          this.filterSelections[
+            filterSelectionsIndex
+          ].selectedFilterOptions.filter(
+            (filOption) => filOption !== filterOption
+          );
+
+        // If the filterSelection has no more filterOptions selected, remove it from the filterSelection array
+        if (
+          this.filterSelections[filterSelectionsIndex].selectedFilterOptions
+            .length < 1
+        ) {
+          this.filterSelections.splice(filterSelectionsIndex, 1);
+        }
+      }
+    }
+
+    console.log(this.filterSelections);
+
+    // if (checked) {
+    //   this.filterSelections = addFilterOption(this.filterSelections, filterBy, filterOption);
+    // } else {
+    //   this.filterSelections = removeFilterOption(this.filterSelections, filterBy, filterOption)
+    // }
+  }
+
+  // Returns boolean indicating if filterOption is in a filterSelection already
+  isChecked(filterOption: any, filterBy: string): boolean {
+    const filterSelectionsIndex = this.filterSelections.findIndex(
+      (filterSelection) => filterSelection.filterBy === filterBy
+    );
+    if (filterSelectionsIndex < 0) {
+      return false;
+    } else {
+      return this.filterSelections[
+        filterSelectionsIndex
+      ].selectedFilterOptions.includes(filterOption);
+    }
   }
 
   formatFilterOption(option: any) {
