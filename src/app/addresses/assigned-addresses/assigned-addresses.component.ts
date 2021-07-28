@@ -147,24 +147,6 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       });
   }
 
-  // // gets called as the html loops through each writer
-  // // gets all addresses that are assigned to the given writer
-  // addressesByName(writer: Writer): Address[] {
-  //   let writersAddresses: Address[] = [];
-  //   let allAddresses: Address[] = this.assignedAddresses;
-
-  //   allAddresses.forEach((address) => {
-  //     if (
-  //       (address.writer && address.writer === writer.id) ||
-  //       (writer.name === 'Other' && !address.writer && address.assigned)
-  //     ) {
-  //       writersAddresses.push(address);
-  //     }
-  //   });
-
-  //   return writersAddresses;
-  // }
-
   getWriter(writerId: string) {
     return this.writers.find((writer) => writer.id === writerId);
   }
@@ -254,52 +236,13 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   // When filter by select is changed
   onSelectionChange() {
-    let options = [];
-
-    // When adding writers to options, set the options to writers objects themselves that get fetched on init
-    if (this.filterBy === 'writer') {
-      options = this.writers;
-    } else if (this.filterBy === 'phone') {
-      // If filtering by phone number, get all phone numbers
-      for (let address of this.assignedAddresses) {
-        if (address.phone.length > 0) {
-          for (let phone of address.phone) {
-            options.push(phone);
-          }
-        } else {
-          options.push('No ' + this.formatFilterByOption(this.filterBy));
-        }
-      }
-    } else if (this.filterBy === 'dateAssigned') {
-      // If filtering by date assigned, get the last date assigned for all addresses with assignment history
-      for (let address of this.assignedAddresses) {
-        if (address.assignmentHistory && address.assignmentHistory.length > 0) {
-          options.push(
-            address.assignmentHistory[address.assignmentHistory.length - 1].date
-          );
-        } else {
-          options.push('No ' + this.formatFilterByOption(this.filterBy));
-        }
-      }
-    } else {
-      for (let address of this.assignedAddresses) {
-        // Adding all address.filterBy fields
-        // For example if filterBy is name, this will go through all addresses and add address.name to options
-        // Any duplicates get removed later with the spread operator
-        if (!address[this.filterBy]) {
-          // If the property is null, push No {{ filterBy }}
-          options.push('No ' + this.formatFilterByOption(this.filterBy));
-        } else if (this.filterBy === 'dateCreated') {
-          options.push(
-            this.datePipe.transform(address[this.filterBy], 'short')
-          );
-        } else {
-          options.push(address[this.filterBy]);
-        }
-      }
-    }
-
-    this.filterOptions = [...new Set(options)];
+    // createFilterOptions returns an array of filter options based on
+    // what you are filtering by, and what properties are present in addresses
+    this.filterOptions = this.filterAddressesService.createFilterOptions(
+      this.filterBy,
+      this.assignedAddresses,
+      this.writers
+    );
 
     // Adding the filter options to the array that get changed when searching
     this.filterOptionsSearchResults = this.filterOptions;
