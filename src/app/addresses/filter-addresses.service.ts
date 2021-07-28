@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Address } from '../shared/models/address.model';
+import { FilterSelection } from '../shared/models/filter-selection.model';
 import { Writer } from '../shared/models/writer.model';
 
 @Injectable({
@@ -36,8 +37,10 @@ export class FilterAddressesService {
   }
 
   /*
-  createFilterOptions returns an array of filter options based on
-  addresses what you are filtering by and what properties are present in addresses
+  Description:
+    createFilterOptions returns an array of filter options based on
+    addresses what you are filtering by and what properties are present in addresses
+
   Params:
     filterBy: string - what address property to populate filter options based on
       i.e. writer will populate filter options based on what writers are present in addresses
@@ -45,7 +48,8 @@ export class FilterAddressesService {
     writers?: Writer[] - an array of writers to add to filter options.
       This parameter is only needed if filterBy is writer
 
-  Returns: An array of filter options
+  Returns:
+    An array of filter options
   */
   public createFilterOptions(
     filterBy: string,
@@ -95,9 +99,74 @@ export class FilterAddressesService {
       }
     }
 
+    // Removes duplicates
     return [...new Set(options)];
-    // What i want from the service
-    // this.filterOptions = this.filterAddressesService.createFilterOptions(filterBy, addresses, writers)
+  }
+
+  /*
+  Description:
+    updateFilterSelection will either add or remove a filterOption from an array of filterSelections
+
+  Params:
+    filterSelections: FilterSelection[] - an array of filterSelections to be updated
+    filterBy: string - what address property filterOption refers to
+      i.e. writer, name, dateAssigned, etc...
+    filterOption: any - a filter option to be added or removed from the filterSelection array
+    add: boolean - true if filter option is being added and false if filter option is being removed
+
+  Returns:
+    An updated array of filterSelections
+  */
+  public updateFilterSelections(
+    filterSelections: FilterSelection[],
+    filterBy: string,
+    filterOption: any,
+    add: boolean
+  ): FilterSelection[] {
+    let updatedFilterSelections = filterSelections;
+    // If there is already a filterSelection for that filterBy option, store the index of that filterSelection for later
+    const filterSelectionsIndex = filterSelections.findIndex(
+      (filterSelection) => filterSelection.filterBy === filterBy
+    );
+
+    if (add) {
+      // If adding the filter option
+      if (filterSelectionsIndex < 0) {
+        const newFilterSelection: FilterSelection = {
+          filterBy: filterBy,
+          selectedFilterOptions: [filterOption],
+        };
+
+        updatedFilterSelections.push(newFilterSelection);
+      } else {
+        updatedFilterSelections[
+          filterSelectionsIndex
+        ].selectedFilterOptions.push(filterOption);
+      }
+    } else {
+      // If removing filter option
+      if (filterSelectionsIndex < 0) {
+        console.error('Cannot find filter option in ' + filterBy);
+      } else {
+        // remove that filter option from the filterSelection's array
+        updatedFilterSelections[filterSelectionsIndex].selectedFilterOptions =
+          updatedFilterSelections[
+            filterSelectionsIndex
+          ].selectedFilterOptions.filter(
+            (filOption) => filOption !== filterOption
+          );
+
+        // If the filterSelection has no more filterOptions selected, remove it from the filterSelection array
+        if (
+          updatedFilterSelections[filterSelectionsIndex].selectedFilterOptions
+            .length < 1
+        ) {
+          updatedFilterSelections.splice(filterSelectionsIndex, 1);
+        }
+      }
+    }
+
+    return updatedFilterSelections;
   }
 
   // Formats filterBy (which should be in camelCase) and converts it to Title Case

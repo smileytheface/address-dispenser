@@ -250,55 +250,15 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   // When checkbox is changed add that option to an array in a filterSelection
   onFilterOptionChange(filterBy: string, filterOption: any, checked: boolean) {
-    // If there is already a filterSelection for that filterBy option, store the index of that filterSelection for later
-    const filterSelectionsIndex = this.filterSelections.findIndex(
-      (filterSelection) => filterSelection.filterBy === filterBy
+    // updateFilterSelection will either add or remove a filterOption from an array of filterSelections
+    this.filterSelections = this.filterAddressesService.updateFilterSelections(
+      this.filterSelections,
+      filterBy,
+      filterOption,
+      checked
     );
 
-    if (checked) {
-      // If the option was checked...
-      if (filterSelectionsIndex < 0) {
-        const newFilterSelection: FilterSelection = {
-          filterBy: filterBy,
-          selectedFilterOptions: [filterOption],
-        };
-
-        this.filterSelections.push(newFilterSelection);
-      } else {
-        this.filterSelections[filterSelectionsIndex].selectedFilterOptions.push(
-          filterOption
-        );
-      }
-    } else {
-      // If the option was unchecked
-      if (filterSelectionsIndex < 0) {
-        console.error('Option was not already checked');
-      } else {
-        // remove that filter option from the filterSelection's array
-        this.filterSelections[filterSelectionsIndex].selectedFilterOptions =
-          this.filterSelections[
-            filterSelectionsIndex
-          ].selectedFilterOptions.filter(
-            (filOption) => filOption !== filterOption
-          );
-
-        // If the filterSelection has no more filterOptions selected, remove it from the filterSelection array
-        if (
-          this.filterSelections[filterSelectionsIndex].selectedFilterOptions
-            .length < 1
-        ) {
-          this.filterSelections.splice(filterSelectionsIndex, 1);
-        }
-      }
-    }
-
     console.log(this.filterSelections);
-
-    // if (checked) {
-    //   this.filterSelections = addFilterOption(this.filterSelections, filterBy, filterOption);
-    // } else {
-    //   this.filterSelections = removeFilterOption(this.filterSelections, filterBy, filterOption)
-    // }
   }
 
   // Returns boolean indicating if filterOption is in a filterSelection already
