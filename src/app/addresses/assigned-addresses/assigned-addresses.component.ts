@@ -1,23 +1,18 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  Optional,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeleteConfirmationComponent } from 'src/app/shared/delete-confirmation/delete-confirmation.component';
-import { WritersService } from 'src/app/writers/writers.service';
-import { AddressesService } from '../addresses.service';
 import { FilterBottomSheetComponent } from './filter-bottom-sheet/filter-bottom-sheet.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DatePipe, SlicePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 
+import { WritersService } from 'src/app/writers/writers.service';
+import { AddressesService } from '../addresses.service';
+import { FilterAddressesService } from '../filter-addresses.service';
 import { Writer } from 'src/app/shared/models/writer.model';
 import { Address } from 'src/app/shared/models/address.model';
 import { FilterSelection } from 'src/app/shared/models/filter-selection.model';
@@ -82,34 +77,15 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   }
   set searchTerm(value: string) {
     this._searchTerm = value;
-    this.filterOptionsSearchResults = this.searchFilterOptions(value);
-  }
-
-  // returns filter options that match the search string
-  searchFilterOptions(searchString: string) {
-    // If searching for a writer name
-    if (this.filterOptions[0].name) {
-      return this.filterOptions.filter(
-        (filterOption) =>
-          filterOption.name
-            .toString()
-            .toLowerCase()
-            .indexOf(searchString.toLowerCase()) !== -1
+    // searchFilterOptions returns a filtered array of filterOptions based on the search string
+    this.filterOptionsSearchResults =
+      this.filterAddressesService.searchFilterOptions(
+        this.filterOptions,
+        value
       );
-    }
-
-    // If searching anything that's not a writer name
-    return this.filterOptions.filter(
-      (filterOption) =>
-        filterOption
-          .toString()
-          .toLowerCase()
-          .indexOf(searchString.toLowerCase()) !== -1
-    );
   }
 
   mobile: boolean;
-  // tempCounter: number = 0;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -119,7 +95,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private filterAddressesService: FilterAddressesService
   ) {}
 
   ngOnInit(): void {
