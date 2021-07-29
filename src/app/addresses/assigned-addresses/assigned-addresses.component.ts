@@ -151,6 +151,15 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     return this.writers.find((writer) => writer.id === writerId);
   }
 
+  onFilterClick(filterBy: string) {
+    this.filterBy = filterBy;
+    this.onSelectionChange();
+  }
+
+  onFilterClose(index: number) {
+    this.filterSelections.splice(index, 1);
+  }
+
   onEdit(address: Address) {
     this.router.navigate(['/available-addresses/edit', address.id]);
   }
@@ -253,8 +262,6 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       filterOption,
       checked
     );
-
-    console.log(this.filterSelections);
   }
 
   // Returns boolean indicating if a filterOption is in an array of filterSelections

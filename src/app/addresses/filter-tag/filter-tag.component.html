@@ -1,5 +1,5 @@
-<div class="wrapper">
+<a class="wrapper" (click)="onClick()">
   <mat-icon id="filter-icon">filter_alt</mat-icon>
   {{ filterBy }}: {{ filterOptionsCount }}
-  <mat-icon id="close-icon">close</mat-icon>
-</div>
+  <mat-icon id="close-icon" (click)="onClose()">close</mat-icon>
+</a>
