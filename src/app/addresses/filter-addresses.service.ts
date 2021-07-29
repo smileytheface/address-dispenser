@@ -91,8 +91,6 @@ export class FilterAddressesService {
         if (!address[filterBy]) {
           // If the property is null, push No {{ filterBy }}
           options.push('No ' + this.formatFilterBy(filterBy));
-        } else if (filterBy === 'dateCreated') {
-          options.push(this.datePipe.transform(address[filterBy], 'short'));
         } else {
           options.push(address[filterBy]);
         }
