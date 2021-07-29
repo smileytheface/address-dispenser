@@ -240,6 +240,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
     // Adding the filter options to the array that get changed when searching
     this.filterOptionsSearchResults = this.filterOptions;
+
+    this.searchTerm = '';
   }
 
   // When checkbox is changed add that option to an array in a filterSelection
@@ -255,7 +257,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     console.log(this.filterSelections);
   }
 
-  // Returns boolean indicating if filterOption is in a filterSelection already
+  // Returns boolean indicating if a filterOption is in an array of filterSelections
   isChecked(filterOption: any, filterBy: string): boolean {
     const filterSelectionsIndex = this.filterSelections.findIndex(
       (filterSelection) => filterSelection.filterBy === filterBy
