@@ -224,14 +224,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   // formatting options
   formatFilterByOption(option) {
-    // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript?page=1&tab=votes#tab-top
-    // https://stackoverflow.com/questions/4149276/how-to-convert-camelcase-to-camel-case
-    // Adds space between cammel case and makes makes options Title Case
-    if (option) {
-      return option.replace(/([A-Z])/g, ' $1').replace(/\w\S*/g, (txt) => {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-      });
-    }
+    // Formats filterBy (which should be in camelCase) and converts it to Title Case
+    return this.filterAddressesService.formatFilterBy(option);
   }
 
   // When filter by select is changed
