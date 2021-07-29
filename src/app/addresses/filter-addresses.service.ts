@@ -1,5 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
+
 import { Address } from '../shared/models/address.model';
 import { FilterSelection } from '../shared/models/filter-selection.model';
 import { Writer } from '../shared/models/writer.model';
@@ -24,6 +26,18 @@ export class FilterAddressesService {
             .toLowerCase()
             .indexOf(searchString.toLowerCase()) !== -1
       );
+    }
+
+    // If searching for a date, transform all iso formatted dates into short date strings
+    if (
+      moment(filterOptions[0], moment.ISO_8601, true).isValid() ||
+      moment(filterOptions[1], moment.ISO_8601, true).isValid()
+    ) {
+      for (const [index, option] of filterOptions.entries()) {
+        if (moment(option, moment.ISO_8601, true).isValid()) {
+          filterOptions[index] = this.datePipe.transform(option, 'short');
+        }
+      }
     }
 
     // If searching anything that's not a writer name
