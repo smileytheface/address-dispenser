@@ -14,6 +14,14 @@
   <div class="container" id="container">
     <mat-spinner *ngIf="loading"></mat-spinner>
     <div class="addresses-section" *ngIf="!loading">
+      <div id="filter-tags" *ngIf="filterSelections.length > 0">
+        <app-filter-tag
+          *ngFor="let filterSelection of filterSelections"
+          [filterBy]="formatFilterByOption(filterSelection.filterBy)"
+          [filterOptionsCount]="filterSelection.selectedFilterOptions.length"
+          class="filter-tag"
+        ></app-filter-tag>
+      </div>
       <mat-accordion>
         <mat-expansion-panel *ngFor="let address of assignedAddresses">
           <mat-expansion-panel-header *ngIf="address">

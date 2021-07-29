@@ -1,0 +1,19 @@
+.wrapper {
+  background-color: #e2f1ff;
+  width: max-content;
+  border-radius: 34px;
+  padding: 10px 20px 10px 20px;
+  display: flex;
+  align-items: center;
+  color: #979797;
+  font-size: 16px;
+
+  #filter-icon {
+    margin-right: 13px;
+    color: #000000;
+  }
+
+  #close-icon {
+    margin-left: 13px;
+  }
+}

@@ -30,6 +30,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthGuard } from './auth/auth.guard';
 import { ChooseAddressesComponent } from './send-addresses/choose-addresses/choose-addresses.component';
 import { DatePipe } from '@angular/common';
+import { FilterTagComponent } from './addresses/filter-tag/filter-tag.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { DatePipe } from '@angular/common';
     SendConfirmationComponent,
     SignInComponent,
     ChooseAddressesComponent,
+    FilterTagComponent,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [

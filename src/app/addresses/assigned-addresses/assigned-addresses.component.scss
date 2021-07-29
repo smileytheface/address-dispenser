@@ -63,6 +63,15 @@
     width: 100%;
   }
 
+  #filter-tags {
+    margin-bottom: 15px;
+    .filter-tag {
+      display: inline-block;
+      margin-right: 15px;
+      margin-bottom: 15px;
+    }
+  }
+
   mat-accordion {
     mat-panel-title {
       font-size: 13px;
