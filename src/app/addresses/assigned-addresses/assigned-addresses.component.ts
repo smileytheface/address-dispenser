@@ -82,6 +82,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     this.filterOptionsSearchResults =
       this.filterAddressesService.searchFilterOptions(
         this.filterOptions,
+        this.filterBy,
         value
       );
   }
@@ -293,8 +294,10 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     }
   }
 
-  formatFilterOption(option: any) {
-    if (option.name) {
+  formatFilterOption(option: any): any {
+    if (!option) {
+      return 'No ' + this.formatFilterByOption(this.filterBy);
+    } else if (option.name) {
       return option.name;
     } else if (moment(option, moment.ISO_8601, true).isValid()) {
       return this.datePipe.transform(option, 'short');

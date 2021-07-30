@@ -15,6 +15,7 @@ export class FilterAddressesService {
   // searchFilterOptions returns a filtered array of filterOptions based on the search string
   public searchFilterOptions(
     filterOptions: any[],
+    filterBy: string,
     searchString: string
   ): any[] {
     // If searching for a writer name
@@ -41,13 +42,17 @@ export class FilterAddressesService {
     }
 
     // If searching anything that's not a writer name
-    return filterOptions.filter(
-      (filterOption) =>
+    return filterOptions.filter((filterOption) => {
+      if (!filterOption) {
+        filterOption = 'No ' + filterBy;
+      }
+      return (
         filterOption
           .toString()
           .toLowerCase()
           .indexOf(searchString.toLowerCase()) !== -1
-    );
+      );
+    });
   }
 
   /*
@@ -102,13 +107,20 @@ export class FilterAddressesService {
         // Adding all address.filterBy fields
         // For example if filterBy is name, this will go through all addresses and add address.name to options
         // Any duplicates get removed later with the spread operator
-        if (!address[filterBy]) {
-          // If the property is null, push No {{ filterBy }}
-          options.push('No ' + this.formatFilterBy(filterBy));
-        } else {
-          options.push(address[filterBy]);
-        }
+        options.push(address[filterBy]);
       }
+
+      // for (let address of addresses) {
+      //   // Adding all address.filterBy fields
+      //   // For example if filterBy is name, this will go through all addresses and add address.name to options
+      //   // Any duplicates get removed later with the spread operator
+      //   if (!address[filterBy]) {
+      //     // If the property is null, push No {{ filterBy }}
+      //     options.push('No ' + this.formatFilterBy(filterBy));
+      //   } else {
+      //     options.push(address[filterBy]);
+      //   }
+      // }
     }
 
     // Removes duplicates
@@ -220,8 +232,6 @@ export class FilterAddressesService {
       });
     }
 
-    console.log('Filtered Addresses after filtering: ');
-    console.log(filteredAddresses);
     return filteredAddresses;
   }
 
