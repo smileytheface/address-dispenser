@@ -103,7 +103,6 @@
           [(ngModel)]="filterBy"
           (selectionChange)="onSelectionChange()"
         >
-          <mat-option style="color: red">None</mat-option>
           <mat-option
             *ngFor="let filterByOption of filterByOptions"
             [value]="filterByOption"
