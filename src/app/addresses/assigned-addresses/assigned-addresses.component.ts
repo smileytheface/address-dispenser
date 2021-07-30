@@ -58,6 +58,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   filterSelections: FilterSelection[] = [];
 
   assignedAddresses: Address[] = [];
+  filteredAssignedAddresses: Address[] = [];
 
   filteredWriters: Writer[];
   filterBy: string;
@@ -121,6 +122,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       .getAssignedAddressesUpdatedListener()
       .subscribe((assignedAddresses) => {
         this.assignedAddresses = assignedAddresses;
+        this.filteredAssignedAddresses = assignedAddresses;
         this.addressesLoading = false;
 
         this.checkLoad();
@@ -158,6 +160,11 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   onFilterClose(index: number) {
     this.filterSelections.splice(index, 1);
+    this.filteredAssignedAddresses =
+      this.filterAddressesService.filterAddresses(
+        this.assignedAddresses,
+        this.filterSelections
+      );
   }
 
   onEdit(address: Address) {
@@ -262,6 +269,14 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       filterOption,
       checked
     );
+
+    // filterAddresses takes an array of addresses and an array of filter selections and
+    // returns an array of addresses that match the filter selection options
+    this.filteredAssignedAddresses =
+      this.filterAddressesService.filterAddresses(
+        this.assignedAddresses,
+        this.filterSelections
+      );
   }
 
   // Returns boolean indicating if a filterOption is in an array of filterSelections

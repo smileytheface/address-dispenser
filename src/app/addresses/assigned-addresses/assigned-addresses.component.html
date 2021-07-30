@@ -25,7 +25,7 @@
         ></app-filter-tag>
       </div>
       <mat-accordion>
-        <mat-expansion-panel *ngFor="let address of assignedAddresses">
+        <mat-expansion-panel *ngFor="let address of filteredAssignedAddresses">
           <mat-expansion-panel-header *ngIf="address">
             <mat-panel-title> {{ address.name }} </mat-panel-title>
           </mat-expansion-panel-header>

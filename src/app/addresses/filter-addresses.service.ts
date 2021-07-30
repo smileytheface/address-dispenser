@@ -181,6 +181,50 @@ export class FilterAddressesService {
     return updatedFilterSelections;
   }
 
+  /*
+  Description:
+  filterAddresses takes an array of addresses and an array of filter selections and
+  returns an array of addresses that match the filter selection options
+
+  Params:
+    addresses: Address[] - an array of addresses to be filtered
+    filterSelections: FilterSelection[] - an array of filterSelections for filtering addresses with
+
+  Returns:
+    Address[] - filtered array of addresses
+  */
+  public filterAddresses(
+    addresses: Address[],
+    filterSelections: FilterSelection[]
+  ): Address[] {
+    let filteredAddresses: Address[] = addresses;
+
+    console.log('Filtered Addresses before filtering: ');
+    console.log(filteredAddresses);
+    if (filterSelections.length > 0) {
+      filteredAddresses = filteredAddresses.filter((address) => {
+        let addressMatchesFilterOption: boolean = false;
+        for (const filterSelection of filterSelections) {
+          addressMatchesFilterOption = false;
+          for (const filterOption of filterSelection.selectedFilterOptions) {
+            if (address[filterSelection.filterBy] === filterOption) {
+              addressMatchesFilterOption = true;
+            }
+          }
+
+          if (!addressMatchesFilterOption) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
+
+    console.log('Filtered Addresses after filtering: ');
+    console.log(filteredAddresses);
+    return filteredAddresses;
+  }
+
   // Formats filterBy (which should be in camelCase) and converts it to Title Case
   public formatFilterBy(filterBy: string): string {
     // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript?page=1&tab=votes#tab-top
