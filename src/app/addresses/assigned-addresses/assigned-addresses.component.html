@@ -14,6 +14,7 @@
   <div class="container" id="container">
     <mat-spinner *ngIf="loading"></mat-spinner>
     <div class="addresses-section" *ngIf="!loading">
+      <!-- Filter Tags -->
       <div id="filter-tags" *ngIf="filterSelections.length > 0">
         <app-filter-tag
           *ngFor="let filterSelection of filterSelections; let i = index"
@@ -24,6 +25,16 @@
           (close)="onFilterClose(i)"
         ></app-filter-tag>
       </div>
+
+      <!-- Number of results -->
+      <div id="result-num" *ngIf="filterSelections.length > 0">
+        {{ filteredAssignedAddresses.length }} result<span
+          *ngIf="filteredAssignedAddresses.length > 1"
+          >s</span
+        >
+      </div>
+
+      <!-- Filtered Addresses -->
       <mat-accordion>
         <mat-expansion-panel *ngFor="let address of filteredAssignedAddresses">
           <mat-expansion-panel-header *ngIf="address">
@@ -85,7 +96,7 @@
       </mat-accordion>
     </div>
 
-    <!-- Filtering section -->
+    <!-- Filtering section for mobile -->
     <div class="filter-section" *ngIf="!mobile">
       <img
         src="../../../assets/images/icons/reveal-persons-icon-blue.svg"

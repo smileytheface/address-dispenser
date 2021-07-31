@@ -64,12 +64,16 @@
   }
 
   #filter-tags {
-    margin-bottom: 15px;
     .filter-tag {
       display: inline-block;
       margin-right: 15px;
       margin-bottom: 15px;
     }
+  }
+
+  #result-num {
+    margin-bottom: 15px;
+    color: #979797;
   }
 
   mat-accordion {
