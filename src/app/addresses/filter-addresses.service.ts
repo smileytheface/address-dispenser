@@ -216,12 +216,22 @@ export class FilterAddressesService {
         let addressMatchesFilterOption: boolean = false;
         for (const filterSelection of filterSelections) {
           addressMatchesFilterOption = false;
-          // If filtering by writer check if address.writer matches writer.id
           if (filterSelection.filterBy === 'writer') {
-            // Check if address in question matches any of the filter options
+            // If filtering by writer check if address.writer matches
+            // any writer.id in selectedFilterOptions
             for (const filterOption of filterSelection.selectedFilterOptions) {
               if (address.writer === filterOption.id) {
                 addressMatchesFilterOption = true;
+              }
+            }
+          } else if (filterSelection.filterBy === 'phone') {
+            // If filtering by phone check if any of the phone numbers in address.phone
+            // match any of the phone numbers in selectedFilterOptions
+            for (const filterOption of filterSelection.selectedFilterOptions) {
+              for (const phone of address.phone) {
+                if (phone === filterOption) {
+                  addressMatchesFilterOption = true;
+                }
               }
             }
           } else {
