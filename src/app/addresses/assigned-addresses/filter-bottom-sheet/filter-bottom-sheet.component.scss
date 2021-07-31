@@ -1,18 +1,37 @@
-h3 {
-  font-size: 20px;
-  margin: 20px;
-}
+.filter-bottom-sheet {
+  #filter-icon {
+    transform: scale(1.5);
+    color: #3136b7;
+    margin-right: 20px;
+  }
 
-mat-divider {
-  margin-bottom: 15px;
-}
+  #filter-by-dropdown {
+    font-size: 16px;
+    margin-top: 15px;
+  }
 
-p {
-  padding: 15px 20px 15px 20px;
-  margin: 0;
-  color: rgba(0, 0, 0, 0.6);
-}
+  .mat-form-field-wrapper {
+    margin-bottom: -1.5em !important;
+  }
 
-.none {
-  color: #d7262c;
+  .my-mat-form-field {
+    margin-bottom: 30px;
+    .mat-form-field-infix {
+      line-height: 1.35;
+    }
+  }
+
+  mat-divider {
+    margin-bottom: 15px;
+  }
+
+  p {
+    padding: 15px 20px 15px 20px;
+    margin: 0;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .none {
+    color: #d7262c;
+  }
 }

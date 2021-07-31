@@ -1,8 +1,25 @@
-<h3>Filter By Writer</h3>
+<div class="filter-bottom-sheet">
+  <mat-icon id="filter-icon" alt="filter-icon">filter_alt</mat-icon>
+  <!-- dropdown for filter by -->
+  <mat-form-field
+    appearance="outline"
+    id="filter-by-dropdown"
+    class="my-mat-form-field"
+  >
+    <mat-label>Filter By...</mat-label>
+    <mat-select name="filterBy">
+      <mat-option
+        *ngFor="let filterByOption of filterByOptions"
+        [value]="filterByOption"
+        >{{ formatOption(filterByOption) }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
 
-<mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 
-<p *ngFor="let writer of data">
-  <a (click)="filterSelect(writer.name)">{{ writer.name }}</a>
-</p>
-<p class="none" (click)="filterSelect('')">None</p>
+  <!-- <p *ngFor="let writer of data">
+    <a (click)="filterSelect(writer.name)">{{ writer.name }}</a>
+  </p>
+  <p class="none" (click)="filterSelect('')">None</p> -->
+</div>
