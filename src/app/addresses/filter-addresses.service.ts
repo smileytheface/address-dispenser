@@ -19,25 +19,15 @@ export class FilterAddressesService {
     searchString: string
   ): any[] {
     // If searching for a writer name
-    if (filterOptions[0].name) {
-      return filterOptions.filter(
-        (filterOption) =>
-          filterOption.name
-            .toString()
-            .toLowerCase()
-            .indexOf(searchString.toLowerCase()) !== -1
-      );
-    }
-
-    // If searching for a date, transform all iso formatted dates into short date strings
-    if (
-      moment(filterOptions[0], moment.ISO_8601, true).isValid() ||
-      moment(filterOptions[1], moment.ISO_8601, true).isValid()
-    ) {
-      for (const [index, option] of filterOptions.entries()) {
-        if (moment(option, moment.ISO_8601, true).isValid()) {
-          filterOptions[index] = this.datePipe.transform(option, 'short');
-        }
+    if (filterOptions[0]) {
+      if (filterOptions[0].name) {
+        return filterOptions.filter(
+          (filterOption) =>
+            filterOption.name
+              .toString()
+              .toLowerCase()
+              .indexOf(searchString.toLowerCase()) !== -1
+        );
       }
     }
 
@@ -46,6 +36,12 @@ export class FilterAddressesService {
       if (!filterOption) {
         filterOption = 'No ' + filterBy;
       }
+
+      // If filterOption is a date, transform it into a short date string
+      if (moment(filterOption, moment.ISO_8601, true).isValid()) {
+        filterOption = this.datePipe.transform(filterOption, 'short');
+      }
+
       return (
         filterOption
           .toString()
@@ -109,18 +105,6 @@ export class FilterAddressesService {
         // Any duplicates get removed later with the spread operator
         options.push(address[filterBy]);
       }
-
-      // for (let address of addresses) {
-      //   // Adding all address.filterBy fields
-      //   // For example if filterBy is name, this will go through all addresses and add address.name to options
-      //   // Any duplicates get removed later with the spread operator
-      //   if (!address[filterBy]) {
-      //     // If the property is null, push No {{ filterBy }}
-      //     options.push('No ' + this.formatFilterBy(filterBy));
-      //   } else {
-      //     options.push(address[filterBy]);
-      //   }
-      // }
     }
 
     // Removes duplicates
