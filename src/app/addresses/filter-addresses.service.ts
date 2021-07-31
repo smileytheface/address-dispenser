@@ -211,16 +211,24 @@ export class FilterAddressesService {
   ): Address[] {
     let filteredAddresses: Address[] = addresses;
 
-    console.log('Filtered Addresses before filtering: ');
-    console.log(filteredAddresses);
     if (filterSelections.length > 0) {
       filteredAddresses = filteredAddresses.filter((address) => {
         let addressMatchesFilterOption: boolean = false;
         for (const filterSelection of filterSelections) {
           addressMatchesFilterOption = false;
-          for (const filterOption of filterSelection.selectedFilterOptions) {
-            if (address[filterSelection.filterBy] === filterOption) {
-              addressMatchesFilterOption = true;
+          // If filtering by writer check if address.writer matches writer.id
+          if (filterSelection.filterBy === 'writer') {
+            // Check if address in question matches any of the filter options
+            for (const filterOption of filterSelection.selectedFilterOptions) {
+              if (address.writer === filterOption.id) {
+                addressMatchesFilterOption = true;
+              }
+            }
+          } else {
+            for (const filterOption of filterSelection.selectedFilterOptions) {
+              if (address[filterSelection.filterBy] === filterOption) {
+                addressMatchesFilterOption = true;
+              }
             }
           }
 
