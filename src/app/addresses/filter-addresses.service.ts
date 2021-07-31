@@ -218,6 +218,34 @@ export class FilterAddressesService {
                 }
               }
             }
+          } else if (filterSelection.filterBy === 'dateAssigned') {
+            // If filtering by dateAssigned, check if the last assignedDate matches any
+            // of the dates in selectedFilterOptions
+            // if (address.assignmentHistory.length > 0) {
+            //   for (const filterOption of filterSelection.selectedFilterOptions) {
+            //     if (
+            //       address.assignmentHistory[
+            //         address.assignmentHistory.length - 1
+            //       ].date === filterOption
+            //     ) {
+            //       addressMatchesFilterOption = true;
+            //     }
+            //   }
+            // }
+
+            for (const filterOption of filterSelection.selectedFilterOptions) {
+              if (address.assignmentHistory.length > 0) {
+                if (
+                  address.assignmentHistory[
+                    address.assignmentHistory.length - 1
+                  ].date === filterOption
+                ) {
+                  addressMatchesFilterOption = true;
+                }
+              } else if (filterOption === 'No Date Assigned') {
+                addressMatchesFilterOption = true;
+              }
+            }
           } else {
             for (const filterOption of filterSelection.selectedFilterOptions) {
               if (address[filterSelection.filterBy] === filterOption) {
