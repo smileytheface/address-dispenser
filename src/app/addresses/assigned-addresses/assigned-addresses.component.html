@@ -96,12 +96,9 @@
       </mat-accordion>
     </div>
 
-    <!-- Filtering section for mobile -->
+    <!-- Filtering section -->
     <div class="filter-section" *ngIf="!mobile">
-      <img
-        src="../../../assets/images/icons/reveal-persons-icon-blue.svg"
-        alt="filter-icon"
-      />
+      <mat-icon id="filter-icon" alt="filter-icon">filter_alt</mat-icon>
       <!-- dropdown for filter by -->
       <mat-form-field
         appearance="outline"
@@ -164,6 +161,7 @@
     </div>
   </div>
 
+  <!-- Filtering bottom sheet for mobile -->
   <button
     class="filter-section-toggle"
     *ngIf="mobile"
