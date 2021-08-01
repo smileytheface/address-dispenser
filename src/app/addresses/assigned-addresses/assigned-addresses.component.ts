@@ -225,7 +225,11 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   openBottomSheet() {
     let sheet = this.bottomSheet.open(FilterBottomSheetComponent, {
-      data: { filterByOptions: this.filterByOptions },
+      data: {
+        filterByOptions: this.filterByOptions,
+        addresses: this.assignedAddresses,
+        writers: this.writers,
+      },
     });
 
     sheet.afterDismissed().subscribe((writer) => {

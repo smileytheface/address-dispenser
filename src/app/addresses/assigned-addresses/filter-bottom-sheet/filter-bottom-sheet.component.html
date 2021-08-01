@@ -7,7 +7,11 @@
     class="my-mat-form-field"
   >
     <mat-label>Filter By...</mat-label>
-    <mat-select name="filterBy">
+    <mat-select
+      name="filterBy"
+      [(ngModel)]="filterBy"
+      (selectionChange)="onFilterByChange()"
+    >
       <mat-option
         *ngFor="let filterByOption of filterByOptions"
         [value]="filterByOption"
@@ -18,8 +22,10 @@
 
   <mat-divider></mat-divider>
 
-  <!-- <p *ngFor="let writer of data">
-    <a (click)="filterSelect(writer.name)">{{ writer.name }}</a>
+  <!-- Filter options -->
+  <p *ngFor="let filterOption of filterOptions">
+    <mat-checkbox color="primary">
+      {{ formatFilterOption(filterOption) }}
+    </mat-checkbox>
   </p>
-  <p class="none" (click)="filterSelect('')">None</p> -->
 </div>
