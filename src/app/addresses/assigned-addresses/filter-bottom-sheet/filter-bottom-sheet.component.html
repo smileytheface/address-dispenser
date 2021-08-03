@@ -22,8 +22,27 @@
 
   <mat-divider *ngIf="filterBy"></mat-divider>
 
+  <!-- Filter search -->
+  <form class="filter-search">
+    <mat-form-field
+      appearance="outline"
+      class="full-width my-mat-form-field"
+      id="search-bar"
+      *ngIf="filterBy"
+    >
+      <mat-label>Search</mat-label>
+      <input
+        type="search"
+        matInput
+        [(ngModel)]="searchTerm"
+        name="searchTerm"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </form>
+
   <!-- Filter options -->
-  <p *ngFor="let filterOption of filterOptions">
+  <p *ngFor="let filterOption of filteredFilterOptions">
     <mat-checkbox color="primary">
       {{ formatFilterOption(filterOption) }}
     </mat-checkbox>

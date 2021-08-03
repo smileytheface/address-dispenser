@@ -21,8 +21,25 @@ export class FilterBottomSheetComponent implements OnInit {
   public filterBy: string;
   public addresses: Address[] = [];
   public writers: Writer[] = [];
-
   public filterOptions: any[] = [];
+  public filteredFilterOptions: any[] = [];
+
+  private _searchTerm: string;
+  public get searchTerm(): string {
+    return this._searchTerm;
+  }
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    console.log(this.searchTerm);
+
+    // searchFilterOptions returns a filtered array of filterOptions based on the search string
+    this.filteredFilterOptions =
+      this.filterAddressesService.searchFilterOptions(
+        this.filterOptions,
+        this.filterBy,
+        value
+      );
+  }
 
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -43,6 +60,10 @@ export class FilterBottomSheetComponent implements OnInit {
       this.addresses,
       this.writers
     );
+
+    this.filteredFilterOptions = this.filterOptions;
+
+    this.searchTerm = '';
   }
 
   formatOption(option: string): string {
