@@ -157,6 +157,10 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
   onFilterClick(filterBy: string) {
     this.filterBy = filterBy;
     this.onSelectionChange();
+
+    if (this.mobile) {
+      this.openBottomSheet();
+    }
   }
 
   onFilterClose(index: number) {
@@ -229,12 +233,24 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
         filterByOptions: this.filterByOptions,
         addresses: this.assignedAddresses,
         writers: this.writers,
+        filterSelections: this.filterSelections,
+        filterBy: this.filterBy,
       },
     });
 
-    sheet.afterDismissed().subscribe((writer) => {
-      this.searchTerm = writer;
-    });
+    sheet
+      .afterDismissed()
+      .subscribe(
+        (data: { filterSelections: FilterSelection[]; filterBy: string }) => {
+          this.filterSelections = data.filterSelections;
+          this.filterBy = data.filterBy;
+          this.filteredAssignedAddresses =
+            this.filterAddressesService.filterAddresses(
+              this.assignedAddresses,
+              this.filterSelections
+            );
+        }
+      );
   }
 
   checkLoad() {

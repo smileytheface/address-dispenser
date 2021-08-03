@@ -43,7 +43,11 @@
 
   <!-- Filter options -->
   <p *ngFor="let filterOption of filteredFilterOptions">
-    <mat-checkbox color="primary">
+    <mat-checkbox
+      color="primary"
+      (change)="onFilterOptionChange(filterBy, filterOption, $event.checked)"
+      [checked]="isChecked(filterOption, filterBy)"
+    >
       {{ formatFilterOption(filterOption) }}
     </mat-checkbox>
   </p>

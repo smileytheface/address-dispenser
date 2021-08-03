@@ -7,6 +7,7 @@ import {
 import * as moment from 'moment';
 
 import { Address } from 'src/app/shared/models/address.model';
+import { FilterSelection } from 'src/app/shared/models/filter-selection.model';
 import { Writer } from 'src/app/shared/models/writer.model';
 import { FilterAddressesService } from '../../filter-addresses.service';
 
@@ -23,6 +24,7 @@ export class FilterBottomSheetComponent implements OnInit {
   public writers: Writer[] = [];
   public filterOptions: any[] = [];
   public filteredFilterOptions: any[] = [];
+  public filterSelections: FilterSelection[] = [];
 
   private _searchTerm: string;
   public get searchTerm(): string {
@@ -30,7 +32,6 @@ export class FilterBottomSheetComponent implements OnInit {
   }
   set searchTerm(value: string) {
     this._searchTerm = value;
-    console.log(this.searchTerm);
 
     // searchFilterOptions returns a filtered array of filterOptions based on the search string
     this.filteredFilterOptions =
@@ -52,6 +53,19 @@ export class FilterBottomSheetComponent implements OnInit {
     this.filterByOptions = this.data.filterByOptions;
     this.addresses = this.data.addresses;
     this.writers = this.data.writers;
+    this.filterSelections = this.data.filterSelections;
+    this.filterBy = this.data.filterBy;
+
+    if (this.filterBy) {
+      this.onFilterByChange();
+    }
+
+    this.bottomSheetRef.backdropClick().subscribe(() => {
+      this.bottomSheetRef.dismiss({
+        filterSelections: this.filterSelections,
+        filterBy: this.filterBy,
+      });
+    });
   }
 
   public onFilterByChange(): void {
@@ -64,6 +78,35 @@ export class FilterBottomSheetComponent implements OnInit {
     this.filteredFilterOptions = this.filterOptions;
 
     this.searchTerm = '';
+  }
+
+  // When checkbox is changed add that option to an array in a filterSelection
+  public onFilterOptionChange(
+    filterBy: string,
+    filterOption: any,
+    checked: boolean
+  ) {
+    // updateFilterSelection will either add or remove a filterOption from an array of filterSelections
+    this.filterSelections = this.filterAddressesService.updateFilterSelections(
+      this.filterSelections,
+      filterBy,
+      filterOption,
+      checked
+    );
+  }
+
+  // Returns boolean indicating if a filterOption is in an array of filterSelections
+  isChecked(filterOption: any, filterBy: string): boolean {
+    const filterSelectionsIndex = this.filterSelections.findIndex(
+      (filterSelection) => filterSelection.filterBy === filterBy
+    );
+    if (filterSelectionsIndex < 0) {
+      return false;
+    } else {
+      return this.filterSelections[
+        filterSelectionsIndex
+      ].selectedFilterOptions.includes(filterOption);
+    }
   }
 
   formatOption(option: string): string {
@@ -80,9 +123,5 @@ export class FilterBottomSheetComponent implements OnInit {
     } else {
       return option;
     }
-  }
-
-  filterSelect(writer: string) {
-    this.bottomSheetRef.dismiss(writer);
   }
 }
