@@ -20,7 +20,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-divider></mat-divider>
+  <mat-divider *ngIf="filterBy"></mat-divider>
 
   <!-- Filter options -->
   <p *ngFor="let filterOption of filterOptions">
