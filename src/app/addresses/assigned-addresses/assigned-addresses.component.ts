@@ -16,6 +16,7 @@ import { FilterAddressesService } from '../filter-addresses.service';
 import { Writer } from 'src/app/shared/models/writer.model';
 import { Address } from 'src/app/shared/models/address.model';
 import { FilterSelection } from 'src/app/shared/models/filter-selection.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-assigned-addresses',
@@ -98,10 +99,12 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private datePipe: DatePipe,
-    private filterAddressesService: FilterAddressesService
+    private filterAddressesService: FilterAddressesService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Assigned Addresses | Address Dispenser');
     this.addressesService.getAssignedAddresses();
     this.writersService.getWriters();
     this.loading = true;
@@ -124,6 +127,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       .subscribe((assignedAddresses) => {
         this.assignedAddresses = assignedAddresses;
         this.filteredAssignedAddresses = assignedAddresses;
+        console.log(assignedAddresses);
         this.addressesLoading = false;
 
         this.checkLoad();

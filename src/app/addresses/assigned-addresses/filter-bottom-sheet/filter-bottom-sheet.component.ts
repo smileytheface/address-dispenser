@@ -26,12 +26,12 @@ export class FilterBottomSheetComponent implements OnInit {
   public filteredFilterOptions: any[] = [];
   public filterSelections: FilterSelection[] = [];
 
-  private _searchTerm: string;
-  public get searchTerm(): string {
-    return this._searchTerm;
+  private _bottomSheetSearchTerm: string;
+  get bottomSheetSearchTerm(): string {
+    return this._bottomSheetSearchTerm;
   }
-  set searchTerm(value: string) {
-    this._searchTerm = value;
+  set bottomSheetSearchTerm(value: string) {
+    this._bottomSheetSearchTerm = value;
 
     // searchFilterOptions returns a filtered array of filterOptions based on the search string
     this.filteredFilterOptions =
@@ -77,7 +77,7 @@ export class FilterBottomSheetComponent implements OnInit {
 
     this.filteredFilterOptions = this.filterOptions;
 
-    this.searchTerm = '';
+    this.bottomSheetSearchTerm = '';
   }
 
   // When checkbox is changed add that option to an array in a filterSelection

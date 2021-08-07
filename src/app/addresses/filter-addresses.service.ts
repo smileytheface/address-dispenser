@@ -79,12 +79,20 @@ export class FilterAddressesService {
     } else if (filterBy === 'phone') {
       // If filtering by phone number, get all phone numbers
       for (let address of addresses) {
+        // if (address.phone.length > 0) {
+        //   for (let phone of address.phone) {
+        //     options.push(phone);
+        //   }
+        // } else {
+        //   options.push('No ' + this.formatFilterBy(filterBy));
+        // }
+
         if (address.phone.length > 0) {
           for (let phone of address.phone) {
             options.push(phone);
           }
         } else {
-          options.push('No ' + this.formatFilterBy(filterBy));
+          options.push(null);
         }
       }
     } else if (filterBy === 'dateAssigned') {
@@ -212,27 +220,18 @@ export class FilterAddressesService {
             // If filtering by phone check if any of the phone numbers in address.phone
             // match any of the phone numbers in selectedFilterOptions
             for (const filterOption of filterSelection.selectedFilterOptions) {
-              for (const phone of address.phone) {
-                if (phone === filterOption) {
-                  addressMatchesFilterOption = true;
+              if (address.phone.length < 1 && !filterOption) {
+                // No phone number for that address
+                addressMatchesFilterOption = true;
+              } else {
+                for (const phone of address.phone) {
+                  if (phone === filterOption) {
+                    addressMatchesFilterOption = true;
+                  }
                 }
               }
             }
           } else if (filterSelection.filterBy === 'dateAssigned') {
-            // If filtering by dateAssigned, check if the last assignedDate matches any
-            // of the dates in selectedFilterOptions
-            // if (address.assignmentHistory.length > 0) {
-            //   for (const filterOption of filterSelection.selectedFilterOptions) {
-            //     if (
-            //       address.assignmentHistory[
-            //         address.assignmentHistory.length - 1
-            //       ].date === filterOption
-            //     ) {
-            //       addressMatchesFilterOption = true;
-            //     }
-            //   }
-            // }
-
             for (const filterOption of filterSelection.selectedFilterOptions) {
               if (address.assignmentHistory.length > 0) {
                 if (
