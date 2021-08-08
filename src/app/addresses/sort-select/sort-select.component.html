@@ -1,0 +1,22 @@
+<div class="sort-select-wrapper">
+  <mat-icon id="sort-icon">sort</mat-icon>
+  <!-- dropdown for sort by -->
+  <mat-form-field appearance="outline" id="sort-by-dropdown">
+    <mat-label>Sort By...</mat-label>
+    <mat-select>
+      <mat-option>One</mat-option>
+      <mat-option>Two</mat-option>
+      <mat-option>Three</mat-option>
+      <mat-option>Four</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button
+    mat-raised-button
+    id="ascending-toggle"
+    (click)="toggleAscending()"
+    [title]="getAscendingTitle()"
+  >
+    <mat-icon *ngIf="ascending">arrow_upward</mat-icon>
+    <mat-icon *ngIf="!ascending">arrow_downward</mat-icon>
+  </button>
+</div>

@@ -31,6 +31,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { ChooseAddressesComponent } from './send-addresses/choose-addresses/choose-addresses.component';
 import { DatePipe } from '@angular/common';
 import { FilterTagComponent } from './addresses/filter-tag/filter-tag.component';
+import { SortSelectComponent } from './addresses/sort-select/sort-select.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { FilterTagComponent } from './addresses/filter-tag/filter-tag.component'
     SignInComponent,
     ChooseAddressesComponent,
     FilterTagComponent,
+    SortSelectComponent,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [
