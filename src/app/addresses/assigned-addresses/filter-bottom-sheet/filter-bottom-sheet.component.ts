@@ -110,7 +110,7 @@ export class FilterBottomSheetComponent implements OnInit {
   }
 
   formatOption(option: string): string {
-    return this.filterAddressesService.formatFilterBy(option);
+    return this.filterAddressesService.camelToTitle(option);
   }
 
   formatFilterOption(option: any): any {

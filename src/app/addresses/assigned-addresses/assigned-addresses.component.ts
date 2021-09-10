@@ -13,10 +13,12 @@ import * as moment from 'moment';
 import { WritersService } from 'src/app/writers/writers.service';
 import { AddressesService } from '../addresses.service';
 import { FilterAddressesService } from '../filter-addresses.service';
+import { SortAddressesService } from '../sort-addresses.service';
 import { Writer } from 'src/app/shared/models/writer.model';
 import { Address } from 'src/app/shared/models/address.model';
 import { FilterSelection } from 'src/app/shared/models/filter-selection.model';
 import { Title } from '@angular/platform-browser';
+import { SortSelection } from 'src/app/shared/models/sort-selection.model';
 
 @Component({
   selector: 'app-assigned-addresses',
@@ -57,6 +59,7 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
 
   // Array to hold what filter options are selected
   filterSelections: FilterSelection[] = [];
+  sortSelection: SortSelection;
 
   assignedAddresses: Address[] = [];
   filteredAssignedAddresses: Address[] = [];
@@ -100,7 +103,8 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private filterAddressesService: FilterAddressesService,
-    private titleService: Title
+    private titleService: Title,
+    private sortAddressesService: SortAddressesService
   ) {}
 
   ngOnInit(): void {
@@ -127,7 +131,6 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       .subscribe((assignedAddresses) => {
         this.assignedAddresses = assignedAddresses;
         this.filteredAssignedAddresses = assignedAddresses;
-        console.log(assignedAddresses);
         this.addressesLoading = false;
 
         this.checkLoad();
@@ -223,14 +226,6 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     this.addressesService.unassignAddress(addressId, writerId);
   }
 
-  filter(name: string) {
-    this.searchTerm = name;
-  }
-
-  clearFilter() {
-    this.searchTerm = '';
-  }
-
   openBottomSheet() {
     let sheet = this.bottomSheet.open(FilterBottomSheetComponent, {
       data: {
@@ -263,10 +258,25 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
     }
   }
 
+  onSortSelectChange(event: any) {
+    this.sortSelection = event;
+    this.filteredAssignedAddresses = this.sortAddressesService.sortAddresses(
+      event,
+      this.filteredAssignedAddresses,
+      this.writers
+    );
+
+    this.assignedAddresses = this.sortAddressesService.sortAddresses(
+      event,
+      this.assignedAddresses,
+      this.writers
+    );
+  }
+
   // formatting options
   formatFilterByOption(option) {
     // Formats filterBy (which should be in camelCase) and converts it to Title Case
-    return this.filterAddressesService.formatFilterBy(option);
+    return this.filterAddressesService.camelToTitle(option);
   }
 
   // When filter by select is changed

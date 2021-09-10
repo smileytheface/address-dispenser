@@ -32,6 +32,7 @@ import { ChooseAddressesComponent } from './send-addresses/choose-addresses/choo
 import { DatePipe } from '@angular/common';
 import { FilterTagComponent } from './addresses/filter-tag/filter-tag.component';
 import { SortSelectComponent } from './addresses/sort-select/sort-select.component';
+import { SortTagComponent } from './addresses/sort-tag/sort-tag.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { SortSelectComponent } from './addresses/sort-select/sort-select.compone
     ChooseAddressesComponent,
     FilterTagComponent,
     SortSelectComponent,
+    SortTagComponent,
   ],
   entryComponents: [AddManyConfirmationComponent],
   imports: [

@@ -103,7 +103,7 @@ export class FilterAddressesService {
             address.assignmentHistory[address.assignmentHistory.length - 1].date
           );
         } else {
-          options.push('No ' + this.formatFilterBy(filterBy));
+          options.push('No ' + this.camelToTitle(filterBy));
         }
       }
     } else {
@@ -264,13 +264,13 @@ export class FilterAddressesService {
     return filteredAddresses;
   }
 
-  // Formats filterBy (which should be in camelCase) and converts it to Title Case
-  public formatFilterBy(filterBy: string): string {
+  // Formats string in camelCase and converts it to Title Case
+  public camelToTitle(str: string): string {
     // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript?page=1&tab=votes#tab-top
     // https://stackoverflow.com/questions/4149276/how-to-convert-camelcase-to-camel-case
     // Adds space between cammel case and makes makes options Title Case
-    if (filterBy) {
-      return filterBy.replace(/([A-Z])/g, ' $1').replace(/\w\S*/g, (txt) => {
+    if (str) {
+      return str.replace(/([A-Z])/g, ' $1').replace(/\w\S*/g, (txt) => {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       });
     }

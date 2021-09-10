@@ -14,6 +14,13 @@
   <div class="container" id="container">
     <mat-spinner *ngIf="loading"></mat-spinner>
     <div class="addresses-section" *ngIf="!loading">
+      <!-- Sort Tags -->
+      <div *ngIf="sortSelection" class="sort-tag">
+        <app-sort-tag
+          [sortBy]="formatFilterByOption(sortSelection.sortBy)"
+          [ascending]="sortSelection.ascending"
+        ></app-sort-tag>
+      </div>
       <!-- Filter Tags -->
       <div id="filter-tags" *ngIf="filterSelections.length > 0">
         <app-filter-tag
@@ -99,7 +106,9 @@
     <!-- Filtering section -->
     <div class="filter-section" *ngIf="!mobile">
       <!-- Sorting section -->
-      <app-sort-select></app-sort-select>
+      <app-sort-select
+        (sortSelectChange)="onSortSelectChange($event)"
+      ></app-sort-select>
       <br />
       <mat-icon id="filter-icon" alt="filter-icon">filter_alt</mat-icon>
       <!-- dropdown for filter by -->
