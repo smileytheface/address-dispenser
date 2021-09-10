@@ -22,14 +22,13 @@
     margin-left: 20px;
   }
 
-  // .mat-form-field-wrapper {
-  //   margin-bottom: -1.5em !important;
-  // }
+  .mat-form-field-wrapper {
+    margin-bottom: -1.5em !important;
+  }
 
-  // .my-mat-form-field {
-  //   margin-bottom: 20px;
-  //   .mat-form-field-infix {
-  //     line-height: 1.35;
-  //   }
-  // }
+  .my-mat-form-field-sort-select {
+    .mat-form-field-infix {
+      line-height: 1.35;
+    }
+  }
 }

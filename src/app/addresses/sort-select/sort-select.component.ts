@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { SortSelection } from '../../shared/models/sort-selection.model';
 import { FilterAddressesService } from '../filter-addresses.service';
 
@@ -6,7 +12,7 @@ import { FilterAddressesService } from '../filter-addresses.service';
   selector: 'app-sort-select',
   templateUrl: './sort-select.component.html',
   styleUrls: ['./sort-select.component.scss'],
-  // encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SortSelectComponent implements OnInit {
   @Output() sortSelectChange = new EventEmitter<SortSelection>();
