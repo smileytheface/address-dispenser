@@ -131,7 +131,6 @@ export class AssignedAddressesComponent implements OnInit, OnDestroy {
       .subscribe((assignedAddresses) => {
         this.assignedAddresses = assignedAddresses;
         this.filteredAssignedAddresses = assignedAddresses;
-        console.log(this.filteredAssignedAddresses);
         this.addressesLoading = false;
 
         this.checkLoad();
