@@ -176,16 +176,21 @@ export class AddressesService {
     console.log(newAddress);
     this.http
       .put<{ message: string }>(BACKEND_URL + '/' + id, newAddress)
-      .subscribe((responseMessage) => {
-        const updatedAddresses = [...this.addresses];
-        const oldAddressIndex = updatedAddresses.findIndex(
-          (address) => address.id === newAddress.id
-        );
-        updatedAddresses[oldAddressIndex] = newAddress;
-        this.addresses = updatedAddresses;
-        this.addressesUpdated.next([...this.addresses]);
-        this.addressEdited.next(newAddress.id);
-      });
+      .subscribe(
+        (responseMessage) => {
+          const updatedAddresses = [...this.addresses];
+          const oldAddressIndex = updatedAddresses.findIndex(
+            (address) => address.id === newAddress.id
+          );
+          updatedAddresses[oldAddressIndex] = newAddress;
+          this.addresses = updatedAddresses;
+          this.addressesUpdated.next([...this.addresses]);
+          this.addressEdited.next(newAddress.id);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   assignAddress(addressId: string, writerId: string) {
@@ -193,16 +198,22 @@ export class AddressesService {
     const writer = { writer: writerId };
     this.http
       .put<{ message: string }>(BACKEND_URL + '/assign/' + addressId, writer)
-      .subscribe((responseMessage) => {
-        let updatedAddresses = [...this.addresses];
-        const updatedAddressIndex = updatedAddresses.findIndex(
-          (address) => address.id === addressId
-        );
-        updatedAddresses[updatedAddressIndex].writer = writerId;
-        updatedAddresses[updatedAddressIndex].assigned = true;
-        this.addresses = updatedAddresses;
-        this.addressesUpdated.next([...this.addresses]);
-      });
+      .subscribe(
+        (responseMessage) => {
+          let updatedAddresses = [...this.addresses];
+          const updatedAddressIndex = updatedAddresses.findIndex(
+            (address) => address.id === addressId
+          );
+          updatedAddresses[updatedAddressIndex].writer = writerId;
+          updatedAddresses[updatedAddressIndex].assigned = true;
+          this.addresses = updatedAddresses;
+          this.addressesUpdated.next([...this.addresses]);
+          this.assignedAddressesUpdated.next([...this.assignedAddresses]);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   unassignAddress(addressId: string, writerId: string) {

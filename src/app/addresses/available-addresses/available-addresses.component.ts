@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,6 +19,7 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
   availableAddresses: Address[] = [];
   isLoading: boolean = false;
   private addressesSub: Subscription;
+  private assignedAddressesUpdatedSub: Subscription;
 
   filteredAddresses: Address[];
 
@@ -42,7 +44,8 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private titleService: Title
+    private titleService: Title,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +60,14 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
         );
         this.filteredAddresses = this.availableAddresses;
         this.isLoading = false;
+      });
+
+    this.assignedAddressesUpdatedSub = this.addressesService
+      .getAssignedAddressesUpdatedListener()
+      .subscribe((addresses: Address[]) => {
+        this.snackBar.open('Address Successfully Assigned', 'Okay', {
+          duration: 3000,
+        });
       });
   }
 
@@ -108,5 +119,6 @@ export class AvailableAddressesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.addressesSub.unsubscribe();
+    this.assignedAddressesUpdatedSub.unsubscribe();
   }
 }
